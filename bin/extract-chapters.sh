@@ -17,12 +17,12 @@
 #
 # Env:
 #   PDF   override source PDF path
-#   OUT   override output dir (default: docs/chapters)
+#   OUT   override output dir (default: docs/pc-8201a-tech-ref/chapters)
 
 set -euo pipefail
 
 PDF="${PDF:-/Users/alexi/LocalDocs/pc8201a-meshtastic/docs/source/NEC8201A-TechRef.pdf}"
-OUT="${OUT:-docs/chapters}"
+OUT="${OUT:-docs/pc-8201a-tech-ref/chapters}"
 LAST_PAGE=258
 
 # chapter : start-page : slug-title   (titles cleaned from OCR'd headings)

@@ -1,2 +1,5 @@
 .DS_Store
 *.swp
+
+# generated review-issue bodies (regenerate with bin/gen-review-issues.sh)
+build/

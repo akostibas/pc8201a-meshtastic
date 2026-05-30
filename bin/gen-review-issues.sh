@@ -4,7 +4,7 @@
 # from the in-file markers, so a human can check off each diagram and each
 # garbled/unverified table against the source scan.
 #
-# It scrapes two marker kinds out of docs/chapters/*.md:
+# It scrapes two marker kinds out of the chapters dir (CHDIR):
 #   <!-- FIGURE x.y: ... -->       -> "Diagrams" checklist item
 #   <!-- TODO(tier-b): ... -->     -> "Tables / values to verify" checklist item
 # Each item keeps its source-line number so a reviewer can jump to it.
@@ -14,14 +14,14 @@
 # actually open the issues with `gh` (label: tier-b).
 #
 # Usage:
-#   bin/gen-review-issues.sh                 # dry run -> experiments/review-issues/
+#   bin/gen-review-issues.sh                 # dry run -> build/review-issues/
 #   bin/gen-review-issues.sh --create        # also: gh issue create per chapter
-#   OUT=/tmp/x bin/gen-review-issues.sh      # override output dir
+#   CHDIR=docs/<book>/chapters OUT=/tmp/x bin/gen-review-issues.sh   # per book
 #
 set -euo pipefail
 
-CHDIR="docs/chapters"
-OUT="${OUT:-experiments/review-issues}"
+CHDIR="${CHDIR:-docs/pc-8201a-tech-ref/chapters}"
+OUT="${OUT:-build/review-issues}"
 LABEL="tier-b"
 create=0
 [ "${1:-}" = "--create" ] && create=1
@@ -86,7 +86,7 @@ for f in "$CHDIR"/*.md; do
       echo
     fi
     echo "---"
-    echo "_Pipeline + per-figure-type policy: see \`experiments/diagram-ocr/RESULTS.md\`._"
+    echo "_Pipeline + per-figure-type policy: see \`docs/ocr-workflow.md\`._"
   } > "$body"
 
   printf "  %-44s figures=%-3s tables=%-3s -> %s\n" "$title" "$nf" "$nt" "$body"

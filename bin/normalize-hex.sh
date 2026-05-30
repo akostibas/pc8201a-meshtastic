@@ -14,13 +14,13 @@
 # corpus are verified 7-8 bit masks (no hex/binary ambiguity).
 #
 # Usage:
-#   bin/normalize-hex.sh [file ...]   (default: docs/chapters/*.md)
+#   bin/normalize-hex.sh [file ...]   (default: docs/pc-8201a-tech-ref/chapters/*.md)
 
 set -euo pipefail
 
 files=("$@")
 if [ "${#files[@]}" -eq 0 ]; then
-  files=(docs/chapters/*.md)
+  files=(docs/pc-8201a-tech-ref/chapters/*.md)
 fi
 
 for f in "${files[@]}"; do

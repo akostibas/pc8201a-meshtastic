@@ -98,8 +98,11 @@ These markers drive the review tracking (below) and are the unit of Tier B work.
 
 ## Tier B — vision re-OCR of figures and tables
 
-We ran an experiment comparing models before committing to a pipeline. Full
-results and raw outputs: [`experiments/diagram-ocr/RESULTS.md`](../experiments/diagram-ocr/RESULTS.md).
+Before committing to a pipeline we ran a one-off bake-off on four
+representative figures (memory map, flowchart, keyboard matrix, timing
+waveform) across tesseract, glm-ocr (local), claude-sonnet-4-6, and
+claude-opus-4-8, scored against hand transcriptions. The scratch outputs
+weren't kept — the conclusions are below.
 
 ### What we learned (carry these forward)
 
@@ -146,7 +149,7 @@ pdftoppm -png -r 300 -f <page> -l <page> "$PDF" out/p<page>
 sips -c <h> <w> out/p<page>-<page>.png
 ```
 
-Local vision model caller: [`experiments/diagram-ocr/glm-ocr.sh`](../experiments/diagram-ocr/glm-ocr.sh)
+Local vision model caller: [`bin/glm-ocr.sh`](../bin/glm-ocr.sh)
 — posts a base64 PNG to ollama's `/api/generate` with `num_ctx 16384` (the
 default 4096 is too small to encode a page image and crashes cryptically).
 
