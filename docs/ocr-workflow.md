@@ -137,6 +137,14 @@ weren't kept — the conclusions are below.
      above the cells they label. The vision pass routinely drifts them left or
      right; check alignment against the source and fix the spacing.
 
+   **Use msb/lsb as ground truth.** Most bit/register tables are labeled
+   **msb** (most significant) and **lsb** (least significant) over the columns.
+   That fixes bit ordering (which end is bit 7 vs bit 0) and the exact bit
+   width — an 8-bit register has exactly 8 cells. Use these labels to fill in
+   and correct OCR-ambiguous tables: a row that's short or over-long is an OCR
+   error to reconcile against the source, and field names must be seated under
+   the correct bit position.
+
 ### Per-figure-type output policy
 
 | Source figure | Target representation | Model |
