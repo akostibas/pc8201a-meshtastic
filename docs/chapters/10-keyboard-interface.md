@@ -91,12 +91,13 @@ READKEY:
         ANI     0XFE        ; Set B0=Off
         OUT     PORTB       ; Activate Strobe for
                             ;   Special key
+        IN      KEYIN       ; Read keyboard
         STAX    B           ; Save Data
         IN      PORTB       ; Get Status of Port B
         ORI     0X01        ; Set B0=On
         OUT     PORTB       ; Strobe off
         MVI     A,0B11111110
-NORMAL:
+NOMAL:
         INX     B           ; Prepare PTR for key Buffer
                             ;   for next data
         OUT     PORTA       ; Strobe On
@@ -112,7 +113,7 @@ NORMAL:
 <!-- TODO(tier-b): page break here; continuation of READKEY routine from source page 187 — raw fragment below -->
 
 ```text
-      • JC    NORMAL
+      • JC    NOMAL
         RET                            ; All done return to caller.
 
                                 ·-  ,• PB0

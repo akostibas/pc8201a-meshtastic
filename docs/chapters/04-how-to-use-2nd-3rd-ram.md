@@ -43,7 +43,7 @@ Altered registers
         [A], [C], [D], [F]
 ```
 
-### 4.1.1.2 PUTBNK (`0X7EE8`)
+### 4.1.1.2 PUTBNK (`0X7EE5`)
 
 The PUTBNK routine writes one byte at the specified address pointed by [HL] in the specified RAM bank. Similar to the GETBNK routine, the original bank will be selected after writing the data. Before using the PUTBNK routine, interrupts should be disabled.
 
@@ -209,8 +209,10 @@ SLOW    EQU     0               ; Low address  (0X0000-0X7FFF)
 BYTER:  DI                      ; Disable interrupt
         IN      STATUS          ; Read current bank status
         PUSH    PSW             ; Save current bank status
+        IF      SHIGH
         ANI     0B11110011      ; Clear high address of bank switch
         ORA     C               ; Set new data of bank
+        ELSE
         PUSH    PSW             ; Save current bank
         MOV     A,C             ; Pick up new bank data
         RAR                     ;
@@ -230,8 +232,10 @@ BYTER:  DI                      ; Disable interrupt
 BYTEW:  DI                      ; Disable interrupt
         IN      STATUS          ; Read current bank status
         PUSH    PSW             ; Save current bank status
+        IF      SHIGH
         ANI     0B11110011      ; Clear high address of bank switch
         ORA     C               ; Set new data of bank
+        ELSE
         PUSH    PSW             ; Save current bank
         MOV     A,C             ; Pick up new bank data
         RAR                     ;
@@ -253,8 +257,10 @@ BLOCKR: DI                      ; Disable interrupt
         MOV     C,A             ; Set up bank number
         IN      STATUS          ; Read current bank status
         STA     CURBNK          ; Save current bank
+        IF      SHIGH
         ANI     0B11110011      ; Clear high address of bank switch
         ORA     C               ; Set new data of bank
+        ELSE
         PUSH    PSW             ; Save current bank
         MOV     A,C             ; Pick up new bank data
         RAR                     ;
@@ -282,9 +288,10 @@ BLOCKW: DI                      ; Disable interrupt
         MOV     C,A             ; Set up bank number
         IN      STATUS          ; Read current bank status
         STA     CURBNK          ; Save current bank
+        IF      SHIGH
         ANI     0B11110011      ; Clear high address of bank switch
         ORA     C               ; Set new data of bank
-        ELSE                    ; <!-- ? original label/condition unclear -->
+        ELSE
         PUSH    PSW             ; Save current bank
         MOV     A,C             ; Pick up new bank data
         RAR                     ;

@@ -172,7 +172,7 @@ The following steps are the algorithm for the interval timer sequence.
 5. Key matrix scanning
 6. Return to the interrupted process
 
-## 3.2 Special Reserved Area of 2nd ROM
+## 3.2 ROM Swapping Method
 
 When you would like to use 2nd ROM, you must write the following information into the 2nd ROM's special reserved area. The special reserved area is located from `"X0000` to `"X0047`. This area will be used for the 2nd ROM starting jump instruction and IO code, and the file name of 2nd ROM. This name is displayed like one of the RAM files on the Menu screen by 1st ROM, ROM #0. The following figure explains the 2nd ROM special reserved area.
 
@@ -520,7 +520,7 @@ POWER:  PUSH    PSW             ;
         OUT     BNKCRL          ; Select!
         MOV     A,B             ; Resave old status
         STA     BANK1-DTBL      ;
-        MVI     A,"B00000001    ; Select RAM bank 1  <!-- ? -->
+        MVI     A,"B00000001    ; Select RAM bank 1
         OUT     BNKCRL          ;
         MVI     A,0             ; Set up to come back
                                 ; to 2nd ROM

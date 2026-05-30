@@ -110,6 +110,7 @@ CMT Motor on/off is simply performed by having access to the I/O PORT, SCP (Syst
 ;
 CMTON:
           LDA       'XFE44            ; Get SCP port status.
+          ANI       'B11110111        ; See if Motor ON?
           RNZ                         ; then return.
           ORI       'B00001000        ; Bit 4 on.
           OUT       SCP               ; Turn on Motor.
@@ -178,6 +179,7 @@ WRITE:
           MOV       C,08              ;  4: Set data length in bit.
 BYTEO:
           MOV       A,B               ;  4: Retrieve data.
+          RLC                         ;  4: Set a bit in CF.
           MOV       B,A               ;  4: Save data.
           MVI       A,'XD0            ;  7: To send MARK.
           JC        SITO              ; 10/7: Branch if HIGH.
@@ -189,6 +191,7 @@ SITO:
           JNZ       BYTEO             ; 10/7: To send next bit.
           MVI       A,'X00            ;  4: To send stop bit.
           RET                         ; 10: It is responsible to
+                                      ;   : CALLER Routine for
                                       ;   : making
                                       ;   : an adequate
                                       ;   : length of the stop
@@ -229,6 +232,7 @@ READ:
 BYTE1:
           CALL    BITI                ; 18:
           MOV     A,B                 ;  4:
+          RLC                         ;  4: Move CF to Bit-0.
           MOV     B,A                 ;  4:
           DCR     C                   ;  4: Bump counter.
           JNZ     BYTE1               ; 10/7: Read next BIT.
@@ -242,8 +246,10 @@ BYTE1:
 ;
 BIT1:
           CALL    SYNC                ; 18:
+          MOV     A,D                 ;  4: Get counter.
           CPI     16                  ;  7: See whether MARK
                                       ;     or SPACE.
+                                      ;     If MARK then CF=1,
                                       ;     else CF=0.
           PUSH    PSW                 ; 12: Save CF.
           LXI     H,???               ; 10: Assume MARK.
@@ -260,6 +266,7 @@ BITI1:
 ; EXIT: D = loop count in this routine.
 ;
 SYNC:
+          MVI     D,36                ;  7: Reset counter.
                                       ; Margin is about 10%.
           RIM                         ;  4:
           ANI     'X80                ;  7: Isolate SID bit.
@@ -270,6 +277,7 @@ SYNC1:
           CMP     E                   ;  4: Same status?
           JZ      SYNC1               ; 10/7: then wait.
 SYNC2:
+          RIM                         ;  4: Get current SIO.
           DCR     D                   ;  4: Bump counter.
           JZ      SYNC                ; 10/7: Too long, Restart.
           ANI     'X80                ;  7: Isolate SID.

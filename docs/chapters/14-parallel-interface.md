@@ -96,6 +96,7 @@ Refer to the manual of the Printer for the actual duration of T1 to T3.
 The tiny program shown below explains how to send a character to the parallel port. The sample program performs the same function as the BASIC command `LPRINT "ABCDEFGHIJ"`.
 
 ```asm
+        600000
         ;-- Equates
 SCP     EQU     'X90            ; System Control Port.
 PORTA   EQU     'XB9            ; Printer Data Port.

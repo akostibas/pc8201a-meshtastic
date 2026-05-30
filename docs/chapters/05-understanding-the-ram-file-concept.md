@@ -86,6 +86,7 @@ The DO file usually consists of "ASCII" characters. And you cannot use the 3 Con
 
 Examples of when a DO file is made in PC-8201A:
 
+1. TEXT always creates and modifies DO files.
 2. `SAVE` command with `,A` creates a DO file in BASIC.
 3. UPLOAD and DOWNLOAD sends or receives a DO file through RS-232C in TELCOM.
 4. DO file can be saved or loaded from CASSETTE and RS-232C in MENU.

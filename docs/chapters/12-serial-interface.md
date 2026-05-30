@@ -157,7 +157,7 @@ msb                     lsb
 
 Note: If the data length is less than 8 bits, output data must be right justified. Input data is right justified by UART.
 
-## 12.2 Using the Serial Interface
+## 12.2 Software Description
 
 ### 12.2.1 How To Initialize Serial Port
 
@@ -209,7 +209,7 @@ INITSERI:
 
         ; See if Serial Port is available.
                   LDA     COMACT               ; Get current user IO.
-
+                  ORA     A                    ; No one use Serial I/O?
                   JZ      SELECT               ; then branch.
                   CMP     C                    ; SAME USER?
                   JZ      SELECT               ; Then branch.

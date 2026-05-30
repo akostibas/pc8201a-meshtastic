@@ -349,6 +349,7 @@ PREP:
         MVI     A,'X01
         OUT     PORTA                   ; Select Block 1
         IN      PORTB                   ; Get current status.
+        ANI     'B11111100              ; Deselect Block 9/10.
         OUT     PORTB
         CALL    LCDBUSY                 ; Wait until LCD become ready.
         MVI     A,0
@@ -381,7 +382,7 @@ WRITE:
         INR     M
 
 ;---- Set starting page --------
-        MVI     A,'XFF                  ; Select all Blocks.
+        MVI     A,'X0FF                 ; Select all Blocks.
         OUT     PORTA
         IN      PORTB
         ORI     'B00000011
@@ -551,7 +552,7 @@ GETMSK:
         MOV     A,L                 ; Get Y position.
         ANI     'B00000111
         MOV     L,A                 ; Set counter.
-        MVI     A,'B10000000
+        MVI     A,'B80
 MSK1:
         RLC
         DCR     L                   ; Bump counter.
@@ -696,7 +697,7 @@ EXPAND:
         LXI     H,CGADR
         DAD     B
         LXI     B,TEMP
-        MVI     D,'X05          ; Set font data length.
+        MVI     D,'X5           ; Set font data length.
 NEXT:
         MOV     A,M             ; Get Font data.
         STAX    B
@@ -716,7 +717,7 @@ The area from `'XFBC0` to `'XFE3F` in the RAM is reserved for the VRAM area of t
 - 1st: `'XFBC0`–`'XFCFF` — Keep previous Page in TELCOM.
 - 2nd: `'XFD00`–`'XFE3F` — Current Displayed.
 
-The character code of the character displayed at location (1,1) on the LCD display is stored at `'XFBC0`, and the code of the character at (2,1) is stored at `'XFBC1`, and so on. So the code of the left-lowest character, (40,8), is stored at `'XFCBF`<!-- TODO(tier-b): verify this address — source says 'XFC3F which may conflict with the 1st-region end 'XFCFF; re-check source page 182 -->. This rule is used in the standard program in ROM #0. For instance, BASIC, TEXT and TELCOM use that area like a VRAM in the traditional desk-top personal computer. The menu screen also utilizes that area. But you can use this area as you like. The data in this area does not affect the information on the LCD display, as long as you use your own display routine.
+The character code of the character displayed at location (1,1) on the LCD display is stored at `'XF000`, and the code of the character at (2,1) is stored at `'XFBC1`, and so on. So the code of the left-lowest character, (40,8), is stored at `'XFCBF`<!-- TODO(tier-b): verify this address — source says 'XFC3F which may conflict with the 1st-region end 'XFCFF; re-check source page 182 -->. This rule is used in the standard program in ROM #0. For instance, BASIC, TEXT and TELCOM use that area like a VRAM in the traditional desk-top personal computer. The menu screen also utilizes that area. But you can use this area as you like. The data in this area does not affect the information on the LCD display, as long as you use your own display routine.
 
 ### 9.5.3 Reverse The Attribute Of The Specified Area
 

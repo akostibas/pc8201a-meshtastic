@@ -61,7 +61,7 @@ oe   - Beginning address of file
 c,e  -        ditto
 ```
 
-TXTTAB in BASIC shows the lowest byte of the file, the first link pointer in the BASIC program file. Please refer to the manual to understand what "link pointer" is if you need to handle BASIC programs.
+TXTTAB in BASIC shows the lowest byte of the file, the first link pointer in the BASIC program file. Please refer to her manual to understand what "link pointer" is if you wco handle the BASIC programs. <!-- OCR: unclear ("her", "wco") -->
 
 Initialized values for the first 6 slots in the Directory are shown below. The first 3 files are stored in ROM and displayed on the menu screen. (These 3 files are called the "standard programs".) The next 3 files are used for hidden files created in RAM area. These hidden files will not appear on the Menu screen. Refer to the previous section, "DO file" and "BA file". The characteristics of these hidden files are described there.
 
@@ -71,33 +71,33 @@ Initialized values for the first 6 slots in the Directory are shown below. The f
 
 ```asm
         ;BASIC
-        DB      B10110000    ; flag
+        DB      &B1011000    ; flag <!-- OCR: 7 bits in source -->
         DW      Start address of BASIC
-        DB      'BASIC   '
+        DB      'BASIC
         DB      0
         ;FILER (TEXT)
-        DB      B10110000    ; flag
+        DB      &B1011000    ; flag <!-- OCR: 7 bits in source -->
         DW      Start address of TEXT
-        DB      'TEXT    '
+        DB      'TEXT
         DB      0
         ;TELCOM
-        DB      B10110000    ; flag
+        DB      &B1011000    ; flag <!-- OCR: 7 bits in source -->
         DW      Start address of TELCOM
-        DB      'TELCOM  '
+        DB      'TELCOM'
         DB      0
         ;for non-registered program
-        DB      B10001000    ; flag
+        DB      &B10001000    ; flag
         DW      0
         DB      0
-        DB      'XXXXXXXX'
+        DB      'XXXXXXX'
         ;for SCRAP file
-        DB      B11001000    ; flag
+        DB      &B11001000    ; flag
         DW      0
         DB      0
-        DB      'YYYYYYYY'
+        DB      'YYYYYYY'
         ;for EDIT command of BASIC
-        DB      B01001000    ; flag
+        DB      &B01001000    ; flag
         DW      0
         DB      0
-        DB      'ZZZZZZZZ'
+        DB      'ZZZZZZZ'
 ```

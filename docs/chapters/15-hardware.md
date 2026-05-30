@@ -111,7 +111,7 @@ Refer to another technical manual for the detailed specifications of PC-8201A's 
 11. **/INTA (Out)**
     It is used instead of (and has the same timing as) /RD during the instruction cycle after an INTR is accepted.
 
-12. **RESETD (Out)**
+12. **RESETO (Out)**
     It indicates the CPU is being reset. Can be used as a system reset.
 
 13. **READY (In)**
@@ -180,7 +180,7 @@ Symbol               Drive capacity (mA)
 AD0–AD7              4.4
 A8–A15               4.4
 /RD, /WR, IO/M
-ALE, RESETD          4.4
+ALE, RESETO          4.4
 HLDA, /INTA, CLK     2.0
 E, /ROME, /BANK3     1.1
 ```
@@ -1016,7 +1016,7 @@ UART DATA PORT
 - 0 = Generate parity and check
 - 1 = Inhibit generating parity and check
 
-**CLS2 / CLS1** — CHARACTER LENGTH SELECT
+**CLS2 / CLS1** — CALENDAR LENGTH SELECT
 
 | CLS2 | CLS1 | Data length |
 |------|------|-------------|
