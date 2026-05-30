@@ -1,112 +1,103 @@
 # Chapter 6: Directory Structure
 
 > Auto-extracted from the OCR text layer of NEC8201A-TechRef.pdf
-> (source pages 76-78). Prose is approximate and **tables
+> (source pages 76–78). Prose is approximate and **tables/figures
 > are unreliable** — pending Tier B vision re-OCR. Do not treat
 > numeric/tabular values here as authoritative.
+> Prose LLM-cleaned 2026-05-29; figures/tables pending Tier B vision re-OCR.
+
+## 6.1 Directory Configuration Per Entry
+
+The directory area is allocated in the middle of the bookkeeping area. The top of the address is F84F in hexadecimal. The directory configuration is shown below.
+
+```
+DIRTBL: BASIC
+          FILER
+                   <--------- &HF84F
+          TELCOM
+NULDIR:   (Directory for non-registered program)
+SCRDIR:   (Directory for SCRAP)
+EDTDIR:   (Directory for EDIT command)
+USRDIR:   (Directory for user-defined files)
+
+          ((End-of-directory)) &HFF
+```
+
+> Note: The "non-registered program" means a non-saved BASIC program. Refer to "BA file" in the previous section. "Directory for SCRAP" and "Directory for EDIT command" are explained in "DO file".
+
+Each slot in the directory consists of 11 bytes: 1 byte flag, 2 bytes address, and 8 bytes file name. The first 6 slots in the directory area are initialized by the INIT routine at the COLD START.
+
+**Dir slot's configuration per entry**
+
+| Field     | Size    |
+|-----------|---------|
+| Dir flag  | 1 byte  |
+| Addrfield | 2 bytes |
+| File name | 8 bytes |
+| **Total** | **11 bytes** |
+
+<!-- TODO(tier-b): bit-flag table garbled — re-OCR from source page 76 -->
+
+**Bit assignment of Directory flag**
 
 ```text
-                                      .
+Bit 7  Master bit      (1 when directory valid)
+Bit 6  ASCII bit       (1 when ASCII-text file)
+Bit 5  Binary bit      (1 when Machine-language file)
+Bit 4  File-in-ROM     (1 when file is in ROM)
+Bit 3  Hidden file     (1 when file is hidden)
+Bit 2  <!-- ? -->
+Bit 1  RAM file open flag
+Bit 0  For internal use (always set to 0 normally)
+```
 
-                          CHAPTER 6
+**Vptr address-field**
 
-6.1   DIRECTORY CONFIGURATION PER ENTRY
+<!-- TODO(tier-b): address-field labels garbled — re-OCR from source page 77 -->
 
-        The directory area is allocated in th~ middle of the
-bookkeeping   area.   The top of the address is F84F in
-hexadecimal. The directory configuration is shown below.
-        OIRTBL: BASIC
-                  FILER
-                           <--------- AXF84F
-                  TELCOM
-        NULOIR:   (Directory for non-r-egister-ed pr-ogram)
-        SCRDER:   (Directory for- SCRAP)
-        EDTOIR:   (Oirector-y for- EDIT command)
-        USRDIR:   <Director-y for- user--defined files)
+```text
+B,e  - Address which TXTTAB must be set to
+oe   - Beginning address of file
+c,e  -        ditto
+```
 
-                  (( End-of-directory)) AXFF
-         r-f. The non-r-egistered progr-am means non-saved BASIC
-       . program.    Refer- to ·eA file· in the pr-evious section.
-         •Directory for- SCRAP• and ·oirectory for- EDIT command•
-         ar-e explained in ·oo·file·.
+TXTTAB in BASIC shows the lowest byte of the file, the first link pointer in the BASIC program file. Please refer to the manual to understand what "link pointer" is if you need to handle BASIC programs.
 
-        Each slot in the directory consists of 11 bytes, 1
-byte flag, 2 bytes address and 8 bytes file name. The first 6
-slots in directory ar-ea ar-e initialized by INIT routine at the
-COLO START.
+Initialized values for the first 6 slots in the Directory are shown below. The first 3 files are stored in ROM and displayed on the menu screen. (These 3 files are called the "standard programs".) The next 3 files are used for hidden files created in RAM area. These hidden files will not appear on the Menu screen. Refer to the previous section, "DO file" and "BA file". The characteristics of these hidden files are described there.
 
-               Oirf slot's configuration per entry
+> Note: First 6 slots in Directory (Initialized data stored at &H6C8E)
 
-               Dir-Y f 1 ag       (1 byte)
-               Adcfiel d          (2 bytes)
-               Fi 1e              (8;bytes)
-               · Tota 1 11 bytes.
+<!-- TODO(tier-b): directory-init data garbled — re-OCR from source page 78 -->
 
-               Bi~gnment of Directory flag
-
-              Bi-Master bit       (1 when directory valid)
-              Bi ASCII bit        (1 when ASCII-text file)
-              Bi Binary bit       (1 when Machine-language file)
-              Bi File-in-ROM      ( 1 when file is in ROM)
-              Bi' Hidden fi 1e    (1 when file is hidden)
-              Bi
-              Bf RAM file open flag
-              Sj for internal use (always set to 0 normally)
-
-              VPf address-field
-
-              B, e - Address which TXTTAB must be set to
-              oe - Beginning address of file
-              c,e -        ditto
-
-              ,XTTAB in BASIC shows the lowest byte of the file,
-      the fir~ink pointer in the BASIC program file.      Please
-      refer to her manual to understand what 'link pointer'  is,
-      if you wco handle the BASIC programs.
-              :nitialized values for first 6 slots in Directory
-     are shooelow.     The first 3 files are stored in ROM and
-     displaye,the menu screen.   (These 3 files are called the
-     'standar~ograms".) Next 3 files are used for hidden files
-     created AM area. These hidden files will    not appear on
-     the Menueen. Refer to previous section, 'DO file' and 'BA
-     file'.     characteristics· of these hidden     files  are
-     describeiere.
-
-                                           ·-1
-
-               rf. First 6 slots in Directory          (Initialized data
-               stored in AX6C8E)
-               08      AB1011000
-               DI.J    Start address
-                               ,     of a=p.sic
-               DB      'BASIC
-               DB      0
-               DB      AB101-10000
-               01.J    Start address
-                                ,    of TEXT
-               08      'TEXT
-               DB      0
-               OB      ""B10110000
-               01.J    Start address of TELCOM
-               OB      'TELCOM'
-               DB      0
-               ;for non-registered program
-               DB      "'B10001000
-               DI.J   0
-                                                   •
-               DB     0
-               DB      'XXXXXXX'
-               ;for SCRAP file
-               OB      ""B11001000
-               DI.J   0
-               08     0
-               DB      'YYYYYYY'
-               ;for EDIT command of BASIC
-               DB     AB01001000
-               DI.J   0
-               OB     0
-               DC      'ZZZZZZZ'
-
-                                   78 -
-
+```asm
+        ;BASIC
+        DB      B10110000    ; flag
+        DW      Start address of BASIC
+        DB      'BASIC   '
+        DB      0
+        ;FILER (TEXT)
+        DB      B10110000    ; flag
+        DW      Start address of TEXT
+        DB      'TEXT    '
+        DB      0
+        ;TELCOM
+        DB      B10110000    ; flag
+        DW      Start address of TELCOM
+        DB      'TELCOM  '
+        DB      0
+        ;for non-registered program
+        DB      B10001000    ; flag
+        DW      0
+        DB      0
+        DB      'XXXXXXXX'
+        ;for SCRAP file
+        DB      B11001000    ; flag
+        DW      0
+        DB      0
+        DB      'YYYYYYYY'
+        ;for EDIT command of BASIC
+        DB      B01001000    ; flag
+        DW      0
+        DB      0
+        DB      'ZZZZZZZZ'
 ```

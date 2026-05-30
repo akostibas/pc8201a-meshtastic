@@ -1,338 +1,228 @@
 # Chapter 15: Hardware
 
 > Auto-extracted from the OCR text layer of NEC8201A-TechRef.pdf
-> (source pages 228-258). Prose is approximate and **tables
-> are unreliable** — pending Tier B vision re-OCR. Do not treat
-> numeric/tabular values here as authoritative.
+> (source pages 228–258). Prose LLM-cleaned 2026-05-29; figures/tables pending Tier B vision re-OCR.
+> Do not treat numeric/tabular values here as **authoritative**.
+
+Refer to another technical manual for the detailed specifications of PC-8201A's hardware. That manual has already been published by NECHE, Chicago. Please contact them. In this chapter, only the most important data is listed.
+
+## 15.1 System Slot
+
+### 15.1.1 Assignment of Signal
+
+<!-- TODO(tier-b): verify Fig 15.1–15.3 pin tables against source pages 228–229 before treating as authoritative -->
+
+**Fig 15.1 — System Slot pin assignments (pins 1–14)**
+
+| Pin number | Signal name | Remarks           |
+|------------|-------------|-------------------|
+| 1          | VDD         | +5 V              |
+| 2          | VDD         | +5 V              |
+| 3          | AD0         | Address/Data 0    |
+| 4          | AD4         | Address/Data 4    |
+| 5          | AD1         | Address/Data 1    |
+| 6          | AD5         | Address/Data 5    |
+| 7          | AD2         | Address/Data 2    |
+| 8          | AD6         | Address/Data 6    |
+| 9          | AD3         | Address/Data 3    |
+| 10         | AD7         | Address/Data 7    |
+| 11         | NC          | No Connection     |
+| 12         | NC          | No Connection     |
+| 13         | A8          | Address 8         |
+| 14         | A12         | Address 12        |
+
+**Fig 15.2 — System Slot pin assignments (pins 15–32)**
+
+| Pin number | Signal name | Remarks              |
+|------------|-------------|----------------------|
+| 15         | A9          | Address 9            |
+| 16         | A13         | Address 13           |
+| 17         | A10         | Address 10           |
+| 18         | A14         | Address 14           |
+| 19         | A11         | Address 11           |
+| 20         | A15         | Address 15           |
+| 21         | A16         | No Connection        |
+| 22         | A18         | No Connection        |
+| 23         | A17         | No Connection        |
+| 24         | A19         | No Connection        |
+| 25         | NC          | No Connection        |
+| 26         | NC          | No Connection        |
+| 27         | RD          | Read                 |
+| 28         | WR          | Write                |
+| 29         | IO/M        | IO or Memory         |
+| 30         | ALE         | Address Latch Enable |
+| 31         | HOLD        | HOLD                 |
+| 32         | HOLDA       | HOLD Acknowledge     |
+
+**Fig 15.3 — System Slot pin assignments (pins 33–48)**
+
+| Pin number | Signal name | Remarks                        |
+|------------|-------------|--------------------------------|
+| 33         | INTR        | INTERRUPT                      |
+| 34         | INTA        | INTerrupt Acknowledge          |
+| 35         | RESET       | RESET                          |
+| 37         | ROME        | ROM Enable                     |
+| 38         | E           | Enable                         |
+| 39         | BANK3       | RAM Cassette Select signal     |
+| 40         | NC          | No Connection                  |
+| 41         | HADRS       | High Address Disable           |
+| 42         | LADRS       | Low Address Disable            |
+| 43         | CLK         | Clock                          |
+| 44         | POWER       | RAM Protect signal             |
+| 45         | GND         | Ground                         |
+| 46         | GND         | Ground                         |
+| 47         | NC          | No Connection                  |
+| 48         | NC          | No Connection                  |
+
+### 15.1.2 Explanation of Pin
+
+#### 15.1.2.1 Function of Signal
+
+1. **VDD (Out)**
+   If you don't use the BCD, this pin can supply a current of 50 mA or so.
+
+2. **AD0–AD7 (In/Out)**
+   Lower 8 bits of the memory address (or I/O address) appear on the bus during the first clock cycle of a machine cycle. It then becomes the data bus during the other cycles.
+
+3. **A8–A15 (Out)**
+   The most significant 8 bits of the memory address or the I/O address. The output goes off during Hold mode; it then becomes 'H' level, because it is connected to a pull-up resistor (100 kΩ) inside.
+
+4. **/RD (Out/3-state)**
+   The read control signal; 3-state during Hold mode.
+
+5. **/WR (Out/3-state)**
+   The write control signal; 3-state during Hold mode.
+
+6. **IO/M (Out/3-state)**
+   When this signal is 'H' level and 'L' level, respectively, the CPU has access to the I/O and the memory. 3-state during Hold mode.
+
+7. **ALE (Out/3-state)**
+   It is used to strobe the address information (AD0–AD7). 3-state during Hold mode.
+
+8. **HOLD (In)**
+   The CPU, upon receiving the hold request, will relinquish the use of the bus as soon as the completion of the current bus transfer. When the Hold is acknowledged, the /RD, /WR, IO/M, ALE lines are 3-stated and the A08–A015 lines are 'H' level.
+
+9. **HLDA (Out)**
+   It indicates that the CPU has received the HOLD request and that it will relinquish the bus in the next clock cycle.
+
+10. **INTR (In)**
+    The general purpose interrupt. It is sampled only during the next to the last clock cycle of an instruction and during Hold and Halt states.
+
+11. **/INTA (Out)**
+    It is used instead of (and has the same timing as) /RD during the instruction cycle after an INTR is accepted.
+
+12. **RESETD (Out)**
+    It indicates the CPU is being reset. Can be used as a system reset.
+
+13. **READY (In)**
+    If it is 'L', the CPU will wait an integral number of clock cycles for it to go 'H' before completing the read or write cycle.
+
+14. **/ROME (Out)**
+    The enable signal for external ROM cartridge or general purpose. When the upper 4 bits of the I/O address is 8, it goes 'L'.
+
+<!-- FIGURE 15.4: /ROME decode logic circuit — present in OCR as noise; needs vision re-OCR from source page ~232 (target: logic gate schematic) -->
 
 ```text
-                          ....
-
-               CHAPTER 15
-
-     !r to another technical manual about the detail
-speci~n of PC-8201A's hardware. That manual has already
-been oy NECHE, Chicago. Please contact with them.    In
-this r, only most important data is listed up.
-
-                     15.1                SYSTEM SLOT
-                     15.1.1                Assignment Of Signal
- .. · ----. _:. ·,· -t· ...-'..:··-··.                                                          ··~   ...-i   -----=;-.-......---------~~~- -
-                                    ·_System Slot
-
-                                                                  S\"STc.\l SLOT
-
-                                                         I                         i
-                                            Pin number   I   Sigr:a/ name          I
-                                                                                            Remarks
-                                                         I                         I
-                                                    1          voo                       +S V
-
-                                                   2           voo                       +S V
-
-                                                   3           AOO
-                                                                                I Adc:-ess/Oata 0
-                                                4              AC4                      Addra:s/Oata 4
-
-                                               .5             .A.01                     Address/Data 1
-
-                                               6              ACS                       Address/Data S
-
-                                               7              A02                      Address/Cata 2
-
-                                               8              A06                      AddressiOata 6
-
-                                               9              A03                      Address/Data 3
-
-                                               10            A07                       Address/Data 7
-
-                                               11            NC                        No C0nr.e~ion
-
-                                               12            NC                        No C;:nnec:io r.
-
-                                              13             AS                    Address 8
-
-                                              14             A12                   .O..dcr ass 12
-                                                                            I
-
-                                                                   Fig 15.1
-
-                                                                                                                     ,,,.-
-
-                   ...
-
-                Pin number
-                             I   Signal name
-
-                                   A9
-                                               I           Remarks
-
-                                                   Address 9
-                     15
-
-                     16            A13             Address 13
-
-                     17            A10             Address 10
-
-                     18            A14             Addresl i4
-
-                     19            Al 1            Address 11
-
-                     20            Ai5         I   Acld:-es~ 15
-
-                     21            A16
-                                               i   No Conr:ec::ion
-
-                     22            A18             No Connec:tion
-
-                     23            A17             No Connec:ion
-
-                     24            A19             f'!o C::-~ae::=:i
-
-                     25            NC              Ne C,nnec:ion
-            .
-                     26            NC              No Connec:tion
-
-                     27            RO              Read                     .,
-                                   WR              Write
-                 . 28
-                     29            10/M            10 OR Memory
-
-                     30            ALE             Address Late."I Enable
-
-                     31            HOLO            HOLO
-
-                     32            HOLOA           HO LO Acknowtedge
-
-                                        Fig 15.2
-
-                                                                            ·&.--·fl
-                                                                                       -··.r~
-                                                         --:4               ---'!
-
-           Pin number
-                        I   Signal name
-
-                              INTR
-                                          I           Remarks
-
-                                              INTERRUPT
-                33
-
-                34             INTA           INTen Ackncwlec;e
-                                          I
-                                              R~----
-                35            RESET       I    ::.c. l
-
-                37            ROME            RCM e:iat:le
-                        I
-                38      I     E               E:iacle
-
-                39            BANK;:;:3       FIAM Cassette Selec: signal
-
-                40            NC              No Connec:ion
-
-                41            .HAORO          High Address Disable
-
-                42            LAORO           Low Address Disable
-
-                43            CLJ<            Clock
-
-                44            POWER           RAM Protec: signal
-
-                45            GNO             Ground
-
-                46            GNO             Ground
-
-                47            NC              No Connection
-
-                48            NC              No Connection
-
-                                      Fig 15.3
-
-           15.1.2   Explanation Of Pin
-
-     • 1s.1.2.1         Function Of Signal
-
-       1.       Vdd COut)
-                        If you don't use the BCD, this Pin can supply with
-                the current of 50mA or so.
-
-       2.       A00-A07 <In/Out)
-                    Lower 8 bits of the memory address Cor I/O address)
-                appear- on the bus during the first clock cycle of a
-                machine cycle.  It then becomes the data bus during the
-                other cycles.
-
-       3.       A8-A15 COut)
-                    The most significant 8 bits of the memory address or
-                the I/O address. The output goes off during Hold mode,it
-                then becomes •H• level, because it is connected to a pull
-                up resister (100k Ohm). inside.
-
-       4.       /RO COut/3-state)
-                           The read control signal, 3-state during Hold mode.
-
-       5.- /WR COut/3-state)
-                           The write   control    signal,   3-state   during     Hold
-                mode.
-
-       6.       IO/M COut/3-stater
-                    When     this   signal   is   •H•   level   and   IL.      level,
-
-            /
-
-                respectively, the CPU have access          to   the I/O and the
-                memory. 3-state during Hold mode.
-
-       f                                       -~
-           7.   ALE (Out/3-state)
-                     It is     used to strobe     the    address     information
-                ( A00-A07).    3-state during Hold mode.
-
-           8.   HOLD CIn)
-                     The CPU, upon receiving the hold request,        will
-                relinquish the use of the bus as soon as the completion of
-                the current bus transfer. When the Hold is acknowledged,
-                the /RO, /WR,    IO/M, ALE lines are 3-stated and the
-                A08-A015 lines are •H• level.
-
-           9•   .HLDA <Out >
-                        It indicates that the CPU has received the HOLD
-                request and that it will relinquish the bus in the next
-                clock cycle.
-
-      10 •      I NTR CIn >
-                    The general purpose interrupt.  It is sampled only
-                during the next to the last clock cycle of an instruction
-                and during Hold and Halt states.
-
-      11.       /INTA <Out)
-                    It is used instead of (and has the same timing as) /RO
-                during the instruction cycle after an INTR is accepted.
-
-      12.       RESETO (Out)
-                     It indicates CPU is being reset.    Can    be   used   as   a
-                system reset.
-
-            13.    READY Cin)
-
-                               If it is •L ·, the CPU 1.,,i 11 wait an integra 1 -number of
-                           clock. cycles for it to go •H• before completing the read
-...... _. ----• ..._'-!, ..or w~j_t!t_ eye 1.e.       ...     ;;;i              --~  ~..___ _.._ -.:.;
-                    ...
-
-            14.    /ROME (Out)
-                       The enable signal for external ROM cartridge or
-                  general purpose. When the upper 4 bits of the I/O address
-                  1 s 8, it goes • L
-
-                                   4liHf38
-
-                          IOIM    I ~~1
-                                   Gr
-                                   1-
-                                                     ~
-                                                     CONi;;oL
-                                         Y! I .
-                          Tis
-                          _A/4
-                                   IGZ
-                                   IC
-                                         Y.: I
-                                         y4.
-                                              1
-                                                     ----
-                                                     5.J.Ni<
-                                                     d'"IJ~
-                                                     ,4o2D
-                           Al3     ,a    Ys          ~
-                           Ai2           Y' I        Rrr
-                                   (     y71
-                                              I      L.c!5
-
-                                  Fig 15.4
-
-           15.    E <Out>
-                      It is used as a memory enable signal of the read or
-                  urite cycle. Eis the logical OR (active high) of /RO and
-                  /WR.
-
-                                  Fig 15.5
-
-        16.   /BANK 3 (Out)
-                  The memory enable signal of        external        RAM    cartridge.
-              (See next section)
-    I                                          -~
-
-        17.   HAORSO <IN)
-                  If it is .H.,the memory of        high   address         (AX8000    to
-              AXFFFF) in PC is disabled.      (See next section)
-
-        18.   LAORSO (IN>
-                  If it is .H.,the memory of LOW address ("'X0 to "'X7FFF)
-              in PC is disabled.  (See next section)
-
-        19.   CLK (Out)
-                       2.5MHz clock output.     It is the same phase as              CPU
-              clock.
-
-        20.   POWER (Out)
-                  It is the signal /RESET     (connected        to    the    CPU)     is
-              reversed.
-
-           15.1.3   DC Characteristics
-
-            -------------------~----------------------
-                  Symbol            Drive capacity (mA)
-     •       -;00:;o;---------------4~4--=..---~--------
-                                               .
-             ----------------------------------------
-              A8-A1S                  4.4
-              /RD,/WR,IO/M
-              ALE,RESETO             4.4
-              HLOA,/INTA,CLK         2.0
-              E,/ROME,/BANK 3        1.1
-
-                    Fig 15.6
-
-                                               ,/
-
-             15.1.4    AC Characteristics
-
-                                                                                                                                                                                                   ··-<   ---~----·
-    . j ·_
-              ----                                                                                                                .-
-                                              ~,I
-                .:
-
-                      ""'t-
-                                             .....
-                                                                         "Z'
-
-                                                                         -=~
-                                                                                   2:
-                                                                                              n
-                                                                                              "M
-
-                                                                                                   I
-                                                                                                                          ,J
-
-                                                                                   ~
-                                                                                   <'
-                                                                                   Q,
-                                                                                                                                                                                         -
-                                                                                                                                                                                         :-' .z.
-                      - .--                                      ,.                ~                                                                                                ..."' - ·--
-                                                                                                                                                                                    -    :i- -
+                          4liHf38
+
+                  IOIM  ~  ~~1
+                           Gr
+                           1-
+                                         ~
+                                         CONi;;oL
+                               Y! I .
+                  Tis
+                  _A/4
+                           IGZ
+                           IC
+                                 Y.: I
+                                 y4.
+                                      1
+                                         ----
+                                         5.J.Ni<
+                                         d'"IJ~
+                                         ,4o2D
+                   Al3     ,a    Ys      ~
+                   Ai2           Y' I    Rrr
+                           (     y71
+                                      I  L.c!5
+```
+
+15. **E (Out)**
+    It is used as a memory enable signal of the read or write cycle. E is the logical OR (active high) of /RD and /WR.
+
+<!-- FIGURE 15.5: E signal logic diagram — not recoverable from OCR; needs vision re-OCR from source page ~232 -->
+
+16. **/BANK3 (Out)**
+    The memory enable signal of external RAM cartridge. (See next section.)
+
+17. **HADRS (In)**
+    If it is 'H', the memory of high address (XX8000 to XXFFFF) in the PC is disabled. (See next section.)
+
+18. **LADRS (In)**
+    If it is 'H', the memory of low address (XX0000 to XX7FFF) in the PC is disabled. (See next section.)
+
+19. **CLK (Out)**
+    2.5 MHz clock output. It is the same phase as the CPU clock.
+
+20. **POWER (Out)**
+    It is the signal /RESET (connected to the CPU) reversed.
+
+### 15.1.3 DC Characteristics
+
+<!-- TODO(tier-b): verify Fig 15.6 drive-capacity values against source page ~233; do not treat OCR'd numbers as authoritative -->
+
+```text
+Fig 15.6 — DC Characteristics (Drive capacity)
+
+Symbol               Drive capacity (mA)
+------               -------------------
+AD0–AD7              4.4
+A8–A15               4.4
+/RD, /WR, IO/M
+ALE, RESETD          4.4
+HLDA, /INTA, CLK     2.0
+E, /ROME, /BANK3     1.1
+```
+
+### 15.1.4 AC Characteristics
+
+<!-- FIGURE 15.7: AC characteristics timing diagram — LOST in OCR, needs vision re-OCR from source page ~234 (target: timing diagram) -->
+
+```text
+                                                                   ··-<   ---~----·
+. j ·_
+      ----                                                              .-
+                                        ~,I
+        .:
+
+              ""'t-
+                                       .....
+                                                             "Z'
+
+                                                             -=~
+                                                                       2:
+                                                                                  n
+                                                                                  "M
+
+                                                                                       I
+                                                                                                              ,J
+
+                                                                                       ~
+                                                                                       <'
+                                                                                       Q,
+                                                                                                                                                                 -
+                                                                                                                                                                 :-' .z.
+                      - .--                                      ,.                ~                                                                        ..."' - ·--
+                                                                                                                                                            -    :i- -
 
                               L
-                                                                                                                                                                                     ~
-                                                                                                                                                                                     c
-                                                                                      '-1
+                                                                                                                                                             ~
+                                                                                                                                                             c
+                                                                                          '-1
 
                                                                    I
-                                                          I- I- - -                                          -I                                                 -
+                                                          I- I- - -                                          -I                                 -
                        i
                         i-
                                          I                                     I
@@ -348,8 +238,8 @@ this r, only most important data is listed up.
                                                           '          I
                                                           i                                                                                  '
                                                                                                                                              '
-                              -                                                                                      .!                                                                  loo{
-                                                                               r.:-....                                                                                                  ~
+                              -                                                                                      .!                                                             loo{
+                                                                               r.:-....                                                                                             ~
 
                       :-J
                       f-.
@@ -360,30 +250,30 @@ this r, only most important data is listed up.
                                                                           ..
                                                                                ~-~
                                                                                ~
-                                                                                                  1I                  ;'
-                                                                                                                                             '
-                                                                                                                                             !
-                                                                                                                                                         ...
-                                                                                                                                                           t
-                                                                                                                                                                             I
-                                                                                                                                                                                         >-
-                                                                                                                                                                                         <,.;
+                                                                                          1I                  ;'
+                                                                                                                             '
+                                                                                                                             !
+                                                                                                                                         ...
+                                                                                                                                           t
+                                                                                                                                                                         I
+                                                                                                                                                                                     >-
+                                                                                                                                                                                     <,.;
 
-                                                                                                                                                                                         -
-                                                                                                                                                                                         ~
-                                                                                                                                                                                         t:.:
+                                                                                                                                                                                     -
+                                                                                                                                                                                     ~
+                                                                                                                                                                                     t:.:
                                          I
                                                               ~I
                                                               I.I.lo
                                                                                                                                              IJ
                                                                                                                                              I             '
-                                                                                                                                                                                         C:
+                                                                                                                                                                                     C:
 
                                                               ~I
                                                               c::.
                                                               ~                               ,.                                             I
-                                                                                                                                                                               -;
-                                                                                                                                                                                                             >
+                                                                                                                                                                           -;
+                                                                                                                                                                                                         >
 
                                                       .
                                                      ,.                                       I                                              .
@@ -424,11 +314,11 @@ this r, only most important data is listed up.
                                                                                                            ~
                                                                                     Q                                                  '.~
                                   ~                            <                    <                                                  Ci:
+```
 
-                                                                                            Fig 15.7
+<!-- FIGURE 15.8: AC characteristics timing diagram (continued) — LOST in OCR, needs vision re-OCR from source page ~235 (target: timing diagram) -->
 
-                                                                                                                                                              ......
-                                                  I X >< -·                 lJ                   I
+```text
                                   -·~ •'
                                   ·<                                                                              ~'.
                                                                                                                                    I
@@ -465,7 +355,7 @@ this r, only most important data is listed up.
                                                                                a- - -·
                                                                                                                1:!
                                                                                              1
-                                             !
+                                                             !
                                   _      __.JI
 
                                                                                ~
@@ -525,200 +415,150 @@ this r, only most important data is listed up.
                                                                                                                                         i
 
                                          I                     II                        I                              I
+```
 
-                                                                                         Fis 15.8
+**Fig 15.9 — AC Characteristics parameter table**
 
-                                                                                         - 238 -                                                          /
+<!-- TODO(tier-b): verify Fig 15.9 AC timing parameter values against source pages 236–237; do not treat OCR'd numbers as authoritative -->
 
--
-        "
-            --- --
-                                                   I       min       (l\S)                   typ CnSl               l'IIGl:(            CnS,       --
-                                                                                                                                                   ··-~-,..., - __..._...
-                                                                                                                                                                ------.     -----~
+```text
+                                               min (ns)    typ (ns)    max (ns)
                      1
-                               ta~             l                                         -    J407
+                               tAX                          407
 
-    .                          tl..GX          I   t
-                                                             112
-                                                                                                        .
-                               t,u.                I
-                                                   I
-                                                             rr2                                                I
-                               i,:.u.
-                                               i
-                                               I
-                                               !
-                                               I
-                                                                 7i.                 I                          I
-                                                                                                                I
-                                  t~           !             16:?                    I                          I
-                                                             142
-                               t,4~           I             :r·1                     I
-                                                                                     !                          I
-                                                                                                                !                              I
-                                  t..:        I             i ...,-  ~           II                             i
-                                                                                                                !
-                                                                                                            i            ,. ..
-                               tAD            I                                  I                              I
-                                                                                                                                   ~
+                               tLGX           t    112
 
-                               =~~            I                                  I                          I
-                                                                                                            I
-                                                                                                                          -.· -
-                                                                                                                        -o.;
+                               tALL               112
 
-                              t:11)            II                                                           I
-                                                                                                            I
-                                                                                                                        334-
-                                               ;
-                         !
-                         :     tc:                           !2S                 I                          I
-                             . t~.
-                               ,
-                                           I
-                                              I
-                                                             163                              .
-                              t~CM         i           I
+                               tALU                          74
 
-                                                                 0                                                                             I
-                                                                                                            1
-                                           I
-                                                                                                                                               '
-                              tw0&.
-                                          I                                      I
-                                                                                                            I              7S                  I
-                              ta.         I
-                                          I
-                                                             13              I                              I                                  I
-                              two         I                  88              I                              I
-                                                                                                            I
-                              to,,        Il
-                                                            srs              I                              r
-                         I
+                                  tC               162
+                                                   142
+                               tAS               171
 
-                         :    t:,D:v      'i                                 !                              '
-                                                                                                            !         '-~?-
-                         l
-                         !    ':ART
-                                          I
-                                          r                                  I                                        ....,:...,, -~:
-                         I    ~
-                              ·~:...:fY
-                                          I                                  I                                            H
-                              t~--r:      1·                /{0
-                                                                             I
-                                                                             I
-                                                                             I
+                                  tAC           i...                   (illegible)
 
-                              t';rrl-!
-                                          I                      0           I
-                                                                             I
-                                          I                                  I
+                               tAD                                     (illegible)
 
-                                                                         Fig 15.9
+                               =~~                                     (illegible)
 
-F
+                              tID                                       334
 
-               15.2       MEMORY CONTROL CIRCUIT
-                           In this section, RAM #n means the chip number                                on   the
-                           main board.
-     ... .I
-                      .                                 -,~   .       .l
+                         :    tC                   125
 
-                      The memory of PC-82~1A corisists of RAM 16K and ROM 32K
-              bytes,and can be expanded to 48K bytes on optional RAM socket
-              CRAM Chip #2- i7) and to 32K bytes on user ROM socket CROM #1)
-              in PC.
+                             . tRL               163
 
-                      Show the composition of memory in Fig 15.11 RAM Chip
-              (#0- #7) and ROM C#0- #1) is connected to the same DATA bus
-              and their out~uts are controlled by /CE and /BANK signal.
-              There are five banks of BANK #0(available ROM #0), SANK
-              #1(user ROM #1), STORAMCavailable RAM #0- #1 and optional RAM
-              #2-#3) ,BANK #2 (optional RAM #4- *7) and BANK *3 <RAM
-              cartridge). Show the bank cont~ol circuit in Fis 15.12 Sy
-              means of this, you can assign each back to the memory address
-              in 64K bytes area of CPU shown in Fis 15.13 and Fi9 15.10.
+                              tACM                  0
 
-                                   Address          STDRAM                        EANK#2
-                                                                           r - - - - - - - - -- ~I
-                               /\X FFi=t=. ·
-                                                    RAM~l                          R~M~7
-                              I\X Eeaa
-                                  Dr:F;:                                                       i
-                                                                                               i
-                                                    RAM le                        RAM#&
-                              ~ C0ee                                   I
+                              tWDA                                      75
 
-                              I\X BFFt=        r                  -   -J
+                              tAL               13
 
-                                                    RAM#2                         RAt-'f #!"
-                              /\~ Aa-sa_.
-                              /\X 9FF F
-                                                                                                   I
+                              tWD               88
 
-                                                                                                   ..
-                                                    RAM~3                        RAM;:4            I
+                              tDW               575
 
-                              /\t.ieee
-                                                                                                   I
+                         :    tDOW                                      (illegible)
 
-                 .Address· ··· --·- · ·•··
-    :- . .-
+                         !    tART                                      (illegible)
 
-                                 ~i--·_m_,~_-RAM·-~----~·~!]~ ....... ~~;;:· 1.
-                                                                  Ruf,!
-                                                                2.0Nl<l#l i
-                                                                           I
-                                                                           I
-                                                                                         ?.~r-1
-                                                                                     :.~N7:r~
-                                                                           !
-                                          (D
-                                                       ,.----·-----·---------------~
-              •f\"y
-                 V' - -
+                         !    tREADY                        H
 
-                                                   I;
-                        --
-                    :-.-~,-
+                              tSRT              160
 
-                                      I
-                                 :~-i -----. ---··
-              :\~ C~2::J                  F.AM                    P.;M                  RAM
-                                      ffiii!:lr i               :ANi<='2           i·8~Nl#3
-                                  I!               I           :....---            _!- - - -
+                              tSTH               0
+```
 
-                                  ,,
+## 15.2 Memory Control Circuit
+
+In this section, RAM #n means the chip number on the main board.
+
+The memory of PC-8201A consists of RAM 16K and ROM 32K bytes, and can be expanded to 48K bytes on optional RAM socket (RAM Chip #2–#7) and to 32K bytes on user ROM socket (ROM #1) in the PC.
+
+The composition of memory is shown in Fig 15.11. RAM Chip (#0–#7) and ROM (#0–#1) is connected to the same DATA bus and their outputs are controlled by /CE and /BANK signals. There are five banks: BANK #0 (available ROM #0), BANK #1 (user ROM #1), STDRAM (available RAM #0–#1 and optional RAM #2–#3), BANK #2 (optional RAM #4–#7), and BANK #3 (RAM cartridge). The bank control circuit is shown in Fig 15.12. By means of this, you can assign each bank to the memory address in the 64K bytes area of the CPU as shown in Fig 15.13 and Fig 15.10.
+
+<!-- FIGURE 15.10: Memory bank address map diagram — LOST in OCR, needs vision re-OCR from source page ~241 (target: memory map / address layout diagram) -->
+
+```text
+                              Address          STDRAM                        BANK#2
+                                                                     r - - - - - - - -- ~I
+                          /\X FFFF
+                                              RAM#7                          RAM#7
+                         /\X E800
+                             DFFF                                                        i
+                                                                                         i
+                                              RAM#6                          RAM#6
+                         /\X C000                                  I
+
+                         /\X BFFF        r                  -   -J
+
+                                              RAM#2                         RAM#5
+                         /\X A800
+                         /\X 9FFF
+                                                                                             I
+
+                                                                                             ..
+                                              RAM#3                        RAM#4            I
+
+                         /\X 8000
+                                                                                             I
+
+         Address         (continued)
+
+                           ~i--_m_,~_-RAM·-~----~·~!]~ ....... ~~;;:· 1.
+                                                          Ruf,!
+                                                        2.0NK#1 i
+                                                                   I
+                                                                   I
+                                                                                 ?.~r-1
+                                                                             :.~N7:r~
+                                                                   !
+                                    (D
+                                                 ,.----·-----·---------------~
+          •fy
+             V' - -
+
+                                             I;
+                    --
+                :-.-~,-
+
                                   I
-                                  I
+                             :~-i -----. ---··
+          :\~ C~2::J              F.AM                    P.;M                  RAM
+                                  ffiii!:lr i           :ANi<='2           i·8~Nl#3
+                              I!               I       :....---            _!- - - -
 
-                                  -----------------------
-                                      ,,;-,               ------ ----- --·-
-                                          ·-=..i
+                              ,,
+                              I
+                              I
 
-                                       --~~t:'.f. - •-- -
-                                  r Si'i:AAM                   -------~
-                                                                  ~M
-                                                               Siuii;:.l.1
+                              -----------------------
+                                  ,,;-,               ------ ----- --·-
+                                      ·-=..i
 
-                                                                                "Th« 0 ~ Niiliffl ~:,:: !ii''!
-                                       -- -----·. ---· -------·--              ;! opi:0,-..1i iff'..:,,,r;,.
+                                   --~~t:'.f. - •-- -
+                              r Si'i:AAM               -------~
+                                                          ~M
+                                                       Siuii;:.l.1
 
-                                                         Fis 15.10
+                                                                        "Th« 0 ~ Niiliffl ~:,:: !ii''!
+                                   -- -----·. ---· -------·--          ;! opi:0,-..1i iff'..:,,,r;,.
+```
 
+<!-- FIGURE 15.11: Memory composition circuit diagram — LOST in OCR, needs vision re-OCR from source page ~242 (target: schematic showing RAM/ROM chips, CE/BANK connections) -->
+
+```text
 ·--.,..~--   ----~'~="J~.~--··------~·~1~;~~-----_-__
-                  ---~IQ~~,_ .. ·
-                  ..        I~ l: ~-
-                                                                        -. ~ ~~~ ,.- ----
-                                                                                      l ~ I
+          ---~IQ~~,_ .. ·
+          ..        I~ l: ~-
+                                                                -. ~ ~~~ ,.- ----
+                                                                              l ~ I
 
-                                                                                         -x
-                                                                                                        i I
-                                                                                                        11
+                                                                                 -x
+                                                                                                i I
+                                                                                                11
                                                               i_-
-                                                                                         ~-, ~-
+                                                                                 ~-, ~-
                        ~) :,d~"i C',: !,'__J*.
                        -
                        ,., ~
@@ -728,520 +568,498 @@ this r, only most important data is listed up.
                                                                               -    -··-----
                                                                                         71
                                                                                   .. ._..:J ,..
-             !
-             ;
-             '·
-             ;
-             :
+         !
+         ;
+         '·
+         ;
+         :
 
-                  I---'-i~i ~~!,1·___. -
-                                ~           1
-             I
-             i                                                I                               '-"   ,
-             ';                •-r.lt
-                           'ill~~-=~f',
-                                             J                I
-                                                              : !,                 1:~~:<
-                                                                                     g        -¾~ '
+              I---'-i~i ~~!,1·___. -
+                            ~           1
+         I
+         i                                                I                               '-"   ,
+         ';                •-r.lt
+                       'ill~~-=~f',
+                                         J                I
+                                                          : !,                 1:~~:<
+                                                                                 g        -¾~ '
                                                                                   :t-~<"'0:···,----
-                                                                                                                  I
-                                                                                                                  I
-             !
-               I                      I
-                                    1&:                                            I ~-
-                                                                                   ! ~
-                                                                                                    I
-                                                                                                                  l
-                            I       31: I                                                           I                  ...?-,
-             i
-             i
-             i
+                                                                                                              I
+                                                                                                              I
+         !
+           I                      I
+                                1&:                                            I ~-
+                                                                               ! ~
+                                                                                                I
+                                                                                                              l
+                            I       31: I                                                      I                  ...?-,
+         i
+         i
+         i
                                     ~                               1
-                                                                                       ;;
-                                                                                         ~
-                                                                                                              I
-                                                                                                              I
-                                                                                                                  I   ·s
-                                                                                                                       :=
-                                                                                                              I
-             '                                                                                                i
-                                                                                                                       :
-                                                                                                                       C:
-                                                                                                                      -~
-             I                                                                                                        ·;:;
-                                                                                                                       :
-                                                                                                                        ~
-                                                                                                                        s
-             lI
-                                                                                                                      (..:
+                                                                                   ;;
+                                                                                     ~
+                                                                                                          I
+                                                                                                          I
+                                                                                                              I   ·s
+                                                                                                                   :=
+                                                                                                          I
+         '                                                                                                i
+                                                                                                                   :
+                                                                                                                   C:
+                                                                                                                  -~
+         I                                                                                                        ·;:;
+                                                                                                                   :
+                                                                                                                    ~
+                                                                                                                    s
+         lI
+                                                                                                                  (..:
 
-                          • c-~;-
-                  ~--~o::::i:~,,----      !! -'            o_      ~:1:J, •
-                                                                                            ~-~--~
-                  ------,11~ ~~ '~l
+                      • c-~;-
+              ~--~o::::i:~,,----      !! -'            o_      ~:1:J, •
+                                                                                        ~-~--~
+              ------,11~ ~~ '~l
                                           ~1,                       ,-/ ~'fii :1"~..-----.
-                                                                                    ~-.
-                                                                                                                             I-·
+                                                                                ~-.
+                                                                                                                         I-·
 
                                     ~                               1_ _ _:i::..·----...L....~
 
-                  ~------,J                                   JJ
-                                                                                                        il
-                                                                                                        I !
+              ~------,J                                   JJ
+                                                                                                    il
+                                                                                                    I !
+```
 
-                                                                        Fig 15.11
+<!-- FIGURE 15.12: Bank control circuit schematic — LOST in OCR, needs vision re-OCR from source page ~243 (target: bank control logic schematic) -->
 
-. .--.. --. -·. - 'f"
-                                                                          -            . ..f
-                                                                                                                               ··:~
+```text
+                   HADRS
+                LADRS
+                     OIM
+                           ~
+                                 !       ',001r.Q   4-0Hl'TS-·    t:.G - . - . ·-- -
+                                                    ,...___                     Ya..,_-----~
+                   A16              I              jro rG/               . Yi-y,------~
+                                                                         ,.
+                                                                                             ~
+                                                                                                        :,l,N K.;t I
 
-                           IAIJ'
-                        LADRS
-                             OIM '
-                                   ~
-                                         !       ',001r.Q   4-0Hl'TS-·    t:.G - . - . ·-- -
-                                                            ,...___                     Ya..,_-----~
-                           A!la              I              jro rG/               . Yi-y,------~
-                                                                                  ,.
-                                                                                                     ~
-                                                                                                                :,l,N K.;t I
+                    Al7 --,----.W                                                           _{___/-- ~
 
-                            At1 --,----.W                                                           _{___/-- ~
+                   .A22              I1             ,1=~
+                                                          2Q;----.:
 
-                           .4Z2              I1             ,1=~
-                                                                    2Q;----.:
+                                                    •., J"'H:
+                                                        .. l  ,.~            :n ,
+                                                                              Ya     I               _
+                                                                                                     !l't.i(;:.;-4
 
-                                                              •., J"'H:
-                                                                  .. l  ,.~            :n ,
-                                                                                        Ya     I               _
-                                                                                                               !l't.i(;:.;-4
+                   ,A,               .
+                                     ll
+                                                    i.. ,.,
+                                                    I ~; I           ,·
+                                                                          a    "I i . D
+                                                                                 -y,;·             - - -;•.'.t(,S•-
+                                                                    i         --1LJ                      -
 
-                           ,&,               .
-                                             ll
-                                                            i.. ,.,
-                                                            I ~; I           ,·
-                                                                                  a    "I i . D
-                                                                                       -y,;·             - - -;•.'.t(,S•-
-                                                                i         --1LJ                      -
+                                           --+0--1
+                                                 i
 
-                                       --+0--1
-                                             i
-
-                         ,;..:..·J:<
-                           ~           ---..:.. I
-                                                                         i   ~i,,::J?
+                 ,;..:..·J:<
+                   ~           ---..:.. I
+                                                                             i   ~i,,::J?
                                                                                                .
-                                             I                           ;
-                        . :n?          --=5\:-1
-                         :t-~:u --;--.:,___,./
-                                        'f.,./o.;~
+                                                 I                           ;
+                . :n?          --=5\:-1
+                 :t-~:u --;--.:,___,./
+                                    'f.,./o.;~
 
-                                                            ~ank Control C;,-e.wf:
+                                                    Bank Control Circuit
+```
 
-                                                            Fig 15.12
+**Fig 15.13 — Bank select register bit assignments**
 
-                                        ~I ' @2 '1@1·1:-;®
-                                         _~CD;     I f · ©lCVt®tI                                  I i
+<!-- TODO(tier-b): verify Fig 15.13 bank register table against source page ~243 -->
 
-                                           LAERII O I O I O I O I o/ 0 I I I '
-                                          UDR2 I O I O I O I f I l I I I O I (          I
+```text
+                        @2  @1 :-; @  |
+                         CD;     f · ©lCVt®t  |
 
-                                          HADRI j O I I   , Io r I I I0 0               I
+                          LADR1  O | O | O | O | O | O | 1 | 1
+                          LADR2  O | O | O | 1 | 1 | 1 | O | (illegible)
 
-                                          HADR2 I O ~ 0   I I0 0 I I I0 0
+                          HADR1  O | 1 | O | 1 | 1 | O | O
 
-                                                             Fi9 15.13
+                          HADR2  O | O | 1 | O | O | 1 | 1 | O | O
+```
 
-r:
+The way of bank conversion by software control is illustrated in the next section. When the PC is reset, it becomes any mode (before reset) of composition No. 1–3. But in the case of no optional RAM BANK #2–#3, it can become only No. 1 mode. If optional ROM is installed, another composition No. 4–6 is possible. Further, as it becomes the mode of 64K bytes full RAM by optional RAM BANK #2–#3, you can use CP/M, etc.
 
-                           The way of bank conversion by software        control
-                   illustrates in next section. When PC is reset, it becomes any
-                   mode (before reset)of the composition No.1-3. But in the case
-                   of nothing of optional RAM BANK #2- #3, it can become only
-                   No.1 mode.  If optional ROM is~ins~alled, another composition
-                   No.4-6 are possible. Further, as it becomes the mode of 64K
-                   bytes full RAM by optional RAM BANK #2- #3, you can use a
-                   CP/M, etc.
+## 15.3 I/O Address
 
-     ·--~                                - 244 -
+(Address is expressed in Binary.)
 
-           15.3   I/O ADDRESS
+<!-- TODO(tier-b): verify Fig 15.14 I/O address table against source pages 245–246 before treating as authoritative -->
 
-    -f .    (Address is expressed in Binary.) l
-             I/O address:In/Out: I/O device:Operation
-            -----~------------------------------------------
-             00000000 -:
-                                           user
-                  V
-             01011111
-             01100000
-                                           NEC reserve
-                  V ·.
-             01111111
-            -----------------------------------------------·
-             1000XXXX    0   NEC reserve CROM cartridge
-                                  : or general purpose) A decoded
-                                  : signal appears on /ROME pin.
-             1001XXXX         0    D-FF     System Control
-                                            *Cassette Motor Control,
-                                            *Clock Command Strobe
-                                            *Printer Strobe
-                         .,
-                          I
-                                            *Serial I/F Select
-            ----------------------------------------------~:
-             1010XXXX : 0 : O-FF l Bank Control
-            -----------------------------------------------·
-             1010XXXX    I   3-S :
-                                   -Buff: Bank Status
-                                           *Bank Status
-                                           *Serial I/F Select
-                                               Status
-            -----------------~---------------------------
-             1011X000 :I/O PPI
-                                   81C55    Command/Status Resister
-             1011X001         0             Port A Output
-                                             *LCD Chip Select
-                                             *Keyboard Scan Data
-                                             *Clock Command/Data
-                                           :------------------------
+**Fig 15.14 — I/O Address Map**
 
-                                       - 24S -
+```text
+I/O address    : In/Out : I/O device     : Operation
+------------------------------------------------------------
+00000000
+     to          --      user             --
+01011111
+------------------------------------------------------------
+01100000
+     to          --      NEC reserve      --
+01111111
+------------------------------------------------------------
+1000XXXX    :   O   : NEC reserve (ROM cartridge
+                        or general purpose). A decoded
+                        signal appears on /ROME pin.
+------------------------------------------------------------
+1001XXXX    :   O   : D-FF          : System Control
+                                       *Cassette Motor Control
+                                       *Clock Command Strobe
+                                       *Printer Strobe
+                                       *Serial I/F Select
+------------------------------------------------------------
+1010XXXX    :   O   : D-FF          : Bank Control
+------------------------------------------------------------
+1010XXXX    :   I   : 3-S-Buff      : Bank Status
+                                       *Bank Status
+                                       *Serial I/F Select Status
+------------------------------------------------------------
+1011X000    : I/O   : PPI 81C55     : Command/Status Register
+1011X001    :   O   :               : Port A Output
+                                       *LCD Chip Select
+                                       *Keyboard Scan Data
+                                       *Clock Command/Data
+1011X010    :   O   :               : Port B Output
+                                       *LCD Chip Select
+                                       *Buzzer Control
+                                       *RS-232C Control
+                                       *Auto Power Off Control
+1011X011    :   I   :               : Port C Input
+                                       *Clock Data
+                                       *Printer Status
+                                       *BCR Data
+                                       *RS-232C Status
+1011X100    :   O   :               : Timer Register (lower 8 bits)
+                                       *Lower 8 bits of counter
+1011X101    :   O   :               : Timer Register (upper 8 bits)
+                                       *Upper 6 bits of counter
+                                       *Mode Select
+------------------------------------------------------------
+1100XXXX    : I/O   : UART 6402     : Data Write/Data Read
+------------------------------------------------------------
+1101XXXX    :   O   :               : Control
+1101XXXX    :   I   : 3-S-Buff      : Input Port
+                                       *UART Status
+                                       *Low Power Signal
+------------------------------------------------------------
+1110XXXX    :   I   : 3-S-Buff      : Keyboard Input
+------------------------------------------------------------
+1111XXX0    :   O   : LCDC          : Command Write/Status Read
+1111XXX1    :   O   :               : Data Write/Data Read
+------------------------------------------------------------
+```
 
-            :-----------
-              1011x010   0
-                                            ------------------------
-                                             Port 8 Output
-                                              *LCD Chip Select
-                                              *Buzzer Control
-           ·'                                 *RS-232C Control
-                                              *Auto Power Off
-                                                   Control
-                 1011X011         I
-                                            ------------------------
-                                             Port C Input
-                                              *Clock Data
-                                              *Printer Status
-                                              *BCR Data
-                                              *RS-232C Status
-           , 1011X100             0         Timer Resister-
-                                                   Clower 8 bits)
-                                            *Lower 8 bits of counter-
-                 1011X101         0
-                                           .------------------------
-                                           : Timer Resister
-                                           :      (upper 8 bits)
-                                           l*Upper- 6 bits of counter
-                                           l*Mode Select
-                 1100XXXX   :I/O1 UART:
-                                      6402: Data Urite/Data Read
-                --------------~:
-                 1101XXXX : 0:
-                                           :-----------------------
-                                             Control
-                 1101XXXX   f I       3-S-:
-                            I
-                            I
-                            I .
-                                       Buff: Input Port
-                            I                 *UART Status
-                                              *Low Power Signal
-                ~----------------------~-----------------------
-                 1110XXXX : I : 3-S-:
-                                      Buff: Keyboard Input
-            -----------------------------------------------:
-             1111XXX0 : 0: LCOC: Command Write/Status
-                                        Read
-            ---------------;
-             1111XXX1 : 0 :
-                                  :------------------------:
-                                  : Data Ur-ite/Data Read
-           ~-----------------------------------------------
-                      Fig 15.14
+### 15.3.1 Detail Information About I/O
 
-           15.3.1     Detail Information About I/O
-                 This following is the particulars of each function.
-         The I/O address is shown in the number which is used really in
-     · ~ system;                        -   ~.t
+This following is the particulars of each function. The I/O address is shown in the number which is used in the actual system.
 
-           15.3.1.1    Reserve Area
+#### 15.3.1.1 Reserve Area
 
-                      As this area is reserved for NEC,don't use it.
+As this area is reserved for NEC, don't use it.
 
-       15.3.1.2        System Control
+#### 15.3.1.2 System Control
 
-                      11 0 0 1 0 0 0 0: OUT AX90
+```
+1 0 0 1 0 0 0 0    OUT AX90
+```
 
-                       7    6       5        4    3
+| Bit | 7    | 6    | 5    | 4    | 3      | 2–0 |
+|-----|------|------|------|------|--------|-----|
+|     | SELA | SELB | PSTB | TSTB | REMOTE | —   |
 
-                      :SELA:SELB:PSTB:TSTB:REMOTEI
-                    ----------------      ------------
-                    REMOTE CASSETTE MOTOR CONTROL
-                       0         motor Off
-                       1         motor On
-                    TSTB        CLOCK COMMAND STROBE
-                       0         Strobe Off
-                       1         Strobe On
-                    PSTB     PRINTER STROBE
-                       0      Strobe Off
-                       1      Strobe On
-                    SEL A SEL B          SERIAL INTERFACE SELECT
-                       0        0         Not used
-                       0        1         SI02
-                       1        0         SIOl
-                       1        1         RS-232C
+**REMOTE** — CASSETTE MOTOR CONTROL
+- 0 = Motor Off
+- 1 = Motor On
 
-           15.3.1.3    Bank Control
+**TSTB** — CLOCK COMMAND STROBE
+- 0 = Strobe Off
+- 1 = Strobe On
 
-                      :1 0 1 0 0 0 0 1l     OUT ~Al 4       ~
+**PSTB** — PRINTER STROBE
+- 0 = Strobe Off
+- 1 = Strobe On
 
-                                3       2         1   · 0
-                  ---------------------------------
-                          lHAR02lHARD1lLAOR2lLADR1l
+**SELA / SELB** — SERIAL INTERFACE SELECT
 
-                  LADR 2     LAOR 1     SELCT ADDRESS AX0 To AX7FFF
-                       0       0         Bank #0 <ROM #0)
-                       0        1        Bank #1 · <ROM #1)
-                       1       0         Bank #2 <RAM #4 - #7)
-                       i       1         Bank #3 <RAM cartridge)
-                  HADR 2     HADR 1     SELECT ADDRESS
-                                          (AX8000 TO AXFFFF>
-                       0       0         Standard RAM CRAM #0 - #3)
-                       0       1         Not Used                     •
-                       1       0         Bank #2 CRAM #4 - #7)
-                       1       1         Bank #3 CRAM Cartridge)
+| SELA | SELB | Selection   |
+|------|------|-------------|
+| 0    | 0    | Not used    |
+| 0    | 1    | SIO2        |
+| 1    | 0    | SIO1        |
+| 1    | 1    | RS-232C     |
 
-                               -    ·---- 248 -
-                                                                                I
+#### 15.3.1.3 Bank Control
 
-           15.3.1.4           Bank Status
+```
+1 0 1 0 0 0 0 1    OUT AXA4
+```
 
-       .!             :   1 0 1 0 0 0 0 0: IN "XA0             .-4
+| Bit | 3     | 2     | 1     | 0     |
+|-----|-------|-------|-------|-------|
+|     | HADR2 | HADR1 | LADR2 | LADR1 |
 
-                          7       6           3    2   1   0
+**LADR2 / LADR1** — SELECT ADDRESS AX0 to AX7FFF
 
-                  BIT 1               BIT 0       STATUS OF ADDRESS
-                                                      <"'X0 TO "X7FFF)
-                              0        0           Bank #0 <ROM #0)
-                              0        1           Bank #1 <ROM #1)
-                              1        0           Bank #2 CRAM #4 - #7).
-                              1        1           Bank #3 (RAM cartridge)
-                  BIT 3               BIT 2       STATUS. OF ADDRESS
-                                                      <"X8000 TO "XFFFF)
-                          0            0           Standard RAM CRAM #0 - #3)
-                          0            1           Not Used
-                          1            0           Bank #2 <RAM #4 - #7)
-                          1            1           Bank #3 (RAM cartridge)
-                  BIT 7               BIT 6       STATUS OF SERIAL INTERFACE
-                          0            0          Not used
-                          0            1          SI02
-                          1            0          S101
-                          1            1          RS-232C
+| LADR2 | LADR1 | Bank            |
+|-------|-------|-----------------|
+| 0     | 0     | Bank #0 (ROM #0)          |
+| 0     | 1     | Bank #1 (ROM #1)          |
+| 1     | 0     | Bank #2 (RAM #4–#7)       |
+| 1     | 1     | Bank #3 (RAM cartridge)   |
 
-           15.3.1.5    PIO 81CSS Address
+**HADR2 / HADR1** — SELECT ADDRESS (AX8000 to AXFFFF)
 
-                  *Command I Status Resister
-                                                 -~ .   d           ..
-                      :1 0 1 1 1 0 0 0: IN/OUT Axes
+| HADR2 | HADR1 | Bank                        |
+|-------|-------|-----------------------------|
+| 0     | 0     | Standard RAM (RAM #0–#3)    |
+| 0     | 1     | Not Used                    |
+| 1     | 0     | Bank #2 (RAM #4–#7)         |
+| 1     | 1     | Bank #3 (RAM Cartridge)     |
 
-                  *Port A output
+#### 15.3.1.4 Bank Status
 
-                      :1 0 1 1 1 0 0 1: OUT AXB9
+```
+1 0 1 0 0 0 0 0    IN AXA0
+```
 
-                       7   6     s    4   3      2      1       0
+| Bit | 7    | 6    | 5–4 | 3    | 2    | 1    | 0    |
+|-----|------|------|-----|------|------|------|------|
+|     | BIT7 | BIT6 | —   | BIT3 | BIT2 | BIT1 | BIT0 |
 
-                      lPA7lPA6:PA5:PA4lPA3:PA2lPA1:PA0:
+**BIT1 / BIT0** — STATUS OF ADDRESS (AX0 to AX7FFF)
 
-                      lP07:P06lP05lP04lP03:P02:P01lP01:
+| BIT1 | BIT0 | Status                      |
+|------|------|-----------------------------|
+| 0    | 0    | Bank #0 (ROM #0)            |
+| 0    | 1    | Bank #1 (ROM #1)            |
+| 1    | 0    | Bank #2 (RAM #4–#7)         |
+| 1    | 1    | Bank #3 (RAM cartridge)     |
 
-                      lKS7:KS6lKS5:KS4lKS3lKS2lKS1lKS0:
+**BIT3 / BIT2** — STATUS OF ADDRESS (AX8000 to AXFFFF)
 
-                                     :ccK:co0:c2 :c1 :ce :
+| BIT3 | BIT2 | Status                      |
+|------|------|-----------------------------|
+| 0    | 0    | Standard RAM (RAM #0–#3)    |
+| 0    | 1    | Not Used                    |
+| 1    | 0    | Bank #2 (RAM #4–#7)         |
+| 1    | 1    | Bank #3 (RAM cartridge)     |
 
-       PA7 to PA0              LCD Chip Select
-       P07 to P00              Printer Data Port
-       KS7 to KS0              Keyboard
-       C2 to C0                Clock command Output Port·
-                                                            .
-       CO0                     Clock Data Output Port
-       CCK                     Calendar Shift Clock
-         0                     Clock Off
-         1                     Clock On
+**BIT7 / BIT6** — STATUS OF SERIAL INTERFACE
 
-       *Port B Output
+| BIT7 | BIT6 | Status      |
+|------|------|-------------|
+| 0    | 0    | Not used    |
+| 0    | 1    | SIO2        |
+| 1    | 0    | SIO1        |
+| 1    | 1    | RS-232C     |
 
-                  :1 0 1 1 1 0 1 0:                  OUT ""XBA
+#### 15.3.1.5 PIO 81C55 Address
 
-                                       - 2se -
+**Command / Status Register**
 
-                    7   6   5   4      3   2    1     0
-               ----------------------------------
+```
+1 0 1 1 1 0 0 0    IN/OUT AXB8
+```
+
+**Port A Output**
+
+```
+1 0 1 1 1 0 0 1    OUT AXB9
+```
+
+| Bit | 7   | 6   | 5   | 4   | 3   | 2   | 1   | 0   |
+|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+|     | PA7 | PA6 | PA5 | PA4 | PA3 | PA2 | PA1 | PA0 |
+|     | PD7 | PD6 | PD5 | PD4 | PD3 | PD2 | PD1 | PD0 |
+|     | KS7 | KS6 | KS5 | KS4 | KS3 | KS2 | KS1 | KS0 |
+|     |     |     |     | CCK | CD0 | C2  | C1  | C0  |
+
+- **PA7 to PA0** — LCD Chip Select
+- **PD7 to PD0** — Printer Data Port
+- **KS7 to KS0** — Keyboard
+- **C2 to C0** — Clock Command Output Port
+- **CD0** — Clock Data Output Port
+- **CCK** — Calendar Shift Clock
+  - 0 = Clock Off
+  - 1 = Clock On
+
+**Port B Output**
+
+```
+1 0 1 1 1 0 1 0    OUT AXBA
+```
+
+| Bit | 7   | 6   | 5    | 4   | 3      | 2  | 1   | 0   |
+|-----|-----|-----|------|-----|--------|----|-----|-----|
+|     | RTS | DTR | BELL | APO | DCD/RD | — | MC  | PB1 | PB0 |
+
+<!-- TODO(tier-b): bit layout of Port B register is garbled in OCR (source page ~250); verify column assignments against source scan, especially DCD/RD and KSS bits -->
+
+```text
                :---:---:        :DcD1:--:       :
                :RTS:DTR:BELL:APO:RD        :MC:PB1:PB0:
-           •   ---------~-----------~--~~----:---
                ----------------------------------
                                            · :Kss:
-               ----------------------------------
-               PB1 -- PB0           LCD Chip Select
+```
 
-               MC                   MEMORY CONTROL OUTPUT
-                0                    On
-                1                    Off
+- **PB1 – PB0** — LCD Chip Select
+- **MC** — MEMORY CONTROL OUTPUT
+  - 0 = On
+  - 1 = Off
+- **DCD/RD** — DCD/RD SELECT OF THE RS-232C
+  - 0 = Ring Detect
+  - 1 = Data Carrier Detect
+- **APO** — AUTO POWER OFF OUTPUT
+  - 0 = Output Off
+  - 1 = Output On
+- **BELL** — BUZZER OUTPUT
+  - 0 = Ring
+  - 1 = Not Ring
+- **DTR** — RS-232C DTR output, Active Low
+- **RTS** — RTS output, Active Low
 
-               OCO/RO               OCO/RO SELECT OF THE RS-232C
-                0                    Ring Detect
-                1                    Data- Carrier Detect
+**Port C Input**
 
-               AP0                  AUTO POWER OFF OUTPUT
-                0                   Output Off.
-                1                   Output On
-               BELL                 BUZZER OUTPUT
-                0                   Ring
-                1                   Not Ring
+```
+1 0 1 1 1 0 1 1    IN AXBB
+```
 
-               DTR                  RS-232C OTR output Active Low
+| Bit | 7   | 6   | 5   | 4   | 3   | 2    | 1    | 0   |
+|-----|-----|-----|-----|-----|-----|------|------|-----|
+|     | —   | —   | DSR | CTS | BCR | BUSY | SLCT | CDI |
 
-               RTS               RTS output Active Low
+- **CDI** — Clock Data Input Port
+- **SLCT** — PRINTER BUSY
+  - 0 = Printer Ready
+  - 1 = Printer Busy
+- **BCR** — Bar Code Reader Data Input Port
+- **CTS** — CTS Input, Active Low
+- **DSR** — RS-232C DSR Input, Active Low
 
-                                - 251
+**81C55 Timer Register**
 
-           *'Pol"'t C Input
+```
+1 0 1 1 1 1 0 0    OUT/IN AXBC
+```
 
-                     :1 0 1 1 1 0 1 1:        IN "'XBB
-                                               _..J  J
-                                5    4    3      2       1   0
-                   .-----------------------------------
-                            I   :   :        I    :
-                              :osR:CTSLBCR:BUSYiSLCT:cor:
-                    ----~------------------------------
-       CDI                    Clock Data Input Port
-       SLCT                   PRINTER BUSY
-           0                   Printer Ready
-           1                   P,-intel"' Busy
-       BCR                    Bar Code Reade,- Data Input Port
+| Bit | 7   | 6   | 5   | 4   | 3   | 2   | 1   | 0   |
+|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+|     | TL7 | TL6 | TL5 | TL4 | TL3 | TL2 | TL1 | TL0 |
 
-       CTS                    CTS Input Active Low
+- **TL7 – TL0** — Timer Counter Lower 8 bits
 
-       DSR                    RS-232C OSR Input Active Low
+```
+1 0 1 1 1 1 0 1    OUT/IN AXBD
+```
 
-           *81CSS Timer Resister
+| Bit | 7  | 6  | 5   | 4   | 3   | 2   | 1   | 0   |
+|-----|----|----|-----|-----|-----|-----|-----|-----|
+|     | M2 | M1 | TH5 | TH4 | TH3 | TH2 | TH1 | TH0 |
 
-                   :1 0 1 1 1 1 0 0: OUT/IN AXBC
-                  -----------------                            -~.       ~
+- **TH5 – TH0** — Timer Counter Upper 6 bits
+- **M2 / M1** — Mode Select
 
-                       7       6       5       4       3       2         1       0
-                  ---------------------------------
-                  lTL7lTL6lTLSlTL4lTL3lTL2lTL1lTL0:
+| M2 | M1 | Mode description |
+|----|----|------------------|
+| 0  | 0  | Mode 0: Transmits a single square wave where the first half of the count is high and the remaining half is low. |
+| 0  | 1  | Mode 1: Continually transmits a Mode 0 type square wave. |
+| 1  | 0  | Mode 2: Transmits a single L-pulse during one clock when finishing the terminal count. |
+| 1  | 1  | Mode 3: Continually transmits a Mode 2 type pulse. |
 
-                  TL7 -- TL0               Timer Counter Lower 8 bit
+#### 15.3.1.6 UART Data I/O Port
 
-                   :1 0 1 1 1 1 0 1: OUT/IN AXBO
+```
+1 1 0 0 1 0 0 0    IN/OUT AXC8
+```
 
-                   7       6       S       4       3       2         1       0
+UART DATA PORT
 
-                   lM2:M1:THS:TH4lTH3:TH2lTH1lTH0:
-                                                                                 •
-                  THS -- TH0 Timer Counter Upper 6 bit
+#### 15.3.1.7 UART Control Port
 
-                   M2              M1
-                   0               0               This-mode transmits a single-
-                                                   square wave which the first
-                                                   half of the number of count
-                                                   is high and remaining 1s low.
-                                                   (Mode 0)
-                   0               1               This mode continually transmits
-                                                   a Mode 0 type square wave.
-                                                   (Mode 1)
-                   1               0               Thi9 mode transmits a L-pulse
-                                                   (single pulse) during one
-                                                   clock when finishing the
-                                                   terminal count.
-                                                   (Mode 2)
-                   1               1               This mode c6ntinually transmits
-                                                   a Mode 2 type pulse.
-                                                   (Mode 3)
+**Command Write**
 
-           15.3.1.6       UART Data I/O Port
+```
+1 1 0 1 1 0 0 0    OUT AXDS
+```
 
-                      -------------------
-                      :1 1 0 ~ 1 0 0 0: IN1qur ?fC8
-                      UART DATA PORT
+<!-- TODO(tier-b): verify UART command write address "AXDS" — may be AXD8; check against source page ~253 -->
 
-       15.3.1.7           UART Control Port
+| Bit | 7 | 6 | 5    | 4    | 3  | 2   | 1   | 0   |
+|-----|---|---|------|------|----|-----|-----|-----|
+|     | — | — | CLS2 | CLS1 | PI | EPE | SBS | —   |
 
-                  *Command Write
+**SBS** — STOP BIT SELECT
+- 0 = Stop bit length is 1 bit
+- 1 = Stop bit length is 1 bit. If data length is 5 bits, stop bit length is 1.5 bits. In the other case, it is 2 bits.
 
-                      :1 1 0 1 1 0 0 0:   our AxDs
+**EPE** — EVEN PARITY ENABLE
+- 0 = Odd Parity
+- 1 = Even Parity
 
-                                :cLS2:CLS1lPI:EPE:ses:
+**PI** — PARITY INHIBIT
+- 0 = Generate parity and check
+- 1 = Inhibit generating parity and check
 
-                  SBS          STOP BIT SELECT
-                      0         Stop bit length is 1 bit
-                      1         Stop bit length is 1 bit.
-                                If data length is S bits,
-                                stop bit length is 1,5 bits.
-                                lh the other case, it is 2 bit.
+**CLS2 / CLS1** — CHARACTER LENGTH SELECT
 
-                  EPE          EVEN PARITY ENABLE
-                      0         Odd Parity
-                      1         Even Parity
+| CLS2 | CLS1 | Data length |
+|------|------|-------------|
+| 0    | 0    | 5 bits      |
+| 0    | 1    | 6 bits      |
+| 1    | 0    | 7 bits      |
+| 1    | 1    | 8 bits      |
 
-                  Pl           PARITY INHIBIT
-                      0         Generate parity and check
-                      1         Inhibit generating parity
+**Status Read**
 
-                    and check
+```
+1 1 0 1 1 0 0 0    IN AXD8
+```
 
-           CLS 2   CLS 1    CALENDAR  LENGTH SELECT
-    ~                              ,~
-                                      .   "'
-           0       0         Data Length s bits
-           0        1        Data length
-                                       . 6 bits
-            1      0         Data length 7 bits
-            1      1         Data length 8 bits
+| Bit | 7   | 6–5 | 4    | 3  | 2  | 1  | 0–1    |
+|-----|-----|-----|------|----|----|----|--------|
+|     | LPS | —   | TBRE | PE | FE | OE | DCD/RD |
 
-                    *Status read
+- **DCD/RD** — Data Carrier Detect / Ring Detect
+  - 0 = On
+  - 1 = Off
+- **OE** — Overrun Error (1 = Detected)
+- **FE** — Framing Error (1 = Detected)
+- **PE** — Parity Error (1 = Detected)
+- **TBRE** — Transmitter Buffer Register Empty (1 = ready to receive data to transmit)
+- **LPS** — LOW POWER SIGNAL (1 = low power voltage)
 
-                    :1 1 0 1 1 0 0 0: IN AXO8
-     ..i
-                    -----------------            -    .....
-                      7            4    3   2    1        0
+#### 15.3.1.8 Keyboard Input
 
-                    :LPS:     ITBRE:PElFE:OE:--:- /--:
-                                                     :oco1 RD:
+```
+1 1 1 0 1 0 0 0    IN AXE8
+```
 
-           DCO/RO           Data Carrier Detect/Ring Detect
+#### 15.3.1.9 LCDC Address
 
-            0                On
-            1                Off
+**Command Write / Status Read**
 
-           OE               Overrun Error
-            1                Detected
+```
+1 1 1 1 1 1 1 0    IN/OUT AXFE
+```
 
-           FE               Framing Error
-            1                Detected
+**Data Write / Read**
 
-           PE               Parity Error
-            1                Detected
-
-           TBRE             Transmitter Buffer register Empty
-            1                ready to receive data to transmit
-
-           LPS              LOW POWER SIGNAL
-            1                low power voltage
-
-           15.3.1.8     Keyboard Input
-
-                      :1 1 1 0 1 0 0 0:   IN -.iXE8~ .
-
-       15.3.1.9        LCDC Address
-
-                  * Command Write /Status Read
-
-                      :1 1 1 1 1 1 1 0:   IN/OUT AXFE
-
-                  * Data Write/Read
-                      :1 1 1 1 1 1 1 1:   IN/OUT AXFF
-
+```
+1 1 1 1 1 1 1 1    IN/OUT AXFF
 ```
