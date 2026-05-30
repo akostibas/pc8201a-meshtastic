@@ -21,9 +21,9 @@ Since they are shared by 3 channels, only one channel is available at a time. Re
 I/O Address and Data Pattern:
 
 ```
-msb 7     6        5 -- 0
+msb 7     6   5 -- 0     lsb
   +----+----+------------+
-  :SRI2:SRI1: XXXXXXXXXX :           OUT 'X90
+  |SRI2|SRI1| XXXXXXXXXX |   OUT 'X90
   +----+----+------------+
 ```
 
@@ -41,15 +41,15 @@ Note: Current status of this port is saved in SYSSTAT ('XFE44) by System ROM.
 #### 12.1.1.2 UART Mode Control
 
 ```
-msb 7 - 5      4      3      2    1    0
+msb 7 - 5    4    3    2   1   0 lsb
   +-------+----+----+----+---+---+
-  : XXXXX :CLS2:CLS1: PI :EPE:SBS:        OUT 'XD8
+  | XXXXX |CLS2|CLS1| PI |EPE|SBS|        OUT 'XD8
   +-------+----+----+----+---+---+
 ```
 
 **SBS** — Stop Bit Select:
 - 0 = 1 bit
-- 1 = 2 bits
+- 1 = 2 bits (*)
 
 (*) When Data length is 5 bits, Stop Bits is 1.5 bit.
 
@@ -74,10 +74,10 @@ msb 7 - 5      4      3      2    1    0
 I/O Address and Data Pattern:
 
 ```
-msb           4       3        2          1    0   lsb
-  +-------+----+----+----+----+------+
-  : XXXXX :TBRE: PE : FE : OE :dcd/dr-:                  IN 'XD8
-  +-------+----+----+----+----+------+
+msb         4     3    2   1     0    lsb
+  +-------+----+----+----+----+-------+
+  | XXXXX |TBRE| PE | FE | OE |dcd/dr-|     IN 'XD8
+  +-------+----+----+----+----+-------+
 ```
 
 **dcd/dr-** — DCD/DR on/off (0=on / 1=off)
@@ -96,11 +96,11 @@ msb           4       3        2          1    0   lsb
 I/O Address and Data Definition:
 
 ```
-msb 6      5 4   3   2   1   0 lsb
+msb 6   5   4   3   2   1   0 lsb
   +---+---+---+---+---+---+---+
-  :M2 :T13:T12:T11:T10:T09:T00:        OUT 'XB0
+  |M2 |T13|T12|T11|T10|T09|T00|   OUT 'XB0
   +---+---+---+---+---+---+---+
-      :T06:T05:T04:T03:T02:T01:T00:    OUT 'XBC
+  |T06|T05|T04|T03|T02|T01|T00|   OUT 'XBC
   +---+---+---+---+---+---+---+
 ```
 
@@ -112,35 +112,33 @@ Specify timer output Mode:
 
 Set a Baud Rate using the value below:
 
-<!-- TODO(tier-b): baud-rate table garbled — re-OCR from source page ~208. Header clipped to "ud Rate"; rows may contain duplicate/misread values. Raw OCR preserved below. -->
-
 ```
---------+---------+---------+
-ud Rate : 'XBC     : 'XB0
---------+---------+---------+
-    75      00          48
---------+---------+---------+
-   150      68          45
---------+---------+---------+
-   300      00          42
---------+---------+---------+
-   600      00          41
---------+---------+---------+
-  1200      80          40
----------+---------+---------+
-  2400      40          40
----------+---------+---------+
-  2400      40          40
----------+---------+---------+
-  4800      20          40
-----------+---------+---------+
-  9600      10          40
-----------+---------+---------+
- 19200      08          40
------------+---------+---------+
++---------+---------+---------+
+|Baud Rate| 'XBC    |  'XBD   |
++---------+---------+---------+
+|    75   |  00     |    48   |
++---------+---------+---------+
+|   150   |  68     |    45   |
++---------+---------+---------+
+|   300   |  00     |    42   |
++---------+---------+---------+
+|   600   |  00     |    41   |
++---------+---------+---------+
+|  1200   |  80     |    40   |
++---------+---------+---------+
+|  2400   |  40     |    40   |
++---------+---------+---------+
+|  2400   |  40     |    40   |
++---------+---------+---------+
+|  4800   |  20     |    40   |
++---------+---------+---------+
+|  9600   |  10     |    40   |
++---------+---------+---------+
+| 19200   |  08     |    40   |
++---------+---------+---------+
 ```
 
-Fig 11.1 <!-- TODO(tier-b): figure label reads "Fig 11.1" in source — likely mislabeled; should be Fig 12.1 -->
+Fig 12.1 <!-- TODO(tier-b): figure label reads "Fig 11.1" in source — likely mislabeled; switched to Fig 12.1 -->
 
 NOTE: It is impossible to read the current UART status directly. ROM #0 always saves the new status in RAM when it is changed. Refer to Chapter 12.3.
 
@@ -151,7 +149,7 @@ I/O Port and Data Pattern:
 ```
 msb                     lsb
 +--+--+--+--+--+--+--+--+
-:D7:D6:D5:D4:D3:D2:D1:D0: IN/OUT 'XC8
+|D7|D6|D5|D4|D3|D2|D1|D0| IN/OUT 'XCB
 +--+--+--+--+--+--+--+--+
 ```
 
@@ -177,22 +175,23 @@ The sample program listed below explains how to initialize serial port. This sam
 ; Sample Program: Initialize Serial Port
 ;
 ; Data in system area which you must update.
-SERMODE   EQU     'XF406               ; 6 bytes for MODE string.
+SERMODE   EQU      'XF406               ; 6 bytes for MODE string.
           ;        'XF407               ; Parity Mode
           ;        'XF408               ; Word Length
           ;        'XF409               ; Stop bits
           ;        'XF40A               ; XON/XOFF control
           ;        'XF40B               ; SI/SO control
-; INHDSP
-; INHIBIT
-COMACT    EQU     'XFE43               ; current user IO for serial port.
-                                       ;  'X00 = Not used
-                                       ;  'X01 = SIO2
-                                       ;  'X10 = SIO1
-                                       ;  'X11 = RS-232C
+INHDSP
+INHIBIT
+COMACT    EQU      'XFE43              ; current user IO for serial port.
+                                       ;  'B00 = Not used
+                                       ;  'B01 = SIO2
+                                       ;  'B10 = SIO1
+                                       ;  'B11 = RS-232C
 SYSSTAT   EQU     'XFE44               ; SCP port status.
 BAUDRT    EQU     'XFE4A               ; Baud Rate Table entry address.
-INHIBIT   EQU     'XFE41               ; 0 inhibits XON/XOFF control.
+INHBIT    EQU     'XFE41               ; 0 inhibits XON/XOFF control.
+<!-- sometimes the manual has this as INHIBIT and sometimes as INHBIT? Probably a typo; which is correct? -->
 ; I/O Port Address
 SCP       EQU     'X90                 ; System Control Port.
 PORTB     EQU     'XBA                 ; RTS/DTR set port.
@@ -203,12 +202,12 @@ RTSDTR    EQU     'X3F                 ; RTS/DTR data for RS-232C.
                                        ; Use 'XFF for SIO1/2.
 
 INITSERI:
-; ENTRY: C = USER IO.
+; ENTRY: C = USER ID.
 ;        B = Baud rate specifier. ASCII Number (1 to 9)
 ;               Same Number as "STAT" of TELCOM.
 
         ; See if Serial Port is available.
-                  LDA     COMACT               ; Get current user IO.
+                  LDA     COMACT               ; Get current user ID.
                   ORA     A                    ; No one use Serial I/O?
                   JZ      SELECT               ; then branch.
                   CMP     C                    ; SAME USER?
@@ -366,23 +365,23 @@ The Serial Input Buffer from 'XFE4C to 'XFFC3 is reserved by System ROM as Seria
 
 This area has 6 bytes of data which indicates the RS-232C String Mode, specified by the `STAT` command in TELCOM or the `OPEN "COM:"` command in BASIC. The contents are as follows:
 
-```asm
-SERMOD    EQU     'XF406
-          DS      6                   ; RS-232C String mode Buffer
-          ; 'XF406                   ; Baud rate specifier (1 to 9)
-          ; 'XF407                   ; Parity Mode (N/E/O/I)
-          ; 'XF408                   ; Word length specifier (5 to 8)
-          ; 'XF409                   ; Stop bit (1/2)
-          ; 'XF40A                   ; Xon/off control (X/N)
-          ; 'XF40B                   ; SI/SO control (S/N)
+```
+SERMOD   at 'XF406 DS6               ; RS-232C String mode Buffer
+            'XF406                   ; Baud rate specifier (1 to 9)
+            'XF407                   ; Parity Mode (N/E/O/I)
+            'XF408                   ; Word length specifier (5 to 8)
+            'XF409                   ; Stop bit (1/2)
+            'XF40A                   ; Xon/off control (X/N)
+            'XF40B                   ; SI/SO control (S/N)
 ```
 
-<!-- TODO(tier-b): source shows 'XF40B" as 'XF408" for SI/SO — likely OCR duplicate; cross-check with source page. -->
 
-**INHIBIT** (at 'XFE42):
+`INHIBIT` (at `'XFE42`)
+
 This byte is the XON/XOFF Inhibit Flag. 0 inhibits XON/XOFF control; otherwise enabled.
 
-**COMACT** ('XFE43, Byte):
+`COMMACT` (`'XFE43` Byte)
+
 This byte indicates who is using the serial port as follows. Please reset to 0 after using the serial port, otherwise the serial port is not available for another user.
 
 | Value | User    |
@@ -392,15 +391,18 @@ This byte indicates who is using the serial port as follows. Please reset to 0 a
 | 'X02  | SIO1    |
 | 'X03  | RS-232C |
 
-**CMPNT** (at 'XFE46, DS 1): Character count in Buffer.
+`CMPNT` (at 'XFE46) DS 1;  Character count in Buffer.`
+
 This byte has the character count in the Serial Buffer.
 
-<!-- TODO(tier-b): one sentence appears garbled/clipped here in source — "This byte indicate last read character displacement." may belong to a different label (e.g. UTARD/'XFE47 area). Re-OCR to confirm. -->
+`REDADDR ('XFE46 Byte)`
 
 This byte indicates the last read character displacement.
 
-**UTADR** ('XFE47, Byte):
+`UTADR ('XFE47 Byte)`
+
 This byte indicates the last written character displacement.
 
-**BAUDRT** ('XFE4A):
+`BAUDRT ('XFE4A)`
+
 This points to the table of the Baud rate. Refer to Chapter 12.2.1.1 sample program.
