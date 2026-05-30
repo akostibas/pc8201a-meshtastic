@@ -94,7 +94,7 @@ Full table with TELCOM-mode notes in
 | 3 | CTRL+C | interrupt command input |
 | 7 | CTRL+G | bell / beeper |
 | 8 | CTRL+H | backspace (BS key) |
-| 9 | CTRL+I | TAB <!-- source prints code 6; 9 is standard ASCII HT — flagged for Tier B --> |
+| 6 | CTRL+I | TAB <!-- source prints 6; this is a likely misprint for ASCII HT=9. Every neighboring control code on APX A3 p271 matches standard ASCII exactly, and CTRL+I=TAB=HT=9 universally. Kept 6 as printed per the byte-faithful rule (glyph is unambiguously a 6 at 400dpi). --> |
 | 10 | CTRL+J | line feed |
 | 11 | CTRL+K | home position |
 | 12 | CTRL+L | clear screen |
@@ -106,12 +106,12 @@ Full table with TELCOM-mode notes in
 | 27 | ESC | begin escape sequence |
 | 28–31 | arrow keys | cursor movement <!-- arrow-icon↔direction-text mismatch in source; flagged for Tier B --> |
 
-> **Discrepancy to reconcile (Tier B):** this table normalizes `CTRL+I` to
-> code **9** (standard ASCII HT) but the BASIC-ref source *prints* **6**, and
-> the chapter file transcribes it faithfully as 6. The User's Guide CTRL table
-> is WordStar-letter-based and doesn't list `I`, so 6 is currently
-> single-sourced and unconfirmed. Settle the value against the source scan
-> before treating it as authoritative.
+> **CTRL+I resolved:** read against the source scan at 400dpi (BASIC-ref APX A3
+> p271), the glyph is unambiguously a printed **6**, not a rotated/smudged 9.
+> It is a source misprint for ASCII HT=9 (every other control code on the page
+> matches standard ASCII; only CTRL+I breaks the pattern, and CTRL+I=TAB=HT=9
+> universally). Canonical = **6 as printed + flag**, per the byte-faithful rule.
+> Chapter file and glossary now agree on 6.
 
 ## Cross-title behavioral notes
 
@@ -121,7 +121,7 @@ machine behavior, not OCR error._
 | Finding | Resolution | Confirmed by |
 |---|---|---|
 | TEXT/editor cursor-arrow keycap icons read reversed vs. their described function (right-triangle icon → moves cursor left, up-triangle → scrolls down, etc.) | Transcribe icon-as-printed; the **described function direction is authoritative**. The CTRL-key equivalents (WordStar-style `^S`/`^D`/`^E`/`^X` = left/right/up/down) agree with the *function*, confirming the printed icons are the reversed ones. Not an OCR slip. | User's Guide Ch.7 (p.131) **and** BASIC-ref Appendix A §A3 — independent agreement |
-| `CTRL`+`I` listed as control code **6** (not ASCII HT 9) | Likely a PC-8201A control-code remap; transcribe-as-printed + flag. Needs a third confirmation — User's Guide Ch.7 CTRL table is WordStar-letter-based and does not list `I=6`, so currently corroborated only by BASIC-ref §A3. | BASIC-ref Appendix A §A3 (UG does not contradict) |
+| `CTRL`+`I` listed as control code **6** (not ASCII HT 9) | **Source misprint, not a remap.** At 400dpi the glyph is unambiguously a printed 6, but every neighboring control code on the page matches standard ASCII and CTRL+I=TAB=HT=9 universally — so 6 is a print error for 9. Kept **6 as printed + flag** per the byte-faithful rule. | BASIC-ref Appendix A §A3 (single-sourced; UG CTRL table is WordStar-letter-based and doesn't list `I`) |
 
 ## User's Guide — title-specific terms
 
