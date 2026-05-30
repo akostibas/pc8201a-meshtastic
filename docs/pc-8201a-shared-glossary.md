@@ -16,9 +16,14 @@ per-figure-type output policy.
 
 | Kind | Canonical form | Example | Notes |
 |---|---|---|---|
-| Hexadecimal | `'X` prefix | `'XFFFF`, `'X8000` | Not `FFFFH`, not `0xFFFF`. Fold on extraction. |
-| Binary | `'B` prefix | `'B11000000` | 8-bit groups where the source shows a byte. |
+| Hexadecimal | `^X` prefix (caret) | `^XFFFF`, `^X8000` | The manual prints a caret. Not `FFFFH`, not `0xFFFF`, not `'X`. Fold on extraction. |
+| Binary | `^B` prefix (caret) | `^B11000000` | 8-bit groups where the source shows a byte. |
 | Decimal | bare | `19200` | No sigil. |
+
+> **Note:** the already-completed tech-ref chapters use an older apostrophe
+> form (`'X`/`'B`) — that was a misread of the source caret. They'll be
+> reconciled to `^X`/`^B` later (tracked in a GitHub audit issue); do not copy
+> the apostrophe form into new work. New titles use the caret from the start.
 
 ## Hardware / parts
 

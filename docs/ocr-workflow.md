@@ -74,12 +74,17 @@ with an inline `<!-- OCR: unclear (...) -->` instead of guessing.
 Script: [`bin/normalize-hex.sh`](../bin/normalize-hex.sh)
 
 Folds numeric-literal styles to the machine's native convention. For the
-PC-8201A that's `'X` for hex and `'B` for binary (what the manual's own
-assembler prints). The LLM pass drifted some literals to C (`0x`) / BASIC
-(`&H`) styles, and OCR misread the leading quote as `"`. Each substitution
-requires a valid digit to follow the prefix, so prose punctuation is never
-touched. **Per book:** confirm the native notation first; if a book just uses
-modern `0x`, target that instead.
+PC-8201A that's `^X` for hex and `^B` for binary — the manual prints a **caret**
+prefix (e.g. `^XFE44`, `^B11110111`). The LLM pass drifted some literals to C
+(`0x`) / BASIC (`&H`) styles, and OCR sometimes misread the caret as a quote
+(`'X`/`"X`). Each substitution requires a valid digit to follow the prefix, so
+prose punctuation is never touched. **Per book:** confirm the native notation
+first; if a book just uses modern `0x`, target that instead.
+
+> **History:** the tech-ref chapters were first normalized to an apostrophe
+> form (`'X`/`'B`) before we confirmed the source actually uses a caret. New
+> titles use `^X`/`^B`; the tech-ref reconciliation is tracked in a GitHub
+> audit issue.
 
 ### Marking what Tier A can't do
 
@@ -155,8 +160,9 @@ default 4096 is too small to encode a page image and crashes cryptically).
 
 For the sonnet/opus pass, hand the model the PNG path and ask for two things:
 (1) a byte-faithful transcription, (2) the target representation per the policy
-table. Tell it the machine's native notation and that the scan may show a caret
-`^X` where the source means a single-quote `'X` prefix.
+table. Tell it the machine's native notation is a caret prefix (`^X` hex / `^B`
+binary), and that OCR may misread the caret as a quote (`'X`/`"X`) — normalize
+back to the caret.
 
 ### Numeric guard
 
