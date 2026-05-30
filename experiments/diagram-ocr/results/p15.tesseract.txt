@@ -1,0 +1,26 @@
+| MEMORY MAP
+| Bank 8 Bank 1 Bank 2 Bank 3
+| “XFFFF  ----------- aasannna--  -----------
+: H ' > 4 i
+: t RAM ; ' ; nn '
+| ‘ | STANDARD: : tot t .
+aL H CRAM + ot CRAM H
+: “XC88@Q 0 ----------- $ #2) i ot #3) '
+*XBFFF  <---------- t ot I
+“TRAM tot
+| Coption)! ! root H .
+1 #1 H ' tot H
+H : : 4 H
+*X880@ 9 ----------- motte
+CXPFFF 0 ------=-==- --------- ----------  -----------
+. ! ROM 1} ROM oo} | RAM of ¢ RAM
+| STANDARD! ! tot t ot i |
+. i #8 tot #1 i i #2 r + #3 Hy |
+r) weenne eee Hee eee
+Main memory . RAM cartridge
+Fig2.1PC-8201A4 MEMORY MAP
+| The RAM #2 and RAM #3 can be located both low
+address, from @ to “X7FFF, and high address, from
+“X88@@ to “XFFFF. This selection can be done by PORT
+; access. Refer to chapter 2.3. ‘
+- 15 -

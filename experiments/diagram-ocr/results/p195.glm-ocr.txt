@@ -1,0 +1,6 @@
+11.1.2 Reading Operation.
+
+Input wave from EAR Pin is reformed to Square wave and sent to SID Pin of 80C85 as shown blow. The input wave is inverted on the way to SID Pin from EAR Pin. In reading operation, the electric high/low level has no meaning. The pulse frequency indicate whether high or low of the data. The frequency, 2400Hz means logical high, and the frequency, 1200Hz means low.
+
+EAR ----- |<-- MARK --->|<--- SPACE ----->
+SDI ----- |+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +
