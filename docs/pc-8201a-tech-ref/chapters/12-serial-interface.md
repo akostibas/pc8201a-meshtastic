@@ -76,7 +76,7 @@ I/O Address and Data Pattern:
 ```
 msb         4     3    2   1     0    lsb
   +-------+----+----+----+----+-------+
-  | XXXXX |TBRE| PE | FE | OE |dcd/dr-|     IN 'XD8
+  | XXXXX |TBRE| PE | FE | OE |dcd/dr |     IN 'XD8
   +-------+----+----+----+----+-------+
 ```
 
