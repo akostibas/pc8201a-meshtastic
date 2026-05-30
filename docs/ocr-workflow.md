@@ -145,6 +145,28 @@ weren't kept — the conclusions are below.
    error to reconcile against the source, and field names must be seated under
    the correct bit position.
 
+7. **Transcription-error patterns (from hand-review of ch.12 — audit every
+   chapter for these):**
+   - **Confusable hex digits in addresses/values:** `8`↔`B`, `0`↔`D` (also
+     `0`↔`O`, `1`↔`I`, `5`↔`S`, `2`↔`Z`). Real Ch12 fixes: `^XC8`→`^XCB`,
+     baud register `^XB0`→`^XBD`. Sanity-check against structure: consecutive
+     registers usually have consecutive addresses (`^XBC`/`^XBD`, not
+     `^XBC`/`^XB0`), so an "off" digit in a sequence is a red flag.
+   - **Bit-field values are BINARY, not hex.** A small multi-bit pattern in a
+     register-field context (`00`/`01`/`10`/`11`) is `^B`, not `^X`. The cleanup
+     pass mistyped Ch12's user-IO field as `^X00`/`^X01`/`^X10`/`^X11`; it's
+     `^B00`/`^B01`/`^B10`/`^B11`. If a "hex" value only ever uses digits 0/1 and
+     labels a field narrower than a byte, it's binary.
+   - **Assembler-symbol spelling must be identical everywhere.** Near-duplicate
+     spellings of the same EQU label (`INHIBIT`/`INHBIT`, `COMACT`/`COMMACT`)
+     are OCR typos — OR a 6-char assembler-label truncation vs. its spelled-out
+     prose form. Reconcile against the source; don't leave both.
+   - **Figure labels must match the chapter** (`Fig 11.1` inside ch.12 → `Fig
+     12.1`).
+   - **Letter-pair confusions in prose/comments:** `IO`↔`ID`, etc.
+   - **Style:** render register/symbol/address references in prose as inline
+     `` `code` `` (e.g. `` `INHIBIT` (at `^XFE42`) ``), not bold.
+
 ### Per-figure-type output policy
 
 | Source figure | Target representation | Model |
