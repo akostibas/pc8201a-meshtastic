@@ -20,26 +20,26 @@ The interrupt table is located in the zero page area.
 
 | Function          | Interrupt  | Address   |
 |-------------------|------------|-----------|
-| POWER OFF TRAP    | NMI        | `"X0024`  |
-| BARCODE READER    | RST 5.5    | `"X002C`  |
-| UART              | RST 6.5    | `"X0034`  |
-| INTERVAL TIMER    | RST 7.5    | `"X003C`  |
+| POWER OFF TRAP    | NMI        | `'X0024`  |
+| BARCODE READER    | RST 5.5    | `'X002C`  |
+| UART              | RST 6.5    | `'X0034`  |
+| INTERVAL TIMER    | RST 7.5    | `'X003C`  |
 
 The Interval timer interrupt has the highest priority, and UART has the second. The lowest interrupt is used for the Barcode reader. The reason why the interval timer has the highest priority is to scan the key and to count the auto-power off counter for saving the battery power. PC-8201A has the "Auto-Power Off" function. Usually, this function is executed after 10 minutes have passed since the last key stroke was detected. (This interval can be set by the `POWER` command in BASIC. Refer to the *PC-8201A Reference Manual*.) The interval timer is used to count this period.
 
-The interrupt hook table is located from `"XF386` to `"XF394`. That table is constructed as follows:
+The interrupt hook table is located from `'XF386` to `'XF394`. That table is constructed as follows:
 
 <!-- TODO(tier-b): verify interrupt hook table layout against source page ~30 -->
 
 | Address   | Hook                               |
 |-----------|------------------------------------|
-| `"XF386`  | POWER ON SEQUENCE                  |
-| `"XF389`  | BARCODE READER INPUT SEQUENCE      |
-| `"XF38C`  | UART INPUT SEQUENCE                |
-| `"XF38F`  | TIMER SEQUENCE and KEY SCANNING SEQUENCE |
-| `"XF392`  | POWER FAILURE SEQUENCE             |
+| `'XF386`  | POWER ON SEQUENCE                  |
+| `'XF389`  | BARCODE READER INPUT SEQUENCE      |
+| `'XF38C`  | UART INPUT SEQUENCE                |
+| `'XF38F`  | TIMER SEQUENCE and KEY SCANNING SEQUENCE |
+| `'XF392`  | POWER FAILURE SEQUENCE             |
 
-### 3.1.1 Power Off Trap (ADDRESS `"X4CFA`)
+### 3.1.1 Power Off Trap (ADDRESS `'X4CFA`)
 
 This interrupt is Non-maskable. When the power switch is turned off, this interrupt occurs. The following sequence is the algorithm of this interrupt.
 
@@ -53,7 +53,7 @@ This interrupt is Non-maskable. When the power switch is turned off, this interr
 The detail bit assignment of the auto power off port is as follows.
 
 ```
-PORT ADDRESS  "XBA  <OUT>
+PORT ADDRESS  'XBA  <OUT>
               81C55 port B
 ```
 
@@ -72,11 +72,11 @@ PORT ADDRESS  "XBA  <OUT>
 
 Refer to Chapters 9 to 15 for more detailed information about this port.
 
-### 3.1.2 Barcode Reader (ADDRESS `"XF389` with Disable interrupt)
+### 3.1.2 Barcode Reader (ADDRESS `'XF389` with Disable interrupt)
 
 This interrupt uses RST 5.5. If you do not use the barcode reader program, this interrupt should do `RETURN` immediately.
 
-### 3.1.3 UART (ADDRESS `"X6E00` with Disable interrupt)
+### 3.1.3 UART (ADDRESS `'X6E00` with Disable interrupt)
 
 This interrupt uses RST 6.5. This interrupt is caused by UART (Serial communication device 6402). This interrupt occurs when the data in the 6402 receive buffer is available.
 
@@ -91,7 +91,7 @@ The algorithm of this interrupt is shown below.
 7. Return to previous process
 
 ```
-PORT ADDRESS  "XD5  <OUT>
+PORT ADDRESS  'XD5  <OUT>
 UART control port
 ```
 
@@ -109,7 +109,7 @@ UART control port
 | 0   | Stop bit select — 0: Stop bit 1 bit; 1: Stop bit 1.5 bit (if DATA Length is 5); 1: Stop bit 2 bit (if DATA Length is not 5) |
 
 ```
-PORT ADDRESS  "XC5  <OUT>
+PORT ADDRESS  'XC5  <OUT>
 UART data I/O port
 ```
 
@@ -128,7 +128,7 @@ UART data I/O port
 
 Refer to Chapters 12 and 15 for more detailed information about UART.
 
-### 3.1.4 Interval Timer (ADDRESS `"X1EBE` with Disable Interrupt)
+### 3.1.4 Interval Timer (ADDRESS `'X1EBE` with Disable Interrupt)
 
 This interrupt uses RST 7.5. This is the interrupt from the interval timer (Timer device 1990). This interrupt is also used for key scanning.
 
@@ -159,7 +159,7 @@ Calendar clock (1990) control port
 | 1 | 1 | 0 | Timing 2048 Hz |
 | 1 | 1 | 1 | TEST mode |
 
-In the initialization routine, the command is set up as `"X05`. It means a 4 ms second interval.
+In the initialization routine, the command is set up as `'X05`. It means a 4 ms second interval.
 
 Refer to Chapter 15 for more information about 1990.
 
@@ -174,21 +174,21 @@ The following steps are the algorithm for the interval timer sequence.
 
 ## 3.2 ROM Swapping Method
 
-When you would like to use 2nd ROM, you must write the following information into the 2nd ROM's special reserved area. The special reserved area is located from `"X0000` to `"X0047`. This area will be used for the 2nd ROM starting jump instruction and IO code, and the file name of 2nd ROM. This name is displayed like one of the RAM files on the Menu screen by 1st ROM, ROM #0. The following figure explains the 2nd ROM special reserved area.
+When you would like to use 2nd ROM, you must write the following information into the 2nd ROM's special reserved area. The special reserved area is located from `'X0000` to `'X0047`. This area will be used for the 2nd ROM starting jump instruction and IO code, and the file name of 2nd ROM. This name is displayed like one of the RAM files on the Menu screen by 1st ROM, ROM #0. The following figure explains the 2nd ROM special reserved area.
 
 ```asm
         ADDRESS          CODE
-        "X0000  JMP     START      ; 2nd ROM start address
-        "X0003
-        "X0024           RET       ; Non maskable interrupt
-        "X002C           RET       ; Barcode reader interrupt
-        "X0034           RET       ; UART interrupt
-        "X003C           RET       ; Interval timer interrupt
-        "X003F                     ; Reserved for RST interrupt
-        "X0040           DB     'A'
-        "X0041           DB     'B'        ; IO code for 2nd ROM
-        "X0042           DB     '2NDROM'   ; File name displayed in the menu
-        "X0048  START:              ; 2nd ROM code
+        'X0000  JMP     START      ; 2nd ROM start address
+        'X0003
+        'X0024           RET       ; Non maskable interrupt
+        'X002C           RET       ; Barcode reader interrupt
+        'X0034           RET       ; UART interrupt
+        'X003C           RET       ; Interval timer interrupt
+        'X003F                     ; Reserved for RST interrupt
+        'X0040           DB     'A'
+        'X0041           DB     'B'        ; IO code for 2nd ROM
+        'X0042           DB     '2NDROM'   ; File name displayed in the menu
+        'X0048  START:              ; 2nd ROM code
 ```
 
 ```
@@ -199,7 +199,7 @@ If these data are implemented correctly, the name will appear on the 1st ROM's m
 
 ## 3.3 The Method to Use 1st ROM Entry from 2nd ROM
 
-If you want to use the routines in 1st ROM from 2nd ROM, you must first create a special routine in the higher memory location of RAM (`"X8000`–`"XFFFF`) and use it. That routine switches the ROM bank using the bank switching method, and calls the routine in 1st ROM. It is very important that interrupts must be disabled before you change the ROM banks. And in addition, as the following sections will tell you, you have to change the hook table for the Power down interrupt that was changed by 2nd ROM to restart the current process in 2nd ROM program at the next power-on. With this hook table for 2nd ROM, the power down in ROM #0 will cause a fatal error. Power-off interrupt cannot be prohibited. And you have to consider the contents of the routine which you will call. The reason is that some routines in the 1st ROM may enable the interrupts in some parts of their code even if you disable the interrupts just before switching the ROM banks to call a 1st ROM entry. Therefore you had better change all hook tables in the current book keeping area. I suggest that all hook tables should be replaced with previous contents which were stored by 1st ROM, just before calling the ROM bank-switching routine, and restored just after coming back from 1st ROM.
+If you want to use the routines in 1st ROM from 2nd ROM, you must first create a special routine in the higher memory location of RAM (`'X8000`–`'XFFFF`) and use it. That routine switches the ROM bank using the bank switching method, and calls the routine in 1st ROM. It is very important that interrupts must be disabled before you change the ROM banks. And in addition, as the following sections will tell you, you have to change the hook table for the Power down interrupt that was changed by 2nd ROM to restart the current process in 2nd ROM program at the next power-on. With this hook table for 2nd ROM, the power down in ROM #0 will cause a fatal error. Power-off interrupt cannot be prohibited. And you have to consider the contents of the routine which you will call. The reason is that some routines in the 1st ROM may enable the interrupts in some parts of their code even if you disable the interrupts just before switching the ROM banks to call a 1st ROM entry. Therefore you had better change all hook tables in the current book keeping area. I suggest that all hook tables should be replaced with previous contents which were stored by 1st ROM, just before calling the ROM bank-switching routine, and restored just after coming back from 1st ROM.
 
 The following program is the sample which uses 1st ROM entry points from 2nd ROM.
 
@@ -219,11 +219,11 @@ The following program is the sample which uses 1st ROM entry points from 2nd ROM
 ;       Exit     for return condition of 1st ROM
 ;
 ; <<< SYSTEM define label >>>
-BNKCRL  EQU     "X0A1           ; Bank control port
-STATUS  EQU     "X0A0           ; Bank status port
+BNKCRL  EQU     'X0A1           ; Bank control port
+STATUS  EQU     'X0A0           ; Bank status port
 ; <<< Main routine >>>
-        ORG     "X8000          ; This routine must stay in
-                                ; "X8000-"XFFFF
+        ORG     'X8000          ; This routine must stay in
+                                ; 'X8000-'XFFFF
 ROM1ST: SHLD    WORKH           ; Save register HL
         LXI     H,RET2ND        ; Return address from 1st ROM
         PUSH    H               ; Push stack top
@@ -234,9 +234,9 @@ ROM1ST: SHLD    WORKH           ; Save register HL
         PUSH    PSW             ; Save all registers
         DI                      ; Disable interrupt
         IN      STATUS          ; Get current bank status
-        ANI     "B11111110      ; Switch 1st ROM data set up
+        ANI     'B11111110      ; Switch 1st ROM data set up
         OUT     BNKCRL          ; Bank select
-                                ; Now "X0000-"X7FFF are
+                                ; Now 'X0000-'X7FFF are
                                 ; 1st ROM
         EI                      ; Enable interrupt
         POP     PSW
@@ -244,15 +244,15 @@ ROM1ST: SHLD    WORKH           ; Save register HL
 ; <<< Return from 1st ROM >>>
 RET2ND: PUSH    PSW             ; Save all registers
         IN      STATUS          ; Get current bank status
-        ORI     "B00000001      ; Switch 2nd ROM data set up
+        ORI     'B00000001      ; Switch 2nd ROM data set up
         OUT     BNKCRL          ; Bank select
-                                ; Now "X0000-"X7FFF are
+                                ; Now 'X0000-'X7FFF are
                                 ; 2nd ROM
         POP     PSW             ; Pick up all registers
         RET
 ; <<< SYSTEM WORK AREA >>>
-ENTRY:  DW      "X0000          ; 1st ROM entry address
-WORKH:  DW      "X0000          ; HL register saving area
+ENTRY:  DW      'X0000          ; 1st ROM entry address
+WORKH:  DW      'X0000          ; HL register saving area
         END
 ```
 
@@ -272,7 +272,7 @@ WORKH:  DW      "X0000          ; HL register saving area
 
    The RAM bank number is always stored in RAM #0. On turning on, the 1st ROM and RAM #0 is selected automatically. And the bank-switching procedure will be called in the Power on sequence if the number of the RAM bank was not identical to RAM #0 in the power down sequence. After changing the RAM bank, all registers will be restored and the pending procedure will be resumed. Therefore, in the stack, the address of the process which was abandoned by the Power down trap should be stored.
 
-   In addition, in order to resume the abandoned process with 2nd ROM, you have to perform a special power on/power off sequence. In the power off trap, you should set the start routine of the special power-on sequence which switches the ROM bank. I recommend using the hook `"XF38F`. Usually, a "JUMP to POWER FAIL SEQUENCE" command is stored here. In 2nd ROM, however, you have to rewrite this hook table and call the special power down routine here. In it, the address of the special power-on routine is placed on the stack. In this case, the following information should be stacked before the `HLT` command is executed.
+   In addition, in order to resume the abandoned process with 2nd ROM, you have to perform a special power on/power off sequence. In the power off trap, you should set the start routine of the special power-on sequence which switches the ROM bank. I recommend using the hook `'XF38F`. Usually, a "JUMP to POWER FAIL SEQUENCE" command is stored here. In 2nd ROM, however, you have to rewrite this hook table and call the special power down routine here. In it, the address of the special power-on routine is placed on the stack. In this case, the following information should be stacked before the `HLT` command is executed.
 
 <!-- FIGURE 3.1: Stack diagram showing stacked items before HLT — needs vision re-OCR from source page ~40 (target: mermaid) -->
 
@@ -291,7 +291,7 @@ WORKH:  DW      "X0000          ; HL register saving area
 
 4. **POWER ON**
 
-   At first, the initializing routine in ROM #0 checks the RAM bank number in BANK (`"XF308`) when power-off was executed. When power-off was done in a non-standard RAM bank, the RAM bank-switching routine is called and switched. Then, the registers' contents will be restored. If the address of the process which should be resumed was stacked, the address will be picked up and executed. When the power-down was detected in ROM #1, the address of the special ROM switching routine ought to be stacked above the address of the process to be resumed. Therefore, after switching the ROM, the abandoned process will be resumed.
+   At first, the initializing routine in ROM #0 checks the RAM bank number in BANK (`'XF308`) when power-off was executed. When power-off was done in a non-standard RAM bank, the RAM bank-switching routine is called and switched. Then, the registers' contents will be restored. If the address of the process which should be resumed was stacked, the address will be picked up and executed. When the power-down was detected in ROM #1, the address of the special ROM switching routine ought to be stacked above the address of the process to be resumed. Therefore, after switching the ROM, the abandoned process will be resumed.
 
 The following figure shows the general 2nd ROM routine control sequence.
 
@@ -362,34 +362,34 @@ If you want to use 1st ROM entry from 2nd ROM, please take care of the following
 ;       TITLE   2nd ROM sample header and useful routine
 
 ; <<< SYSTEM define label >>>
-BANK    EQU     "XF3DB          ; Bank save area
-ATIDSV  EQU     "XF382          ;
-PWHOK   EQU     "XF386          ; Power on hook table
-RST55   EQU     "XF389          ; RST 5.5 hook table
-STAKSV  EQU     "XF9AE          ;
-AUTOID  EQU     "X9C0B          ;
-SAVSTK  EQU     "XFA00          ;
-STATUS  EQU     "XA0            ; Bank status
-BNKCRL  EQU     "XA1            ; Bank control
-PWPORT  EQU     "XB8            ; 81C55 chip select
-PORTS   EQU     "XBA            ; 81C55 port B
+BANK    EQU     'XF3DB          ; Bank save area
+ATIDSV  EQU     'XF382          ;
+PWHOK   EQU     'XF386          ; Power on hook table
+RST55   EQU     'XF389          ; RST 5.5 hook table
+STAKSV  EQU     'XF9AE          ;
+AUTOID  EQU     'X9C0B          ;
+SAVSTK  EQU     'XFA00          ;
+STATUS  EQU     'XA0            ; Bank status
+BNKCRL  EQU     'XA1            ; Bank control
+PWPORT  EQU     'XB8            ; 81C55 chip select
+PORTS   EQU     'XBA            ; 81C55 port B
 FREE    EQU     "X????          ; You must set your RAM
                                 ; free portion address
 ; <<< Main routine >>>
 
 START:
         JMP     INIT            ; 2nd ROM start address
-        ORG     "X0024          ; Non maskable interrupt
+        ORG     'X0024          ; Non maskable interrupt
                                 ; table
         JMP     POWER           ; Power down trap
-        ORG     "X002C          ; RST 5.5
+        ORG     'X002C          ; RST 5.5
         JMP     BARCODE         ; Barcode reader interrupt
                                 ; table
-        ORG     "X0034          ; RST 6.5
+        ORG     'X0034          ; RST 6.5
         JMP     UART            ; UART interrupt table
-        ORG     "X003C          ; RST 7.5
+        ORG     'X003C          ; RST 7.5
         JMP     TIMER           ; Timer interrupt table
-        ORG     "X0040          ; IO code for 2nd ROM
+        ORG     'X0040          ; IO code for 2nd ROM
         DB      'AB'            ; AB is ID code for 2nd ROM
         DB      '2NDROM'        ; File name displayed in the MENU
 
@@ -412,7 +412,7 @@ MAIN:                           ; Main routine
 
 ; <<< Set up hook >>>
 ; Set up hook table for 2nd ROM
-SETTRP: MVI     A,"B00000001    ; Select standard RAM
+SETTRP: MVI     A,'B00000001    ; Select standard RAM
         OUT     BNKCRL          ; Select!
         LXI     H,DTBL          ; Set some codes into RAM
         LXI     D,PWHOK         ; for power on sequence
@@ -440,7 +440,7 @@ COPY:   MOV     A,M             ; Read [HL]
 ; these parts are interrupt hook table.
 ;
 DTBL    EQU     $
-        MVI     A,"B00000001    ; These code will be
+        MVI     A,'B00000001    ; These code will be
                                 ; copied into RAM
         OUT     BNKCRL          ; Bank select!
         JMP     PWON            ; Jump power on trap
@@ -455,15 +455,15 @@ TBLHOK  EQU     $
 RETSB:  XRA     A               ; Clear A
         OUT     BNKCRL          ; Select 1st ROM and
                                 ; standard RAM
-        JMP     "X0000          ; Return!
+        JMP     'X0000          ; Return!
 HOKE    EQU     $
 
 ; <<< RETURN >>>
-RETURN: MVI     A,"B00000001    ; Select standard RAM
+RETURN: MVI     A,'B00000001    ; Select standard RAM
         OUT     BNKCRL          ;
-        MVI     A,"B00000000    ;
+        MVI     A,'B00000000    ;
         STA     BANK            ;
-        LXI     H,"X0000        ; Reset
+        LXI     H,'X0000        ; Reset
         SHLD    ATIDSV          ;
         LXI     H,RTBL          ; Rewrite code table
         LXI     D,PWHOK         ; Interrupt hook table set
@@ -507,7 +507,7 @@ POWER:  PUSH    PSW             ;
         PUSH    D               ; Save DE
         PUSH    B               ; Save BC
         PUSH    PSW             ; Save AF
-        LXI     H,"X0000
+        LXI     H,'X0000
         DAD     SP              ; Now I know stack address
         SHLD    STAKSV          ; Save stack
         MVI     A,0FFH          ; Reset interval timer
@@ -516,11 +516,11 @@ POWER:  PUSH    PSW             ;
         IN      STATUS          ; Save current RAM bank status
                                 ; remember this and select RAM bank.
         MOV     B,A             ; Save it
-        MVI     A,"B00000001    ; Select standard RAM
+        MVI     A,'B00000001    ; Select standard RAM
         OUT     BNKCRL          ; Select!
         MOV     A,B             ; Resave old status
         STA     BANK1-DTBL      ;
-        MVI     A,"B00000001    ; Select RAM bank 1
+        MVI     A,'B00000001    ; Select RAM bank 1
         OUT     BNKCRL          ;
         MVI     A,0             ; Set up to come back
                                 ; to 2nd ROM
@@ -528,7 +528,7 @@ POWER:  PUSH    PSW             ;
         LXI     H,AUTOID        ;
         SHLD    ATIDSV          ;
         IN      PORTS           ;
-        ORI     "B00010000      ;
+        ORI     'B00010000      ;
         OUT     PORTS           ;
         HLT                     ; Never go on
 
@@ -548,6 +548,6 @@ TIMER:  LDA     PWRINT          ; Pick up timer value
         RET                     ;
 
 ; <<< System work area >>>
-PWRINT: DB      "X0FF           ; Timer counter n * 1/256 Hz
+PWRINT: DB      'X0FF           ; Timer counter n * 1/256 Hz
         END
 ```

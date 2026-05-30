@@ -26,9 +26,9 @@ Note: `•;•` means \<SHIFTED CODE\> / \<UNSHIFTED CODE\>
 ```text
 msb 7   6   5 4 3 2 1 0 lsb
   +---+---+---+---+---+---+---+---+
-  :KS7:KS6:KS5:KS4:KS3:KS2:KS1:KS0:   OUT 0XB9
+  :KS7:KS6:KS5:KS4:KS3:KS2:KS1:KS0:   OUT 'XB9
   +-------------------------------+
-  : X : X : X : X : X : X : X :KS8:   OUT 0XBA
+  : X : X : X : X : X : X : X :KS8:   OUT 'XBA
   +-------------------------------+
 ```
 
@@ -40,11 +40,11 @@ KS8 … KS0 — KEYBOARD Strobe
 ```text
 msb 7   6   5 4 3 2 1 0 lsb
   +---+---+---+---+---+---+---+---+
-  :KD7:KD6:KD5:KD4:KD3:KD2:KD1:KD0:   IN 0XEB
+  :KD7:KD6:KD5:KD4:KD3:KD2:KD1:KD0:   IN 'XEB
   +---+---+---+---+---+---+---+---+
 ```
 
-<!-- TODO(tier-b): verify OUT/IN port addresses (0XB9, 0XBA, 0XEB) against source pages 185–186 -->
+<!-- TODO(tier-b): verify OUT/IN port addresses ('XB9, 'XBA, 'XEB) against source pages 185–186 -->
 
 KD7 … KD0 — Keyboard data
 
@@ -78,25 +78,25 @@ The following sample program reads every column and saves the data into KYBUF (K
 ;       You have to take care of the other interrupts.
 ;
 ; Equates
-PORTA   EQU     0XB9        ; Keyboard Strobe Port
-PORTB   EQU     0XBA        ;   ditto
-KEYIN   EQU     0XEB        ; Keyboard data Port
+PORTA   EQU     'XB9        ; Keyboard Strobe Port
+PORTB   EQU     'XBA        ;   ditto
+KEYIN   EQU     'XEB        ; Keyboard data Port
 
-        ORG     0XF000
+        ORG     'XF000
 READKEY:
         LXI     B,KYDATA    ; Get PTR for buffer
-        MVI     A,0XFF      ; Disable normal key strobe
+        MVI     A,'XFF      ; Disable normal key strobe
         OUT     PORTA
         IN      PORTB       ; Get PortB Status
-        ANI     0XFE        ; Set B0=Off
+        ANI     'XFE        ; Set B0=Off
         OUT     PORTB       ; Activate Strobe for
                             ;   Special key
         IN      KEYIN       ; Read keyboard
         STAX    B           ; Save Data
         IN      PORTB       ; Get Status of Port B
-        ORI     0X01        ; Set B0=On
+        ORI     'X01        ; Set B0=On
         OUT     PORTB       ; Strobe off
-        MVI     A,0B11111110
+        MVI     A,'B11111110
 NOMAL:
         INX     B           ; Prepare PTR for key Buffer
                             ;   for next data
@@ -104,7 +104,7 @@ NOMAL:
         MOV     D,A
         IN      KEYIN       ; Get data
         STAX    B           ; Store it
-        MVI     A,0XFF
+        MVI     A,'XFF
         OUT     PORTA       ; Strobe off
         MOV     A,D         ; Retrieve strobe data
         RLC                 ; Strobe for next column

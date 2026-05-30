@@ -50,7 +50,7 @@ The simple memory map of PC-8201A is illustrated in the next figure. This illust
                      Fig 2.1 PC - 8 2 0 1 A            ME MO R Y     MA P
 ```
 
-The RAM #2 and RAM #3 can be located both at the low address range, from 0x0000 to 0x7FFF, and the high address range, from 0x8000 to 0xFFFF. This selection can be done by PORT access. Refer to section 2.3.
+The RAM #2 and RAM #3 can be located both at the low address range, from 'X0000 to 'X7FFF, and the high address range, from 'X8000 to 'XFFFF. This selection can be done by PORT access. Refer to section 2.3.
 
 ## 2.2 Bank Switching Architecture
 
@@ -58,9 +58,9 @@ The heart of the PC-8201A is the Intel 80C85, which is an 8-bit processor whose 
 
 The RAM in the PC-8201A is divided into units referred to as "BANKs". One bank can contain a maximum of 32K bytes of memory, while the RAM can be expanded to hold a maximum of three banks (RAM #1, RAM #2, RAM #3).
 
-The RAM #2 and RAM #3 can be located in two different positions: the lower position is from 0x0000 to 0x7FFF, and the higher position is from 0x8000 to 0xFFFF. And RAM #3 is detachable, because it is provided in a RAM cartridge. The bank-switching is executed every 32K bytes. Because of this limitation it is impossible to access the lower half of RAM #1 and the lower half of RAM #2 at the same time. In other words, you cannot set up this kind of memory allocation: the lower half of RAM #2 (from 0x8000 to 0xBFFF) and the upper half of RAM #1 (from 0xC000 to 0xFFFF) as 32K of memory. The variety of memory allocation is illustrated and explained in Chapter 15. The explanation of the software specification for bank-switching is shown in the next section.
+The RAM #2 and RAM #3 can be located in two different positions: the lower position is from 'X0000 to 'X7FFF, and the higher position is from 'X8000 to 'XFFFF. And RAM #3 is detachable, because it is provided in a RAM cartridge. The bank-switching is executed every 32K bytes. Because of this limitation it is impossible to access the lower half of RAM #1 and the lower half of RAM #2 at the same time. In other words, you cannot set up this kind of memory allocation: the lower half of RAM #2 (from 'X8000 to 'XBFFF) and the upper half of RAM #1 (from 'XC000 to 'XFFFF) as 32K of memory. The variety of memory allocation is illustrated and explained in Chapter 15. The explanation of the software specification for bank-switching is shown in the next section.
 
-The RAM #2 and RAM #3 can be protected by a "PROTECT SWITCH". The "PROTECT SWITCH" for RAM #2 is equipped at the rear panel. Refer to page 1-3 in the PC-8201A User's Guide. RAM #3 has its switch at the side of the cartridge. Unfortunately, RAM #1 has no such protect function. When you use this protect switch, you cannot use that RAM bank in the usual way (for instance, BASIC), because the PC-8201A uses the highest RAM area, from 0xF380 to 0xFFFF, to save the current status of the PC-8201A at all times.
+The RAM #2 and RAM #3 can be protected by a "PROTECT SWITCH". The "PROTECT SWITCH" for RAM #2 is equipped at the rear panel. Refer to page 1-3 in the PC-8201A User's Guide. RAM #3 has its switch at the side of the cartridge. Unfortunately, RAM #1 has no such protect function. When you use this protect switch, you cannot use that RAM bank in the usual way (for instance, BASIC), because the PC-8201A uses the highest RAM area, from 'XF380 to 'XFFFF, to save the current status of the PC-8201A at all times.
 
 All RAM chips consist of CMOS and are backed up by battery. All data and program files stored in RAM will be kept even if the power switch is turned off. If you make a special utility for 2nd ROM or a special RAM configuration, you have to consider this Power-down sequence. Refer to Chapter 3 to understand the Power-off trap in ROM #0.
 
@@ -70,7 +70,7 @@ The "bank-switching" is performed by the OUT instruction. The OUT instruction ou
 
 <!-- TODO(tier-b): table garbled — verify against source page 17 -->
 ```text
-           PORT ADDRESS 0xA1 (OUT)
+           PORT ADDRESS 'XA1 (OUT)
                    Bank control
 
      MSB      7     6     5        4     3     2     1     0
@@ -80,13 +80,13 @@ The "bank-switching" is performed by the OUT instruction. The OUT instruction ou
            Bit 5              not used
            Bit 4              not used
            Bit 3           High address
-              (0x8000 - 0xFFFF) selection #2
+              ('X8000 - 'XFFFF) selection #2
            Bit 2           High address
-              (0x8000 - 0xFFFF) selection #1
+              ('X8000 - 'XFFFF) selection #1
            Bit 1           Low address
-              (0x0000 - 0x7FFF) selection #2
+              ('X0000 - 'X7FFF) selection #2
            Bit 0           Low address
-              (0x0000 - 0x7FFF) selection #1
+              ('X0000 - 'X7FFF) selection #1
 
   High address #2     High address #1
          0                  0       Bank #0 (RAM #1)
@@ -104,7 +104,7 @@ The current status of the memory — the status of bank-switching — can be exa
 
 <!-- TODO(tier-b): table garbled — verify against source page 18 -->
 ```text
-           PORT ADDRESS 0xA0 (IN)
+           PORT ADDRESS 'XA0 (IN)
                    Bank status
 
      MSB   -------------------------------------------------
@@ -115,12 +115,12 @@ The current status of the memory — the status of bank-switching — can be exa
            Bit 5             Not used
            Bit 4             Not used
   *2
-           Bit 3             High address (0x8000 - 0xFFFF) status
-           Bit 2             High address (0x8000 - 0xFFFF) status
+           Bit 3             High address ('X8000 - 'XFFFF) status
+           Bit 2             High address ('X8000 - 'XFFFF) status
   *1
-           Bit 1             Low address  (0x0000 - 0x7FFF) status
+           Bit 1             Low address  ('X0000 - 'X7FFF) status
   *2
-           Bit 0             Low address  (0x0000 - 0x7FFF) status
+           Bit 0             Low address  ('X0000 - 'X7FFF) status
   *1
 
            Serial I/F #2              Serial I/F #1
@@ -145,9 +145,9 @@ Refer to Chapter 12 for information about the Serial Interface.
 
 ### 2.2.2 Bank Switching Software
 
-The bank-switching capability is used in Menu mode. The "BANK" command, assigned to Function key 10 (Shift+F.5), uses this function. This function falls into the bank handler routine, CHGBNK, at 0x7EAB. CHGBNK checks the current bank status, tests whether the bank really exists, saves the new bank number in BANK (0xF308), changes the bank status and jumps to address 0. Jumping to address 0 causes a "COLD START" if the bank has not ever been used or if the flag named FSIOSV has a wrong value (refer to section 3.2 Bookkeeping area). Otherwise, jumping to address 0 causes a "WARM START".
+The bank-switching capability is used in Menu mode. The "BANK" command, assigned to Function key 10 (Shift+F.5), uses this function. This function falls into the bank handler routine, CHGBNK, at 'X7EAB. CHGBNK checks the current bank status, tests whether the bank really exists, saves the new bank number in BANK ('XF308), changes the bank status and jumps to address 0. Jumping to address 0 causes a "COLD START" if the bank has not ever been used or if the flag named FSIOSV has a wrong value (refer to section 3.2 Bookkeeping area). Otherwise, jumping to address 0 causes a "WARM START".
 
-In order to test the existence of another bank, CHGBNK reads the contents of address 0xE000 in the destination bank, modifies that value, restores it, and re-reads it. If that bank really exists, the value read first and the value re-read last will not be identical.
+In order to test the existence of another bank, CHGBNK reads the contents of address 'XE000 in the destination bank, modifies that value, restores it, and re-reads it. If that bank really exists, the value read first and the value re-read last will not be identical.
 
 The reason why CHGBNK jumps to address 0 is, as you might already notice, to set up the bookkeeping area. As described in Chapter 7, all standard programs and the operating system use this area every time to keep the current status. This area contains very important pointers, flags and interrupt routines. So without setting up this area, that bank cannot be handled with ROM #0 correctly.
 
@@ -157,7 +157,7 @@ Refer to Chapter 4 "HOW TO USE 2ND/3RD RAM" for more detailed documentation.
 
 ## 2.3 General Memory Mapping of Internal Software Use
 
-You know that ROM #0, addressed from 0 to 0x7FFF, is used for standard programs and the operating system. (Sometimes "standard programs" refers specifically to BASIC, TEXT and TELCOM. "Operating system" also refers to "Menu". But there is no explicit border line between the "standard programs" and "operating system". These words are used sometimes to explain the concept of the PC-8201A's built-in software.) Also, some parts of the RAM memory area are reserved and used by those standard programs and the operating system. The memory map of the RAM area is shown on the next page. Each part of the reserved area is pointed to by pointers in the "book-keeping area", located at the highest part of the RAM memory, from 0xF380 to 0xFFFF. The following 2 items are also included in the book-keeping area:
+You know that ROM #0, addressed from 0 to 'X7FFF, is used for standard programs and the operating system. (Sometimes "standard programs" refers specifically to BASIC, TEXT and TELCOM. "Operating system" also refers to "Menu". But there is no explicit border line between the "standard programs" and "operating system". These words are used sometimes to explain the concept of the PC-8201A's built-in software.) Also, some parts of the RAM memory area are reserved and used by those standard programs and the operating system. The memory map of the RAM area is shown on the next page. Each part of the reserved area is pointed to by pointers in the "book-keeping area", located at the highest part of the RAM memory, from 'XF380 to 'XFFFF. The following 2 items are also included in the book-keeping area:
 
 - Interrupt routine
 - System work area
@@ -189,7 +189,7 @@ AXF3s0· -------------~---I
          I                 I
          I   Fr-ee ar-ea   I
 
-                           :<- CSTRENDJ     "XFAE9
+                           :<- CSTRENDJ     'XFAE9
          -----------------
          I
          I Ar-r-ay stored  I
@@ -200,7 +200,7 @@ AXF3s0· -------------~---I
            Simple          I
                            I
 
-             variable ar-ea :<- CVARTABJ    "XFAES
+             variable ar-ea :<- CVARTABJ    'XFAES
              .co files     I
                            I
 
@@ -213,7 +213,7 @@ AXF3s0· -------------~---I
          : Paste buffer-   I
                            I
 
-         : for- TEXT       :<- CSCRDIRJ+1   "XF87B
+         : for- TEXT       :<- CSCRDIRJ+1   'XF87B
          : .DO files       I
                            I
 
@@ -222,13 +222,13 @@ AXF3s0· -------------~---I
          l BASIC file     :<-CNULDIRJ+1     "'XF870+1
 
      : .BA fi 1es
-         ar-ea         : <-CTXTENDJ    "XFA88
+         ar-ea         : <-CTXTENDJ    'XFA88
      : Cur-r-ent BA
-        file           l<-CTXTTABJ     "XFASO
+        file           l<-CTXTTABJ     'XFASO
      : .BA fi 1es      I
                        I
-        ar-ea          l<-CBOTTOMJ+1   "XF980+1
-                      I <-CBOTTOMJ     "XF980
+        ar-ea          l<-CBOTTOMJ+1   'XF980+1
+                      I <-CBOTTOMJ     'XF980
 ```
 
 Brief explanation of the pointers appearing in the figure above:
@@ -259,7 +259,7 @@ Refer to Chapter 5 "UNDERSTANDING THE RAM FILE CONCEPT", "DIRECTORY STRUCTURE" a
 
 ;
 ;       This sample will only change the bank of
-;       RAM addressed from 0x8000 to 0xFFFF.
+;       RAM addressed from 'X8000 to 'XFFFF.
 ;       You had better check that the bank which
 ;       you want to switch really exists. And you
 ;       should save the next bank# at the
@@ -272,31 +272,31 @@ Refer to Chapter 5 "UNDERSTANDING THE RAM FILE CONCEPT", "DIRECTORY STRUCTURE" a
 ;       Bank rotation #1 -> #2 -> #3 -> #1 ->
 
 ; <<< SYSTEM labels >>>
-SYSTEM   EQU      0x0000             ; Reset address
-CONTRL   EQU      0x0A1              ; Bank control port
-STATUS   EQU      0x0A0              ; Bank status port
+SYSTEM   EQU      'X0000             ; Reset address
+CONTRL   EQU      'X0A1              ; Bank control port
+STATUS   EQU      'X0A0              ; Bank status port
 ; <<< Bank switching program >>>
-         ORG      0x0100             ; This program must be
-                                     ; stored between 0x0000
-                                     ; and 0x7FFF
+         ORG      'X0100             ; This program must be
+                                     ; stored between 'X0000
+                                     ; and 'X7FFF
 CHECK:   DI                          ; Disable interrupt
          IN       STATUS             ; Read current bank status
          MOV      B,A                ; Save current bank status
-         ANI      0b00001100         ; Pick up high bank status only
+         ANI      'B00001100         ; Pick up high bank status only
 NEXTB:
-         ADI      0b00000100         ; Set next bank data
-         CPI      0b00000100         ; This pattern was not used!
+         ADI      'B00000100         ; Set next bank data
+         CPI      'B00000100         ; This pattern was not used!
          JZ       NEXTB              ; Set up next bank data
                                      ; for lap around
          MOV      C,A                ; Save new bank data
          MOV      A,B                ; Remember old bank status
-         ANI      0b11110011         ; Do not change bit data
+         ANI      'B11110011         ; Do not change bit data
                                      ; without RAM bank data
          ORA      C                  ; Set new RAM bank
          OUT      CONTRL             ; Select bank
 
          EI                          ; Enable interrupt
          JMP      SYSTEM             ; We must update bookkeeping area.
-                                     ; Jump to 0x0000 is the best way.
+                                     ; Jump to 'X0000 is the best way.
          END
 ```

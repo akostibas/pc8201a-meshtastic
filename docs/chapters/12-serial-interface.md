@@ -23,7 +23,7 @@ I/O Address and Data Pattern:
 ```
 msb 7     6        5 -- 0
   +----+----+------------+
-  :SRI2:SRI1: XXXXXXXXXX :           OUT "X90
+  :SRI2:SRI1: XXXXXXXXXX :           OUT 'X90
   +----+----+------------+
 ```
 
@@ -36,14 +36,14 @@ SRI2/1 — Serial Interface Select:
 | 1    | 0    | SIO1              |
 | 1    | 1    | RS-232C           |
 
-Note: Current status of this port is saved in SYSSTAT ("XFE44) by System ROM.
+Note: Current status of this port is saved in SYSSTAT ('XFE44) by System ROM.
 
 #### 12.1.1.2 UART Mode Control
 
 ```
 msb 7 - 5      4      3      2    1    0
   +-------+----+----+----+---+---+
-  : XXXXX :CLS2:CLS1: PI :EPE:SBS:        OUT "XD8
+  : XXXXX :CLS2:CLS1: PI :EPE:SBS:        OUT 'XD8
   +-------+----+----+----+---+---+
 ```
 
@@ -64,10 +64,10 @@ msb 7 - 5      4      3      2    1    0
 - 1 = Parity Disable
 
 **CLS2/1** — Character Length Select:
-- "B00 = 5 bits
-- "B01 = 6 bits
-- "B10 = 7 bits
-- "B11 = 8 bits
+- 'B00 = 5 bits
+- 'B01 = 6 bits
+- 'B10 = 7 bits
+- 'B11 = 8 bits
 
 #### 12.1.1.3 UART Status Read
 
@@ -76,7 +76,7 @@ I/O Address and Data Pattern:
 ```
 msb           4       3        2          1    0   lsb
   +-------+----+----+----+----+------+
-  : XXXXX :TBRE: PE : FE : OE :dcd/dr-:                  IN "XD8
+  : XXXXX :TBRE: PE : FE : OE :dcd/dr-:                  IN 'XD8
   +-------+----+----+----+----+------+
 ```
 
@@ -98,17 +98,17 @@ I/O Address and Data Definition:
 ```
 msb 6      5 4   3   2   1   0 lsb
   +---+---+---+---+---+---+---+
-  :M2 :T13:T12:T11:T10:T09:T00:        OUT "XB0
+  :M2 :T13:T12:T11:T10:T09:T00:        OUT 'XB0
   +---+---+---+---+---+---+---+
-      :T06:T05:T04:T03:T02:T01:T00:    OUT "XBC
+      :T06:T05:T04:T03:T02:T01:T00:    OUT 'XBC
   +---+---+---+---+---+---+---+
 ```
 
 Specify timer output Mode:
-- "B00 = Single Square Wave
-- "B01 = Continuous Square Wave
-- "B10 = Single Pulse On
-- "B11 = Continuous Pulse
+- 'B00 = Single Square Wave
+- 'B01 = Continuous Square Wave
+- 'B10 = Single Pulse On
+- 'B11 = Continuous Pulse
 
 Set a Baud Rate using the value below:
 
@@ -116,7 +116,7 @@ Set a Baud Rate using the value below:
 
 ```
 --------+---------+---------+
-ud Rate : "XBC     : "XB0
+ud Rate : 'XBC     : 'XB0
 --------+---------+---------+
     75      00          48
 --------+---------+---------+
@@ -151,7 +151,7 @@ I/O Port and Data Pattern:
 ```
 msb                     lsb
 +--+--+--+--+--+--+--+--+
-:D7:D6:D5:D4:D3:D2:D1:D0: IN/OUT "XC8
+:D7:D6:D5:D4:D3:D2:D1:D0: IN/OUT 'XC8
 +--+--+--+--+--+--+--+--+
 ```
 
@@ -177,30 +177,30 @@ The sample program listed below explains how to initialize serial port. This sam
 ; Sample Program: Initialize Serial Port
 ;
 ; Data in system area which you must update.
-SERMODE   EQU     "XF406               ; 6 bytes for MODE string.
-          ;        "XF407               ; Parity Mode
-          ;        "XF408               ; Word Length
-          ;        "XF409               ; Stop bits
-          ;        "XF40A               ; XON/XOFF control
-          ;        "XF40B               ; SI/SO control
+SERMODE   EQU     'XF406               ; 6 bytes for MODE string.
+          ;        'XF407               ; Parity Mode
+          ;        'XF408               ; Word Length
+          ;        'XF409               ; Stop bits
+          ;        'XF40A               ; XON/XOFF control
+          ;        'XF40B               ; SI/SO control
 ; INHDSP
 ; INHIBIT
-COMACT    EQU     "XFE43               ; current user IO for serial port.
-                                       ;  "X00 = Not used
-                                       ;  "X01 = SIO2
-                                       ;  "X10 = SIO1
-                                       ;  "X11 = RS-232C
-SYSSTAT   EQU     "XFE44               ; SCP port status.
-BAUDRT    EQU     "XFE4A               ; Baud Rate Table entry address.
-INHIBIT   EQU     "XFE41               ; 0 inhibits XON/XOFF control.
+COMACT    EQU     'XFE43               ; current user IO for serial port.
+                                       ;  'X00 = Not used
+                                       ;  'X01 = SIO2
+                                       ;  'X10 = SIO1
+                                       ;  'X11 = RS-232C
+SYSSTAT   EQU     'XFE44               ; SCP port status.
+BAUDRT    EQU     'XFE4A               ; Baud Rate Table entry address.
+INHIBIT   EQU     'XFE41               ; 0 inhibits XON/XOFF control.
 ; I/O Port Address
-SCP       EQU     "X90                 ; System Control Port.
-PORTB     EQU     "XBA                 ; RTS/DTR set port.
-TIMEL     EQU     "XBC                 ; Timer Set Low.
-TIMEH     EQU     "XB0                 ; Timer Set High.
+SCP       EQU     'X90                 ; System Control Port.
+PORTB     EQU     'XBA                 ; RTS/DTR set port.
+TIMEL     EQU     'XBC                 ; Timer Set Low.
+TIMEH     EQU     'XB0                 ; Timer Set High.
 
-RTSDTR    EQU     "X3F                 ; RTS/DTR data for RS-232C.
-                                       ; Use "XFF for SIO1/2.
+RTSDTR    EQU     'X3F                 ; RTS/DTR data for RS-232C.
+                                       ; Use 'XFF for SIO1/2.
 
 INITSERI:
 ; ENTRY: C = USER IO.
@@ -229,7 +229,7 @@ SELECT:
                   RRC
                   MOV     C,A                  ; Save it.
                   LDA     SYSSTAT              ; Get current SCP status.
-                  ANI     "B00111111           ; cancel channel control
+                  ANI     'B00111111           ; cancel channel control
                   ORA     C                    ; Set new channel control bits
                   OUT     SCP                  ; Select channel
                   STA     SYSSTAT              ; Update SCP status.
@@ -259,19 +259,19 @@ SETBAUD:
                   INX     H
                   MOV     A,M                  ; Get Higher Value.
                   OUT     TIMEH
-                  MVI     A,"XC3               ; To start timer.
-                  OUT     "X88                 ; Use this value to start Timer.
+                  MVI     A,'XC3               ; To start timer.
+                  OUT     'X88                 ; Use this value to start Timer.
 
 ; SET TRANSFER MODE.
 MODE:
                   IN      PORTB
-                  ANI     RTSDTR               ; IF 232C RTSDTR="X3F to
+                  ANI     RTSDTR               ; IF 232C RTSDTR='X3F to
                                                ; activate RTS/DTR,
                   OUT     PORTB
-                  IN      "XC8                 ; Dummy read to clear
+                  IN      'XC8                 ; Dummy read to clear
                                                ; Receive Buffer Register
-                  MVI     A,"B00001110         ; 7 bit, Even Parity, 1 stop bit.
-                  OUT     "XD8                 ; Set Mode.
+                  MVI     A,'B00001110         ; 7 bit, Even Parity, 1 stop bit.
+                  OUT     'XD8                 ; Set Mode.
 
 ;      Update SERMODE
                   LHLD    SERMODE              ; Set ptr  <!-- TODO(tier-b): several MVI operands illegible in OCR; register/value fields blank in source -->
@@ -289,15 +289,15 @@ MODE:
                   EI
                   RET
 
-TIMTBL: DB       "X00,"X48            ;          75 bps
-        DB       "X68,"X45            ;         150
-        DB       "X00,"X42            ;         300
-        DB       "X00,"X41            ;         600
-        DB       "X80,"X40            ;        1200
-        DB       "X40,"X40            ;        2400
-        DB       "X20,"X40            ;        4800
-        DB       "X10,"X40            ;        9600
-        DB       "X08,"X40            ;       19200
+TIMTBL: DB       'X00,'X48            ;          75 bps
+        DB       'X68,'X45            ;         150
+        DB       'X00,'X42            ;         300
+        DB       'X00,'X41            ;         600
+        DB       'X80,'X40            ;        1200
+        DB       'X40,'X40            ;        2400
+        DB       'X20,'X40            ;        4800
+        DB       'X10,'X40            ;        9600
+        DB       'X08,'X40            ;       19200
 ```
 
 ### 12.2.2 Send a Data to the Serial Port
@@ -311,12 +311,12 @@ The sample program shown below describes how to send data to the serial port. It
 ;
 
 WRITE:
-         IN       "XD8               ; Get UART status.
-         CPI      "B00010000         ; See if transmitter buffer
+         IN       'XD8               ; Get UART status.
+         CPI      'B00010000         ; See if transmitter buffer
                                      ; register Empty?
          JZ       WRITE              ; Wait TBR become empty.
          MOV      A,C                ; Get character to send.
-         OUT      "XC8               ; Send it to the serial port.
+         OUT      'XC8               ; Send it to the serial port.
          RET
 ```
 
@@ -328,7 +328,7 @@ The sample program shown below explains how to read data from serial port by RST
 ;* Read a data from Serial Port.
 ; Read a data by RST6.5
 
-         ORG     "X3C                    ; Entry point of RST6.5
+         ORG     'X3C                    ; Entry point of RST6.5
 RST65:   DI
          JMP     READ
 
@@ -339,10 +339,10 @@ READ:
          PUSH    D
          PUSH    B
          PUSH    PSW
-         IN      "XC8                    ; Read the data
+         IN      'XC8                    ; Read the data
          MOV     L,A                     ; Save it.
-         IN      "XD8                    ; Get error status
-         ANI     "B00001110              ; Strip error bits.
+         IN      'XD8                    ; Get error status
+         ANI     'B00001110              ; Strip error bits.
          MOV     H,A
          SHLD    BUFFER
          POP     PSW                     ; Restore Registers.
@@ -360,47 +360,47 @@ BUFFER   DS      1                       ; Got Data.
 
 You may want to use the system area for your own use. In this section, the available work area of ROM #0 is described. Make sure to keep compatibility with System ROM if you want to use this area.
 
-The Serial Input Buffer from "XFE4C to "XFFC3 is reserved by System ROM as Serial Input Buffer. You can use it for your own routine.
+The Serial Input Buffer from 'XFE4C to 'XFFC3 is reserved by System ROM as Serial Input Buffer. You can use it for your own routine.
 
 **SERMOD** saves the RS-232C mode string.
 
 This area has 6 bytes of data which indicates the RS-232C String Mode, specified by the `STAT` command in TELCOM or the `OPEN "COM:"` command in BASIC. The contents are as follows:
 
 ```asm
-SERMOD    EQU     "XF406
+SERMOD    EQU     'XF406
           DS      6                   ; RS-232C String mode Buffer
-          ; "XF406                   ; Baud rate specifier (1 to 9)
-          ; "XF407                   ; Parity Mode (N/E/O/I)
-          ; "XF408                   ; Word length specifier (5 to 8)
-          ; "XF409                   ; Stop bit (1/2)
-          ; "XF40A                   ; Xon/off control (X/N)
-          ; "XF40B                   ; SI/SO control (S/N)
+          ; 'XF406                   ; Baud rate specifier (1 to 9)
+          ; 'XF407                   ; Parity Mode (N/E/O/I)
+          ; 'XF408                   ; Word length specifier (5 to 8)
+          ; 'XF409                   ; Stop bit (1/2)
+          ; 'XF40A                   ; Xon/off control (X/N)
+          ; 'XF40B                   ; SI/SO control (S/N)
 ```
 
-<!-- TODO(tier-b): source shows "XF40B" as "XF408" for SI/SO — likely OCR duplicate; cross-check with source page. -->
+<!-- TODO(tier-b): source shows 'XF40B" as 'XF408" for SI/SO — likely OCR duplicate; cross-check with source page. -->
 
-**INHIBIT** (at "XFE42):
+**INHIBIT** (at 'XFE42):
 This byte is the XON/XOFF Inhibit Flag. 0 inhibits XON/XOFF control; otherwise enabled.
 
-**COMACT** ("XFE43, Byte):
+**COMACT** ('XFE43, Byte):
 This byte indicates who is using the serial port as follows. Please reset to 0 after using the serial port, otherwise the serial port is not available for another user.
 
 | Value | User    |
 |-------|---------|
-| "X00  | No user |
-| "X01  | SIO2    |
-| "X02  | SIO1    |
-| "X03  | RS-232C |
+| 'X00  | No user |
+| 'X01  | SIO2    |
+| 'X02  | SIO1    |
+| 'X03  | RS-232C |
 
-**CMPNT** (at "XFE46, DS 1): Character count in Buffer.
+**CMPNT** (at 'XFE46, DS 1): Character count in Buffer.
 This byte has the character count in the Serial Buffer.
 
-<!-- TODO(tier-b): one sentence appears garbled/clipped here in source — "This byte indicate last read character displacement." may belong to a different label (e.g. UTARD/"XFE47 area). Re-OCR to confirm. -->
+<!-- TODO(tier-b): one sentence appears garbled/clipped here in source — "This byte indicate last read character displacement." may belong to a different label (e.g. UTARD/'XFE47 area). Re-OCR to confirm. -->
 
 This byte indicates the last read character displacement.
 
-**UTADR** ("XFE47, Byte):
+**UTADR** ('XFE47, Byte):
 This byte indicates the last written character displacement.
 
-**BAUDRT** ("XFE4A):
+**BAUDRT** ('XFE4A):
 This points to the table of the Baud rate. Refer to Chapter 12.2.1.1 sample program.

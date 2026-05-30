@@ -35,7 +35,7 @@ The calculation of the free space is very important. And you have to maintain th
 
 **5. Insert the promissory byte in the file.**
 
-When you open a DO file, you have to enter at least one byte of data. The data is Control-Z (0x1A); it shows the end of file in RAM. Sometimes this promissory byte is forgotten, so the routine which makes up the starting address in the directory area becomes confused. Simultaneously, BASIC needs 2 NULL bytes at the end of the file. A CO file requires a 6-byte file header at the top of the file. Refer to "What is RAM file".
+When you open a DO file, you have to enter at least one byte of data. The data is Control-Z ('X1A); it shows the end of file in RAM. Sometimes this promissory byte is forgotten, so the routine which makes up the starting address in the directory area becomes confused. Simultaneously, BASIC needs 2 NULL bytes at the end of the file. A CO file requires a 6-byte file header at the top of the file. Refer to "What is RAM file".
 
 **6. Make up the starting address in the directory.**
 
@@ -43,14 +43,14 @@ When you change the RAM configuration, you have to care not only about the point
 
 **7. Bad data in DO file.**
 
-You cannot store data which includes the character whose code is 0x00, 0x08 or 0x1A. The 0x00 is used as "NULL" to indicate a hole which is not used, or double NULL means the end of the BA file. The 0x08 is used as "Back space". The 0x1A is regarded as the end of the DO file, as you know. Refer to "DO file".
+You cannot store data which includes the character whose code is 'X00, 'X08 or 'X1A. The 'X00 is used as "NULL" to indicate a hole which is not used, or double NULL means the end of the BA file. The 'X08 is used as "Back space". The 'X1A is regarded as the end of the DO file, as you know. Refer to "DO file".
 
 
 ## 8.2 How To Make a New File
 
 ### 8.2.1 How To Register The New File Name
 
-At the first, the new file name should be registered in the user's directory area when you create a new file. The user's directory area starts from USRDIR. And the next byte of the user's directory area — the end of the directory area — has 0xFF (255 in decimal). This byte is called the "Directory Stopper". The used slot starts with a number larger than 0x80 as the directory flag. Therefore it is easy to find the free slot. Refer to the sample program shown later.
+At the first, the new file name should be registered in the user's directory area when you create a new file. The user's directory area starts from USRDIR. And the next byte of the user's directory area — the end of the directory area — has 'XFF (255 in decimal). This byte is called the "Directory Stopper". The used slot starts with a number larger than 'X80 as the directory flag. Therefore it is easy to find the free slot. Refer to the sample program shown later.
 
 You had better compare the new file name with the file names which already exist. Two files which have the same file name sometimes cause a serious problem. So during searching for the free slot, the existing file names should be checked. And if there is a same file name, you had better delete it before making the new file or abandon making a new file.
 
@@ -66,7 +66,7 @@ Usually the new DO file is created just above ASCTAB, the lowest address of the 
 
 But you have to do two more steps for that new DO file. One is to insert the end-of-file flag at the bottom of that new DO file. Another one is, as you know, to make up the starting address of other files in the directory area.
 
-There is no DO file whose size is zero, because the final character of the DO file should be ^Z (0x1A, 26 in decimal). In other words, the ^Z indicates the End of File of the DO file. So the DO file will spend at least one byte. If you only want to open the new DO file without any data, you have to insert a ^Z at the starting address. If you want to save some data now, you have to append a ^Z at the end of the data. Never forget to insert a ^Z at the end of the file. Otherwise, the next RAM file operation might destroy all RAM files.
+There is no DO file whose size is zero, because the final character of the DO file should be ^Z ('X1A, 26 in decimal). In other words, the ^Z indicates the End of File of the DO file. So the DO file will spend at least one byte. If you only want to open the new DO file without any data, you have to insert a ^Z at the starting address. If you want to save some data now, you have to append a ^Z at the end of the data. Never forget to insert a ^Z at the end of the file. Otherwise, the next RAM file operation might destroy all RAM files.
 
 In order to make a room for the new file, a convenient routine is in ROM #0. Its name is MAKHOL (MAKe HOLe). This routine makes a hole from the specified point whose size can be decided by the contents in the [BC] register. Refer to "MAKHOL" in "Useful Routines For RAM file handling in ROM #0". The concept of MAKHOL is shown briefly in that section.
 
@@ -91,7 +91,7 @@ If you succeed in inserting a ^Z and making up the starting address field in the
 
 ### 8.2.3 How To Make a BA File
 
-There are few differences between how to make a DO file and how to make a BASIC file. There is no difference in the registration of the file name and the directory flag. The first difference is that you have to end the BASIC file with double NULLs (0x00) instead of ^Z in DO files. In order to understand what double NULLs means, you have to be familiar with the function of the LINK POINTER in Microsoft BASIC. The inner specification of the Microsoft BASIC file is too difficult to describe here briefly. You can get some good texts to learn the information about BASIC programs and their data constructions at the book store or computer shop. But the basic concept about RAM file handling is exactly the same as DO file. (Register the file name and other information in the directory and make a room for the program.)
+There are few differences between how to make a DO file and how to make a BASIC file. There is no difference in the registration of the file name and the directory flag. The first difference is that you have to end the BASIC file with double NULLs ('X00) instead of ^Z in DO files. In order to understand what double NULLs means, you have to be familiar with the function of the LINK POINTER in Microsoft BASIC. The inner specification of the Microsoft BASIC file is too difficult to describe here briefly. You can get some good texts to learn the information about BASIC programs and their data constructions at the book store or computer shop. But the basic concept about RAM file handling is exactly the same as DO file. (Register the file name and other information in the directory and make a room for the program.)
 
 The second difference is that the new BA file is created just above the BA files which have already been stored. In other words, the new BA file is inserted just below the lowest DO file. Refer to the section "WHAT IS RAM FILE?".
 
@@ -131,9 +131,9 @@ The CO file is usually made just under the address pointed by VARTAB. So the sta
 Dump the data in the CO file is:
 
 ```
-0xC350        (50000)  Starting address
-0x000A        (10)     Length
-0xC350        (50000)  Execution address
+'XC350        (50000)  Starting address
+'X000A        (10)     Length
+'XC350        (50000)  Execution address
 ```
 
 **Cf. The flow of making a new CO file:**
@@ -151,7 +151,7 @@ Dump the data in the CO file is:
 
 You can guess how to delete a file from the RAM file system in PC-8201A easily. The things that you have to do are to clear the directory flag and to remove the data of the file.
 
-To delete a directory entry, you only turn off the directory flag. If the directory flag is less than 0x80, other programs regard that slot as not used now.
+To delete a directory entry, you only turn off the directory flag. If the directory flag is less than 'X80, other programs regard that slot as not used now.
 
 And when you squeeze the body of the file, you have to check the pointers and the start address of other files in the directory. When you are using the subroutines in ROM #0, these pointers are adjusted automatically. But if you do it by your own routine, you have to care about the pointers. You can find good clues in "How to make new file", and "MAKHOL" in "Useful Routines for RAM file handling in ROM #0".
 
@@ -389,7 +389,7 @@ The useful routines presented in ROM #0:
 **Make a hole**
 
 ```
-ADDRESS:  0x6C0A  (octal 066012, decimal 27658)
+ADDRESS:  'X6C0A  (octal 066012, decimal 27658)
 ENTRY:    [HL]  points where you want to make a hole
           [BC]  size of the hole
 EXIT:     [HL] and [BC] are preserved
@@ -431,14 +431,14 @@ It is unnecessary to care about the pointers unless you make your own MAKHOL rou
 
 > **\*\*** When you make a hole just above ASCTAB to create a new DO file, you have to change the pointers BINTAB, VARTAB and ARYTAB. ASCTAB is modified only when you make a hole under ASCTAB to register a new BA file.
 
-It is easy to guess that calling MAKHOL too many times will reduce the processing speed. So you had better call MAKHOL with a good large number in the BC register. It makes a good hole which is large enough to save the data you want to keep. The only one thing you have to care about is that you have to shrink the hole when you made a too big hole. The DO file cannot include NUL (0x00) or ^Z (0x1A) in the file. (The ^Z means the End of File, as you know.) There is a convenient routine to shrink the hole and it refines the pointers, also. Its name is MASDEL and you can get the information about it in the following section.
+It is easy to guess that calling MAKHOL too many times will reduce the processing speed. So you had better call MAKHOL with a good large number in the BC register. It makes a good hole which is large enough to save the data you want to keep. The only one thing you have to care about is that you have to shrink the hole when you made a too big hole. The DO file cannot include NUL ('X00) or ^Z ('X1A) in the file. (The ^Z means the End of File, as you know.) There is a convenient routine to shrink the hole and it refines the pointers, also. Its name is MASDEL and you can get the information about it in the following section.
 
 ### 8.7.2 LNKFIL
 
 **Fix up directory structure**
 
 ```
-ADDRESS:  0x233A  (octal 021472, decimal 9018)
+ADDRESS:  'X233A  (octal 021472, decimal 9018)
 ENTRY:    NONE
 EXIT:     NONE
           All registers might be altered
@@ -508,7 +508,7 @@ When the top address of the next file is searched, the pointers ASCTAB and BINTA
 **Delete [BC] bytes from [HL]**
 
 ```
-ADDRESS:  0x6C3C  (octal 066074, decimal 27708)
+ADDRESS:  'X6C3C  (octal 066074, decimal 27708)
 ENTRY:    [HL]  pointer of the hole should be squeezed
           [BC]  size of the hole
 EXIT:     [HL]  preserved
@@ -524,7 +524,7 @@ If you want to utilize this routine for a CO file, you need to save BINTAB and r
 **Search for the end of this BASIC program**
 
 ```
-ADDRESS:  0x0718  (octal 03430, decimal 1816)
+ADDRESS:  'X0718  (octal 03430, decimal 1816)
 ENTRY:    [HL]  Top address of that BASIC file
 EXIT:     [HL]  The last address of that BASIC file
           All registers and flags are possibly modified
@@ -545,14 +545,14 @@ And also, these programs stored in this section are written in plain program tec
 ; Register new DO file in the Directory area
 ;    OPEN DO file
 ;
-USRDIR  EQU     0xF891  ; Top address of user's directory
+USRDIR  EQU     'XF891  ; Top address of user's directory
 EOTDIR  EQU     USRDIR - Directory_length
 DIRLEN  EQU     11      ; Length of the directory per file
 NAMLEN  EQU     6       ; Length of the file name
-ASCTAB  EQU     0xFAE1  ; Points the lowest address of DO files
-LNKFIL  EQU     0x233A  ; Make up the address in Directory
-MAKHOL  EQU     0x6C0A  ; Make a room for file
-EOFFIL  EQU     0x1A    ; End of DO file
+ASCTAB  EQU     'XFAE1  ; Points the lowest address of DO files
+LNKFIL  EQU     'X233A  ; Make up the address in Directory
+MAKHOL  EQU     'X6C0A  ; Make a room for file
+EOFFIL  EQU     'X1A    ; End of DO file
 
 OPENDO:
         XRA     A           ; Clear HL
@@ -566,7 +566,7 @@ SEANAM:
         LXI     B,DIRLEN    ; Set Directory length
         DAD     B           ; Get next slot
         MOV     A,M         ; Get directory flag
-        CPI     0x80        ; Valid?
+        CPI     'X80        ; Valid?
         JC      NONVAL      ; Jump if not valid slot
         INR     A           ; End of directory area?
         JZ      ENOSEA      ; Jump if end of test
@@ -574,7 +574,7 @@ SEANAM:
 ; Is the file a DO file?
         DCR     A           ; Adjust directory flag
         MOV     D,A         ; copy flag for later use
-        ANI     0b01000000  ; Pick up ASCII flag
+        ANI     'B01000000  ; Pick up ASCII flag
         ORA     A           ; DO file?
         JZ      SEANAM      ; Jump if not DO file
 ;
@@ -597,7 +597,7 @@ CMPNAM:
 ;
         POP     H           ; Top of the slot address
         MOV     A,M         ; Get directory flag
-        ANI     0b00000010  ; Pick up OPEN BIT
+        ANI     'B00000010  ; Pick up OPEN BIT
         ORA     A           ; File already opened?
         JNZ     FILAOP      ; Jump if file already opened
 ;
@@ -632,7 +632,7 @@ FINONM:
         JZ      DIRFULL     ; Jump if directory full
 ;
         PUSH    H           ; Save the top of the slot
-        MVI     M,0b11000000 ; Set directory flag as DO file
+        MVI     M,'B11000000 ; Set directory flag as DO file
         INX     H           ; Advance to name field
         LXI     D,NAME      ; Top of our file name
         MVI     B,NAMLEN    ; Name length
@@ -690,9 +690,9 @@ NAME:   DB      'TEST   DO'
 ;        [DE] address of source data
 ;        [BC] length of data
 ;
-MAKHOL  EQU     0x6C0A  ; Make a room for data
-LNKFIL  EQU     0x233A  ; Make up starting address
-ENDFIL  EQU     0x1A    ; End of DO file
+MAKHOL  EQU     'X6C0A  ; Make a room for data
+LNKFIL  EQU     'X233A  ; Make up starting address
+ENDFIL  EQU     'X1A    ; End of DO file
 ;
 SAVDAT:
 ;
@@ -701,15 +701,15 @@ SAVDAT:
         MOV     A,M         ; Get directory flag
         PUSH    B           ; Save data length
         MOV     B,A         ; Save directory flag
-        ANI     0b11000000  ; Pick up mode bits
-        CPI     0b11000000  ; DO file?
+        ANI     'B11000000  ; Pick up mode bits
+        CPI     'B11000000  ; DO file?
         JNZ     BADFIL      ; Jump if not DO file
         MOV     A,B         ; Get flag again
-        ANI     0b00000010  ; Pick up OPEN bit
+        ANI     'B00000010  ; Pick up OPEN bit
         ORA     A           ; File already opened?
         JNZ     FILAOP      ; Jump if file already opened
         MOV     A,B         ; Get directory flag
-        ORI     0b00000010  ; Say this file is opened
+        ORI     'B00000010  ; Say this file is opened
         MOV     M,A
 ;
 ; Search end of file
@@ -757,7 +757,7 @@ COPYLP:
 ;
         POP     H           ; Recover directory address
         MOV     A,M         ; Get directory flag
-        ANI     0b11111101  ; Turn off the flag
+        ANI     'B11111101  ; Turn off the flag
         MOV     M,A         ; Renew the flag
         RET
 ;
@@ -780,23 +780,23 @@ MEMFUL:
 ;        [DE] Offset address of top data to be deleted
 ;        [BC] Length of data to be deleted
 ;
-MASDEL  EQU     0x6C3C  ; Remove some data
-LNKFIL  EQU     0x233A  ; Make up starting address
+MASDEL  EQU     'X6C3C  ; Remove some data
+LNKFIL  EQU     'X233A  ; Make up starting address
 ;
 DELDAT:
 ;
 ; Check directory flag
 ;
         MOV     A,M         ; Get directory flag of the file
-        ANI     0b11000000  ; Pick up VALID bit and ASCII bit
-        CPI     0b11000000  ; Valid DO file?
+        ANI     'B11000000  ; Pick up VALID bit and ASCII bit
+        CPI     'B11000000  ; Valid DO file?
         JNZ     BADFIL      ; Jump if bad file
         MOV     A,M         ; Get directory flag again
-        ANI     0b00000010  ; Pick up OPEN bit
+        ANI     'B00000010  ; Pick up OPEN bit
         ORA     A           ; Already opened?
         JNZ     FILAOP      ; jump if the file already opened
         MOV     A,M         ; Set opened bit
-        ORI     0b00000010
+        ORI     'B00000010
         MOV     M,A         ; Say, the file is opened
 ;
         PUSH    H           ; Save directory address
@@ -818,7 +818,7 @@ DELDAT:
 ;
         POP     H           ; Restore the directory address
         MOV     A,M         ; Get directory flag
-        ANI     0b11111101  ; Turn off
+        ANI     'B11111101  ; Turn off
         MOV     M,A
 ;
 ; Adjust the directory
@@ -842,16 +842,16 @@ FILAOP:
 ;
 ; ENTRY: [HL] points the directory of the file
 ;
-MASDEL  EQU     0x6C3C  ; remove data
-LNKFIL  EQU     0x233A  ; adjust address field in directory area
+MASDEL  EQU     'X6C3C  ; remove data
+LNKFIL  EQU     'X233A  ; adjust address field in directory area
 
 DELOO:
         MOV     A,M         ; Get directory flag
-        ANI     0b11000000  ; Pick up VALID and ASCII bit
-        CPI     0b11000000  ; Valid DO file?
+        ANI     'B11000000  ; Pick up VALID and ASCII bit
+        CPI     'B11000000  ; Valid DO file?
         JNZ     BADFIL      ; jump if bad file mode
         MOV     A,M         ; get directory flag
-        ANI     0b00000010  ; pick up opened bit
+        ANI     'B00000010  ; pick up opened bit
         ORA     A           ; Already opened?
         JNZ     FILAOP      ; jump if already opened
 ;
@@ -910,15 +910,15 @@ BADFIL:
 ;
 ; ENTRY: [HL] directory address of the file
 ;
-MASDEL  EQU     0x6C3C  ; remove data from file
-LNKFIL  EQU     0x233A  ; make up starting address
-CHEAD   EQU     0x0718  ; search end of BASIC file
-TXTTAB  EQU     0xF450  ; lowest address of current BASIC program
-ASCTAB  EQU     0xFAE1  ; Lowest address of DO files
+MASDEL  EQU     'X6C3C  ; remove data from file
+LNKFIL  EQU     'X233A  ; make up starting address
+CHEAD   EQU     'X0718  ; search end of BASIC file
+TXTTAB  EQU     'XF450  ; lowest address of current BASIC program
+ASCTAB  EQU     'XFAE1  ; Lowest address of DO files
 ;
 DELBAS:
         MOV     A,M         ; Get directory flag
-        CPI     0b10000000  ; BASIC file?
+        CPI     'B10000000  ; BASIC file?
         JNZ     BADFIL      ; Jump if not BASIC file
         XCHG                ; [DE] directory address
         LHLD    TXTTAB      ; get lowest address of the
@@ -1011,18 +1011,18 @@ BADFIL:
 ;        [EXECAD]  execution address
 ;        [HL]      directory address for this CO file
 ;
-MAKHOL  EQU     0x6C0A  ; make a room
-LNKFIL  EQU     0x233A  ; make up directory address field
+MAKHOL  EQU     'X6C0A  ; make a room
+LNKFIL  EQU     'X233A  ; make up directory address field
 HEADLN  EQU     6       ; Header length of CO file
-BINTAB  EQU     0xFAE3  ; lowest address of existing CO files
-VARTAB  EQU     0xFAE5  ; lowest address of Variable table
+BINTAB  EQU     'XFAE3  ; lowest address of existing CO files
+VARTAB  EQU     'XFAE5  ; lowest address of Variable table
 
 MAKECO:
 ;
 ; Refer HOW TO MAKE NEW DO FILE to know how to find
 ; the directory address for new files.
 ;
-        MVI     A,0b10100000 ; Set directory flag as CO file
+        MVI     A,'B10100000 ; Set directory flag as CO file
         MOV     M,A         ; register it
         PUSH    H           ; save directory address
         LHLD    LENGTH      ; get file length of new CO
@@ -1098,14 +1098,14 @@ EXECAD: DS      2
 ;
 ; ENTRY: [HL] address of its directory
 ;
-MASDEL  EQU     0x6C3C  ; remove data
-LNKFIL  EQU     0x233A  ; make up starting address in the directory
-BINTAB  EQU     0xFAE3  ; lowest address of CO files
+MASDEL  EQU     'X6C3C  ; remove data
+LNKFIL  EQU     'X233A  ; make up starting address in the directory
+BINTAB  EQU     'XFAE3  ; lowest address of CO files
 HEADLN  EQU     6       ; length of the header in CO file
 
 DELCO:
         MOV     A,M         ; Get DIRECTORY flag
-        CPI     0b10100000  ; CO file?
+        CPI     'B10100000  ; CO file?
         JNZ     BADFIL      ; Jump if BAD file mode
         XRA     A
         MOV     M,A         ; Clear directory flag

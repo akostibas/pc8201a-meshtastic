@@ -13,14 +13,14 @@ The directory area is allocated in the middle of the bookkeeping area. The top o
 ```
 DIRTBL: BASIC
           FILER
-                   <--------- &HF84F
+                   <--------- 'XF84F
           TELCOM
 NULDIR:   (Directory for non-registered program)
 SCRDIR:   (Directory for SCRAP)
 EDTDIR:   (Directory for EDIT command)
 USRDIR:   (Directory for user-defined files)
 
-          ((End-of-directory)) &HFF
+          ((End-of-directory)) 'XFF
 ```
 
 > Note: The "non-registered program" means a non-saved BASIC program. Refer to "BA file" in the previous section. "Directory for SCRAP" and "Directory for EDIT command" are explained in "DO file".
@@ -65,38 +65,38 @@ TXTTAB in BASIC shows the lowest byte of the file, the first link pointer in the
 
 Initialized values for the first 6 slots in the Directory are shown below. The first 3 files are stored in ROM and displayed on the menu screen. (These 3 files are called the "standard programs".) The next 3 files are used for hidden files created in RAM area. These hidden files will not appear on the Menu screen. Refer to the previous section, "DO file" and "BA file". The characteristics of these hidden files are described there.
 
-> Note: First 6 slots in Directory (Initialized data stored at &H6C8E)
+> Note: First 6 slots in Directory (Initialized data stored at 'X6C8E)
 
 <!-- TODO(tier-b): directory-init data garbled — re-OCR from source page 78 -->
 
 ```asm
         ;BASIC
-        DB      &B1011000    ; flag <!-- OCR: 7 bits in source -->
+        DB      'B1011000    ; flag <!-- OCR: 7 bits in source -->
         DW      Start address of BASIC
         DB      'BASIC
         DB      0
         ;FILER (TEXT)
-        DB      &B1011000    ; flag <!-- OCR: 7 bits in source -->
+        DB      'B1011000    ; flag <!-- OCR: 7 bits in source -->
         DW      Start address of TEXT
         DB      'TEXT
         DB      0
         ;TELCOM
-        DB      &B1011000    ; flag <!-- OCR: 7 bits in source -->
+        DB      'B1011000    ; flag <!-- OCR: 7 bits in source -->
         DW      Start address of TELCOM
         DB      'TELCOM'
         DB      0
         ;for non-registered program
-        DB      &B10001000    ; flag
+        DB      'B10001000    ; flag
         DW      0
         DB      0
         DB      'XXXXXXX'
         ;for SCRAP file
-        DB      &B11001000    ; flag
+        DB      'B11001000    ; flag
         DW      0
         DB      0
         DB      'YYYYYYY'
         ;for EDIT command of BASIC
-        DB      &B01001000    ; flag
+        DB      'B01001000    ; flag
         DW      0
         DB      0
         DB      'ZZZZZZZ'

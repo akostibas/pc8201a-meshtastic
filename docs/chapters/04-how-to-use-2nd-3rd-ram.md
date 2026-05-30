@@ -4,14 +4,14 @@
 > (source pages 49–59). Prose LLM-cleaned 2026-05-29; figures/tables pending Tier B vision re-OCR.
 > Do not treat numeric/tabular values here as **authoritative**.
 
-When you want to change the bank of RAM, the most simple method is to do an OUT instruction and to jump to `0X0000` for a warm start, because managing the bookkeeping area yourself is too difficult. But if you would not like to do a warm start, you must manage the bookkeeping and system parameters yourself and use the special RAM bank handling routine.
+When you want to change the bank of RAM, the most simple method is to do an OUT instruction and to jump to `'X0000` for a warm start, because managing the bookkeeping area yourself is too difficult. But if you would not like to do a warm start, you must manage the bookkeeping and system parameters yourself and use the special RAM bank handling routine.
 
-You can easily guess that when the bank of RAM is changed, PC (the program counter) must stay lower than `0X7FFF`, because a bank switch completely changes the code in RAM from address `0X8000` to `0XFFFF`. The area from `0X0` to `0X7FFF` is used for ROM. The only way is to make a special RAM bank switch routine in all RAM banks at the same address. The following illustration will help you to understand this curious method.
+You can easily guess that when the bank of RAM is changed, PC (the program counter) must stay lower than `'X7FFF`, because a bank switch completely changes the code in RAM from address `'X8000` to `'XFFFF`. The area from `'X0` to `'X7FFF` is used for ROM. The only way is to make a special RAM bank switch routine in all RAM banks at the same address. The following illustration will help you to understand this curious method.
 
 ```asm
    POP      HL           POP    HL       ; Pick up return address
    MOV      A,NEXT       MOV    A,NEXT   ; Set next bank status
-   OUT      0XA1         OUT    0XA1     ; Change bank
+   OUT      'XA1         OUT    'XA1     ; Change bank
    PUSH     H            PUSH   H        ; Set return address
    RET                                   ; Return to specified address
          RAM #0          RAM #1
@@ -28,30 +28,30 @@ There are two methods to read/write another bank of RAM. The first is simpler th
 
 These are very useful routines in the 1st ROM: GETBNK and PUTBNK.
 
-### 4.1.1.1 GETBNK (`0X7EEC`)
+### 4.1.1.1 GETBNK (`'X7EEC`)
 
 This routine reads one byte from other banks of RAM. The GETBNK routine temporarily changes the specified RAM bank, reads a byte pointed by [HL], and returns to the original bank. Interrupts should be disabled before calling the GETBNK routine.
 
 ```
 Entry   [B]  = Bank number
-                  0X00: Main bank
-                  0X08: Bank #2
-                  0X0C: Bank #3
+                  'X00: Main bank
+                  'X08: Bank #2
+                  'X0C: Bank #3
         [HL] = Address of byte to read
 Exit    [D]  = Byte data which was read
 Altered registers
         [A], [C], [D], [F]
 ```
 
-### 4.1.1.2 PUTBNK (`0X7EE5`)
+### 4.1.1.2 PUTBNK (`'X7EE5`)
 
 The PUTBNK routine writes one byte at the specified address pointed by [HL] in the specified RAM bank. Similar to the GETBNK routine, the original bank will be selected after writing the data. Before using the PUTBNK routine, interrupts should be disabled.
 
 ```
 Entry   [B]  = Bank number
-                  0X00: Main bank
-                  0X08: Bank #2
-                  0X0C: Bank #3
+                  'X00: Main bank
+                  'X08: Bank #2
+                  'X0C: Bank #3
         [HL] = Location where the byte is stored
         [D]  = Byte data to be stored
 Exit    None
@@ -61,7 +61,7 @@ Altered registers
 
 ### 4.1.2 Method 2 (Using Your Original Code)
 
-When your code is located in the upper address range (`0X8000`–`0XFFFF`), and you want to read/write a large amount of data in another bank of RAM, you had better change the target RAM bank at the lower position of memory.
+When your code is located in the upper address range (`'X8000`–`'XFFFF`), and you want to read/write a large amount of data in another bank of RAM, you had better change the target RAM bank at the lower position of memory.
 
 (1) Your code is in RAM #1. And data you want to access is in RAM #2.
 
@@ -111,7 +111,7 @@ When your code is located in the upper address range (`0X8000`–`0XFFFF`), and 
 
 In this case, you have to disable all interrupts before changing the BANK.
 
-When your code is located at a lower address (`0X0000`–`0X7FFF`), for instance running a program in 2nd ROM, please use the next method to handle the data in other RAM banks.
+When your code is located at a lower address (`'X0000`–`'X7FFF`), for instance running a program in 2nd ROM, please use the next method to handle the data in other RAM banks.
 
 (1) The program in 2nd ROM is running with RAM #1.
 
@@ -139,7 +139,7 @@ When your code is located at a lower address (`0X0000`–`0X7FFF`), for instance
 <!-- FIGURE 4.5: Memory map — RAM #2 switched in during bank switch (lower address scenario, step 2) — needs vision re-OCR from source page 55 (target: mermaid or table) -->
 
 ```text
-                         0XFFFF   ---------- -----------
+                         'XFFFF   ---------- -----------
                                         RAM    : RAM
                                          #2    :standard
                                   I
@@ -162,7 +162,7 @@ When your code is located at a lower address (`0X0000`–`0X7FFF`), for instance
 
 This sample will access another bank of RAM. There are two routines in this source program. One is for byte-by-byte access using special bank switching. The other is for block-of-data access.
 
-In the architecture of the bank, bank 1 (Standard RAM) is not able to switch the low address range (`0X0000`–`0X7FFF`).
+In the architecture of the bank, bank 1 (Standard RAM) is not able to switch the low address range (`'X0000`–`'X7FFF`).
 
 ```
 Entry   HL: Address to be accessed
@@ -189,28 +189,28 @@ Exit    None
 Bank number:
 
 ```
-Bank #1 (Standard RAM)  : 0X00
-Bank #2 (RAM #2)        : 0X08
-Bank #3 (RAM #3)        : 0X0C
+Bank #1 (Standard RAM)  : 'X00
+Bank #2 (RAM #2)        : 'X08
+Bank #3 (RAM #3)        : 'X0C
 ```
 
 ```asm
 ; <<< System label defines >>>
-BNKCRL  EQU     0X0A1           ; Bank control port
-STATUS  EQU     0X0A0           ; Bank status port
-        ORG     0X0000          ; This program can be located
+BNKCRL  EQU     'X0A1           ; Bank control port
+STATUS  EQU     'X0A0           ; Bank status port
+        ORG     'X0000          ; This program can be located
                                 ; any place
                                 ; This switch should be changed
                                 ; according to the situation
-HIGH    EQU     -1              ; High address (0X8000-0XFFFF)
-SLOW    EQU     0               ; Low address  (0X0000-0X7FFF)
+HIGH    EQU     -1              ; High address ('X8000-'XFFFF)
+SLOW    EQU     0               ; Low address  ('X0000-'X7FFF)
 
 ; <<< Byte access routine >>>
 BYTER:  DI                      ; Disable interrupt
         IN      STATUS          ; Read current bank status
         PUSH    PSW             ; Save current bank status
         IF      SHIGH
-        ANI     0B11110011      ; Clear high address of bank switch
+        ANI     'B11110011      ; Clear high address of bank switch
         ORA     C               ; Set new data of bank
         ELSE
         PUSH    PSW             ; Save current bank
@@ -219,7 +219,7 @@ BYTER:  DI                      ; Disable interrupt
         RAR                     ; Shift 2 bits
         MOV     C,A             ; Restore bank data
         POP     PSW             ; Pick up current bank
-        ANI     0B11111100      ; Clear low address of bank switch
+        ANI     'B11111100      ; Clear low address of bank switch
         ORA     C               ; Set new data of bank
         ENDIF
         OUT     BNKCRL          ; Select new bank!
@@ -233,7 +233,7 @@ BYTEW:  DI                      ; Disable interrupt
         IN      STATUS          ; Read current bank status
         PUSH    PSW             ; Save current bank status
         IF      SHIGH
-        ANI     0B11110011      ; Clear high address of bank switch
+        ANI     'B11110011      ; Clear high address of bank switch
         ORA     C               ; Set new data of bank
         ELSE
         PUSH    PSW             ; Save current bank
@@ -241,7 +241,7 @@ BYTEW:  DI                      ; Disable interrupt
         RAR                     ;
         RAR                     ; Shift 2 bits
         MOV     C,A             ; Pick up current bank
-        ANI     0B11111100      ; Clear low address of bank switch
+        ANI     'B11111100      ; Clear low address of bank switch
         ORA     C               ; Set new data of bank
         ENDIF
         OUT     BNKCRL          ; Bank switch!
@@ -258,7 +258,7 @@ BLOCKR: DI                      ; Disable interrupt
         IN      STATUS          ; Read current bank status
         STA     CURBNK          ; Save current bank
         IF      SHIGH
-        ANI     0B11110011      ; Clear high address of bank switch
+        ANI     'B11110011      ; Clear high address of bank switch
         ORA     C               ; Set new data of bank
         ELSE
         PUSH    PSW             ; Save current bank
@@ -267,7 +267,7 @@ BLOCKR: DI                      ; Disable interrupt
         RAR                     ; Shift 2 bits
         MOV     C,A             ; Restore bank data
         POP     PSW             ; Pick up current bank
-        ANI     0B11111100      ; Clear low address of bank switch
+        ANI     'B11111100      ; Clear low address of bank switch
         ORA     C               ; Set new bank data
         ENDIF
         POP     B               ; Pick up length
@@ -289,7 +289,7 @@ BLOCKW: DI                      ; Disable interrupt
         IN      STATUS          ; Read current bank status
         STA     CURBNK          ; Save current bank
         IF      SHIGH
-        ANI     0B11110011      ; Clear high address of bank switch
+        ANI     'B11110011      ; Clear high address of bank switch
         ORA     C               ; Set new data of bank
         ELSE
         PUSH    PSW             ; Save current bank
@@ -298,7 +298,7 @@ BLOCKW: DI                      ; Disable interrupt
         RAR                     ; Shift 2 bits
         MOV     C,A             ; Restore bank data
         POP     PSW             ; Pick up current bank
-        ANI     0B11111100      ; Clear low address of bank switch
+        ANI     'B11111100      ; Clear low address of bank switch
         ORA     C               ; Set new bank data
         ENDIF
         POP     B               ; Pick up length
@@ -314,6 +314,6 @@ NEXTW:
         RET                     ;
 
 ; <<< System work area >>>
-CURBNK: DB      0X00            ; Current bank data
+CURBNK: DB      'X00            ; Current bank data
         END
 ```
