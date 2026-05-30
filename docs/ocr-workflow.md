@@ -128,6 +128,14 @@ weren't kept — the conclusions are below.
    - flowchart **connector topology** (sonnet invented a loop edge / got an
      off-page connector's direction backwards),
    - **dual-character table cells** (shifted glyph over normal) collapsed to one.
+   - **column dividers misread as colons:** the manual's font draws a pipe `|`
+     as a double vertical line, which OCR flattens to `:`. In ASCII
+     register/bit diagrams the cell separators are PIPES, not colons —
+     transcribe `|`. (e.g. `| TBRE | PE | FE | OE |`, not `:TBRE:PE:FE:OE:`.)
+   - **bit/column header labels not aligned over their columns:** in
+     register diagrams the msb..lsb numbers and field names must sit directly
+     above the cells they label. The vision pass routinely drifts them left or
+     right; check alignment against the source and fix the spacing.
 
 ### Per-figure-type output policy
 
