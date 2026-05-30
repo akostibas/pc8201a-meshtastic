@@ -44,7 +44,7 @@ There is **no channel-selection field**. Outbound serial → always broadcast on
 
 ## Status
 
-Pre-build. WisBlock Mini base board on the way. RAK4631 in hand. Next step is the Phase 1 external dongle — proves the serial bridge before any case mods.
+RAK4631 in hand and configured: Serial Module (`TEXTMSG`, 19200 baud) on the BayMesh radio config (MediumFast, freq slot 45, max hops 7), with the private "Shannon" channel as primary. Next step is bench-verifying the UART, then the Phase 1 external RS-232 dongle — proves the serial bridge before any case mods. See [`docs/`](docs/) for the full as-built node config.
 
 ## Notes
 

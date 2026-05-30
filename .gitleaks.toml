@@ -1,0 +1,11 @@
+title = "pc8201a-meshtastic gitleaks config"
+
+# Keep all of gitleaks' built-in rules, then add project-specific ones below.
+[extend]
+useDefault = true
+
+[[rules]]
+id = "meshtastic-channel-url"
+description = "Meshtastic channel-set URL (embeds channel PSK)"
+regex = '''https?://meshtastic\.org/e/#[A-Za-z0-9_=-]+'''
+tags = ["meshtastic", "secret", "psk"]

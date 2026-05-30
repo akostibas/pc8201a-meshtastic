@@ -23,6 +23,40 @@ Recommendation: try (1) first since it's free; fall back to (3) or (4) if BLE do
 
 Once connected: Meshtastic supports MQTT natively — point it at a local broker (Mosquitto on the Pi) and every mesh message is a topic, easy to consume from anything else on the LAN.
 
+## Node config (as built — Phase 1)
+
+The RAK4631 bridge node, configured 2026-05-29. This is the third node on the
+mesh (alongside the SenseCAP REPEATER and WisMesh Tag CLIENT).
+
+**Mesh: BayMesh.** LoRa radio config must match the community exactly or the
+node is deaf:
+
+- Modem preset: **MediumFast**
+- Frequency slot: **45**
+- Region: **US (915 MHz)**
+- Max hops: **7**
+
+**Serial Module:**
+
+- `enabled` — on
+- `mode` — `TEXTMSG`
+- `baud` — `19200` (matches PC-8201A TELCOM 8N1; the 8201A's spec ceiling, may
+  drop to 9600/4800 if real-world UART proves unstable)
+- `echo` — on (so TELCOM shows what you typed)
+
+**Channels:**
+
+- Slot 0 (primary): **Shannon** — a private, PSK-encrypted channel. TELCOM
+  output broadcasts here (in `TEXTMSG` mode outbound always goes to primary).
+- **No other channels should carry a key.** `TEXTMSG` inbound is unfiltered:
+  every channel the node can decrypt dumps to the UART. BayMesh's public
+  primary is high-traffic, so any stray public key would flood the 8201A
+  screen. Keep Shannon the only keyed channel.
+
+> **The Shannon channel PSK is NOT in this repo (it's public).** The key lives
+> only on the physical nodes. To add a node to the Shannon channel, share the
+> channel URL/QR out-of-band — never commit it.
+
 ## Phase 1 — antenna note
 
 PCB antenna ships with the RAK4631 and is fine for the external-dongle phase. If/when we move inside the case (Phase 2) and the PCB antenna underperforms inside the shielding, the swap to u.FL + external SMA is mechanically easy.
@@ -40,9 +74,17 @@ PCB antenna ships with the RAK4631 and is fine for the external-dongle phase. If
 
 ### Hardware integration (new — internal mount + power tap)
 
-- Where on the PC-8201A's PCB are the 80C85 UART TX/RX pads (pre-RS-232 driver)? Need a service manual / schematic, or trace from the driver chip backwards.
-- What driver chip does the 8201A use for the DB-25? (likely an MC1488/1489 pair or similar.) Confirms TTL side is on its inputs.
-- UART logic level on the 8201A side — 5V CMOS expected, but confirm with a scope before wiring the RAK directly.
+> **TTL tap, drivers, and UART are now researched** — see
+> [`phase2-internal-uart-tap.md`](phase2-internal-uart-tap.md). Short version:
+> tap the **6402 UART (U22)** at **TRO pin 25** (TX) / **RRI pin 20** (RX), 5V
+> CMOS; the drivers are CD4584-style CMOS inverters (not MC1488/89), and the
+> DB-25 swings ~±5–8V, not true ±12V. Handshake lines live on separate I/O
+> latches (ports 0xBA / 0xD8), not the UART. Still verify pin locations on the
+> actual board before cutting.
+
+- ~~Where are the 80C85 UART TX/RX pads (pre-driver)?~~ → 6402 U22, TRO pin 25 / RRI pin 20.
+- ~~What driver chip does the 8201A use?~~ → CD4584-style CMOS Schmitt inverters (U30/U31), not MC1488/89.
+- ~~UART logic level?~~ → 5V CMOS (confirm with scope before wiring).
 - Which internal rail is switched by the power button and has headroom for the RAK4631 (TX bursts can spike to ~120 mA on the SX1262)? Candidates: any 5V rail downstream of the switch, or the regulated CPU supply.
 - If we tap a 5V rail, do we feed it to the RAK19003's 5V/USB input, or step it down and feed VBAT (3.3–4.2V)?
 - Physical mounting location — option ROM bay? Under the keyboard? Behind the battery compartment?
