@@ -10,7 +10,7 @@
 
 ### Map 1 — RAM Address Layout (single-bank view)
 
-**Figure B.1 — RAM address map (8000–65535), high address at top.**
+**Figure B.1 — RAM address map (32768–65535), high address at top.**
 
 ```mermaid
 block-beta
@@ -24,14 +24,23 @@ block-beta
   a6[" "]:1 pure["Pure variable region"]:1
   a7[" "]:1 co["Machine language program file .CO"]:1
   a8[" "]:1 do[".DO ASCII code text file"]:1
-  bot["8000"]:1 ba["BASIC program file .BA"]:1
+  bot["32768"]:1 ba["BASIC program file .BA"]:1
 ```
-<!-- Figure B.1 reproduces the single-bank RAM map on source p279. Addresses
-     verified against scan: top boundary 65535, Work-area lower boundary 62336,
-     base 8000. The "Changes according to CLEAR statement number 1 parameter"
-     brace in the scan spans String region through System stack. -->
+<!-- Figure B.1 reproduces the single-bank RAM map on source p279. The source
+     diagram MIXES notations: it prints the top two boundaries in decimal
+     (65535, 62336) but the base as hex "8000" (= ^X8000 = 32768 decimal).
+     8000 cannot be decimal here — that would be ^X1F40, well inside System
+     ROM. Reconciled to decimal throughout for internal consistency with
+     Map 2 below; the base is therefore shown as 32768, not the printed 8000.
+     Hex equivalents: 65535 = ^XFFFF, 62336 = ^XF380, 32768 = ^X8000 (matches
+     the canonical memory map in the shared glossary). The "Changes according
+     to CLEAR statement number 1 parameter" brace in the scan spans String
+     region through System stack. -->
 
-The following table summarises the regions shown in the diagram on source page 279:
+The following table summarises the regions shown in the diagram on source page
+279. Addresses are given in decimal; the source diagram printed the base in hex
+("8000" = `^X8000` = 32768 decimal) while the upper boundaries were decimal, so
+the base has been converted to decimal here for consistency.
 
 | Address Range | Region | Notes |
 |---|---|---|
@@ -44,7 +53,7 @@ The following table summarises the regions shown in the diagram on source page 2
 | (variable) | Pure variable region | |
 | (variable) | Machine language program file (.CO) | |
 | (variable) | ASCII code text file (.DO) | |
-| 8000–(variable) | BASIC program file (.BA) | |
+| 32768–(variable) | BASIC program file (.BA) | |
 
 ### Map 2 — RAM Bank Configuration
 
