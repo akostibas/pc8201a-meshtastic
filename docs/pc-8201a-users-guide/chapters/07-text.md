@@ -1,8 +1,7 @@
 # Chapter 7: TEXT
 
 > Vision-OCR'd from NEC8201A-UsersGuide.pdf (image-only scan, source pages 123-154 / printed 7-1..7-32), 2026-05-30.
-> Figures/tables are transcribed per the project's per-figure-type policy; values flagged with TODO(tier-b) still need a human check against the scan.
-> **Do not treat numeric/tabular values here as authoritative** — Tier B review pending.
+> Figures/tables are transcribed per the project's per-figure-type policy. Tier-B vision review complete: illustration/screen-photo figures are embedded crops, and every table / ASCII mockup / grid diagram has been verified cell-by-cell against the scan.
 
 
 ## Overview
@@ -366,20 +365,8 @@ Input the [STOP] Key to get out of the SELECT command mode, and then move the cu
 
 The screen will now appear as illustrated:
 
-<!-- FIGURE 7.13: Screen with last sentence selected in reverse video — source page 141 (target: image) -->
-
-```text
-The PC-8201 is a compact and smart
-computer. It offers many features, like
-BASIC language for programming, word
-processing capability and the ability to
- communicate to other machines by the
-use of a telephone modem. [You also have
-access to a wide range of devices thru
-its interface ports.]◄          -
-```
-
-<!-- TODO(tier-b): verify reverse-video selection extent (which chars highlighted) against source page 141 -->
+![Fig 7.13: TEXT screen with last sentence selected in reverse video](../images/ch07-fig13-p141.png)
+<!-- source page 141 -->
 
 Now you can press the f.5 Function Key to copy that sentence into the PASTE buffer. After this, the last sentence is released for normal use.
 
@@ -407,31 +394,13 @@ EXAMPLE:
 
 Use the same example as in the SELECT command. After you have selected the last statement of the "PC8201.DO" document, press the f.4 Function Key. The screen will appear as illustrated:
 
-<!-- FIGURE 7.14: Screen after CUT — last sentence removed, cursor at end of remaining text — source page 142 (target: image) -->
-
-```text
-The PC-8201 is a compact and smart
-computer. It offers many features, like
-BASIC language for programming, word
-processing capability and the ability to
- communicate to other machines by the
-use of a telephone modem. ↵
-```
+![Fig 7.14: TEXT screen after CUT — last sentence removed, end-of-file marker at end of remaining text](../images/ch07-fig14-p142.png)
+<!-- source page 142 -->
 
 To verify that we actually moved the last statement in the PASTE buffer, just press the PAST Key and [SHIFT] Key simultaneously. The screen will revert back to the original display:
 
-<!-- FIGURE 7.15: Screen after PASTE verification — original text restored — source page 142 (target: image) -->
-
-```text
-The PC-8201 is a compact and smart
-computer. It offers many features, like
-BASIC language for programming, word
-processing capability and the ability to
- communicate to other machines by the
-use of a telephone modem. You also have
-access to a wide range of devices thru
-its interface ports.↵
-```
+![Fig 7.15: TEXT screen after PASTE verification — original text restored](../images/ch07-fig15-p142.png)
+<!-- source page 142 -->
 
 > **NOTE:** A distinction should be made between the [DEL] Key and the CUT command. When you DELETE a character by means of the DEL Key or BS Key, that character is not saved as with the CUT command.
 
@@ -453,18 +422,8 @@ Again use the same example as for the CUT and SELECT commands. After selecting t
 
 To verify that we moved the contents to the PASTE buffer, move the cursor onto the "◄" and press the [RETURN] and [SHIFT] Keys simultaneously. The screen will display:
 
-<!-- FIGURE 7.16: Screen after COPY+PASTE — duplicated last sentence appended — source page 144 (target: image) -->
-
-```text
-BASIC language for programming, word
-processing capability and the ability to
- communicate to other machines by the
-use of a telephone modem. You also have
-access to a wide range of devices thru
-its interface ports.You also have access
- to a wide range of devices thru its
-interface ports.↵
-```
+![Fig 7.16: TEXT screen after COPY+PASTE — duplicated last sentence appended](../images/ch07-fig16-p144.png)
+<!-- source page 144 -->
 
 ## f.6/KEYS
 
@@ -484,7 +443,7 @@ If the last line is used for text editing, then the following will happen:
 
 - If the screen is not full, then the following screen will be displayed:
 
-<!-- FIGURE 7.17: Screen mockup — f.6/KEYS command with function key bar displayed, screen not full — source page 145 (target: ascii) -->
+<!-- Fig 7.17 (Tier-B verified): Screen mockup — f.6/KEYS command with function key bar displayed, screen not full — source page 145. Content + function-key bar verified against scan. -->
 
 ```text
 processing capability and the ability to
@@ -495,14 +454,12 @@ its interface ports.◄
 
 Find    Next    Sel     Cut     Copy
 ```
-
-<!-- TODO(tier-b): verify cursor glyph and exact spacing of function key bar against source page 145 -->
 
 The seven lines will be displaying your document. Notice that the last line is the same as in the case when the screen is full.
 
 The screen appears as follows when the first five functions are displayed on the last line of the screen:
 
-<!-- FIGURE 7.18: Screen mockup — f.6/KEYS with first five function key names on last line — source page 146 (target: ascii) -->
+<!-- Fig 7.18 (Tier-B verified): Screen mockup — f.6/KEYS with first five function key names (Find Next Sel Cut Copy) on last line — source page 146. Verified against scan. -->
 
 ```text
 processing capability and the ability to
@@ -514,11 +471,9 @@ its interface ports.◄
 Find    Next    Sel     Cut     Copy
 ```
 
-<!-- TODO(tier-b): verify exact tab spacing of function key labels against source page 146 -->
-
 When the [SHIFT] Key is depressed, the names of functions 6 and 10 are displayed in the last line:
 
-<!-- FIGURE 7.19: Screen mockup — f.6/KEYS with SHIFT held, showing Keys and Menu labels — source page 146 (target: ascii) -->
+<!-- Fig 7.19 (Tier-B verified): Screen mockup — f.6/KEYS with SHIFT held, showing Keys (left) and Menu (right) labels — source page 146. Verified against scan. -->
 
 ```text
 processing capability and the ability to
@@ -529,8 +484,6 @@ its interface ports.◄
 
 Keys                            Menu
 ```
-
-<!-- TODO(tier-b): verify spacing between "Keys" and "Menu" labels against source page 146 -->
 
 You can always alternate between displaying or erasing the last line (command line) by pressing the f.6 Function Key.
 
@@ -550,20 +503,18 @@ If you omitted the ".DO" extension when you specified the file name, the PC-8201
 
 When in the MENU mode, you will notice that the name of the file you were editing will appear on the screen:
 
-<!-- FIGURE 7.20: MENU screen mockup showing PC8201.DO highlighted after returning from TEXT — source page 147 (target: ascii) -->
+<!-- Fig 7.20 (Tier-B verified): MENU screen mockup showing BASIC highlighted after returning from TEXT, PC8201.DO now listed — source page 147. Row-2 col-1 (██████ = BASIC) is the reverse-video cursor highlight; PC8201.BA in row 3. Verified against scan. -->
 
 ```text
-1983/01/01  00:00:00        (C) Microsoft #1
-████████  TEXT      TELCOM      PC8201.DO
-PC8201.BA  -.-
--.-        -.-       -.-         -.-
--.-        -.-       -.-         -.-
--.-        -.-       -.-         -.-
--.-        -.-       -.-         -.-
+1983/01/01 00:00:00         (C) Microsoft #1
+██████    TEXT      TELCOM      PC8201.DO
+PC8201.BA -.-       -.-         -.-
+-.-       -.-       -.-         -.-
+-.-       -.-       -.-         -.-
+-.-       -.-       -.-         -.-
+-.-       -.-       -.-         -.-
 Load    Save    Name    List    12374
 ```
-
-<!-- TODO(tier-b): verify highlighted filename field and exact spacing of MENU screen against source page 147 -->
 
 ---
 
@@ -581,7 +532,7 @@ EXAMPLE:
 
 When you have selected the "PC8201.DO" file as in the previous examples, the screen will appear as illustrated:
 
-<!-- FIGURE 7.21: Screen mockup — full document text with cursor at end before PASTE — source page 148 (target: ascii) -->
+<!-- Fig 7.21 (Tier-B verified): Screen mockup — full document text with end-of-file marker (◄) and cursor at end before PASTE — source page 148. Verified against scan. -->
 
 ```text
 The PC-8201 is a compact and smart
@@ -594,8 +545,6 @@ access to a wide range of devices thru
 its interface ports.◄    _
 ```
 
-<!-- TODO(tier-b): verify cursor position and underscore character against source page 148 -->
-
 A paste buffer with the following contents:
 
 ```text
@@ -606,7 +555,7 @@ its interface ports.
 
 To copy the PASTE buffer, move the cursor to the position to the right of "◄", and then press the [MENU] Key and [SHIFT]. The screen will change as illustrated:
 
-<!-- FIGURE 7.22: Screen mockup — document after PASTE buffer copied in, showing duplicated text — source page 149 (target: ascii) -->
+<!-- Fig 7.22 (Tier-B verified): Screen mockup — document after PASTE buffer copied in, showing duplicated text — source page 149. Line-wrap and joined text at paste point verified against scan. -->
 
 ```text
 BASIC language for programming, word
@@ -618,8 +567,6 @@ its interface ports.You also have access
  to a wide range of devices thru its
 interface ports.◄
 ```
-
-<!-- TODO(tier-b): verify exact line-wrap and joined text at paste point against source page 149 -->
 
 ---
 
@@ -681,58 +628,52 @@ DESCRIPTION:
 
 The following figure shows that the tab stops are set every eighth column on the screen. These tab stops are transparent to the display:
 
-<!-- FIGURE 7.23: Tab-stop grid diagram — 8 rows × 40 columns, tab stops at columns 1, 9, 17, 25, 33 shown as dark bars — source page 153 (target: ascii) -->
+<!-- Fig 7.23 (Tier-B verified): Tab-stop grid diagram — 8-row × 40-column screen grid; a solid dark bar marks each tab-stop column (1, 9, 17, 25, 33). The ▓ bars stand in for those solid columns; the remaining cells are the empty screen grid. Source page 153; column numbers verified against scan. -->
 
 ```text
-         1         9        17        25        33
-         |         |         |         |         |
-row 1  [ tab ]   [ tab ]   [ tab ]   [ tab ]   [    ]
-row 2  [     ]   [     ]   [     ]   [     ]   [    ]
-row 3  [     ]   [     ]   [     ]   [     ]   [    ]
-row 4  [     ]   [     ]   [     ]   [     ]   [    ]
-row 5  [     ]   [     ]   [     ]   [     ]   [    ]
-row 6  [     ]   [     ]   [     ]   [     ]   [    ]
-row 7  [     ]   [     ]   [     ]   [     ]   [    ]
-row 8  [     ]   [     ]   [     ]   [     ]   [    ]
+       1        9        17       25       33
+col:   ▓........▓........▓........▓........▓.......
+row 1  ▓........▓........▓........▓........▓.......
+row 2  ▓........▓........▓........▓........▓.......
+row 3  ▓........▓........▓........▓........▓.......
+row 4  ▓........▓........▓........▓........▓.......
+row 5  ▓........▓........▓........▓........▓.......
+row 6  ▓........▓........▓........▓........▓.......
+row 7  ▓........▓........▓........▓........▓.......
+row 8  ▓........▓........▓........▓........▓.......
 ```
-
-<!-- TODO(tier-b): verify exact column numbers (1, 9, 17, 25, 33) and grid layout against source page 153 -->
 
 Start a new line and press the [TAB] Key (or press [CTRL] + I). The cursor is automatically moved to the nearest tab position in the forward direction.
 
 Any text that is located to the right of the cursor, and the cursor position, is moved to the right to the next tab position. For example, type in the following and move the cursor to column 5. Press the [TAB] Key. Figure 2 shows the result:
 
-<!-- FIGURE 7.24: Two-row diagram showing before/after TAB key press — text shifts from col 5 to next tab stop — source page 153 (target: ascii) -->
+<!-- Fig 7.24 (Tier-B verified): Two-row diagram showing before/after a TAB key press. Cursor sits at column 5; pressing TAB pushes the text at/after the cursor ("AAAA BBB CCC") rightward to the next tab stop (column 9). Source page 153; cell-by-cell positions read off the scan. -->
 
 ```text
-         1    5    9        17        25        33
-1.  [ AA | AAAA | BBB |  | CCC |  |  |  |  |  |  |  |  |  |  ]
-              \       [TAB] Key      /
-2.  [  AA |    | AAAA | BBB |  | CCC |  |  |  |  |  |  |  |  ]
+       1   5   9       17      25      33
+1.  | AA AAAA BBB   CCC                          |
+                 ^ [TAB] Key
+2.  | AA     AAAA BBB   CCC                      |
 ```
-
-<!-- TODO(tier-b): verify column positions and label characters (AA, AAAA, BBB, CCC) in tab diagram against source page 153 -->
 
 If the [DEL] Key is used, the reverse process will occur and the original display will reappear.
 
 When the tab is moved over, the vacant space caused by tab movement consists of a null code. The tab code then can be set before the tab location. When the tab code is erased, the cursor and the text will revert to the original locations:
 
-<!-- FIGURE 7.25: Three-row grid showing TAB null-code and DEL effect — columns 1–13 — source page 154 (target: ascii) -->
+<!-- Fig 7.25 (Tier-B verified): Two-row grid (columns 1–13) showing the TAB null-code and DEL effect. ▓ = the solid black "null" (tab) code cell. Top row: A A at cols 3–4, null at col 5, A A A A at cols 6–9 (TAB arrow up at col 5, DEL arrow up at col 8). Bottom row: A A at cols 3–4, null shifted to col 8, A A A A at cols 9–12. Source page 154; positions read cell-by-cell off the scan. -->
 
 ```text
      1  2  3  4  5  6  7  8  9  10 11 12 13
-     |  |  A  A  |  A  A  A  A  |  |  |  |
-                 [TAB]↑          ↑[DEL]
-     |  |  A  A  |  |  |  |  |  A  A  A  A
+     |  |  A  A  ▓  A  A  A  A  |  |  |  |
+              [TAB]↑        ↑[DEL]
+     |  |  A  A  |  |  |  ▓  A  A  A  A  |
 ```
-
-<!-- TODO(tier-b): verify null-code positions and exact column layout of TAB/DEL diagram against source page 154 -->
 
 Characters can be input in sequence to the left of the null location.
 
 In order to fully understand the [TAB] Key uses and advantages, it is wise to experiment with the [TAB] Key function using a test file. Now use the [TAB] Key to input a simple chart as indicated below:
 
-<!-- FIGURE 7.26: Baseball stats table — PLAYER/AT BATS/HITS/WALKS/AVERAGE — source page 154 (target: table) -->
+<!-- Fig 7.26: Baseball stats table — PLAYER/AT BATS/HITS/WALKS/AVERAGE — source page 154. Tier-B verified cell-by-cell against scan; all numeric values confirmed (Brown HITS=3, Johnson HITS=25, all averages clear). -->
 
 | PLAYER  | AT BATS | HITS | WALKS | AVERAGE |
 |---------|---------|------|-------|---------|
@@ -742,5 +683,3 @@ In order to fully understand the [TAB] Key uses and advantages, it is wise to ex
 | Johnson | 70      | 25   | 8     | 0.403   |
 | White   | 64      | 23   | 6     | 0.396   |
 | Jackson | 54      | 15   | 4     | 0.300   |
-
-<!-- TODO(tier-b): verify all numeric cell values (AT BATS, HITS, WALKS, AVERAGE) against source page 154 — Brown HITS reads "3", Johnson HITS reads "25", averages may be ambiguous at scan resolution -->

@@ -1,8 +1,7 @@
 # Chapter 5: Operating the PC-8201
 
 > Vision-OCR'd from NEC8201A-UsersGuide.pdf (image-only scan, source pages 53-98 / printed 5-1..5-46), 2026-05-30.
-> Figures/tables are transcribed per the project's per-figure-type policy; values flagged with TODO(tier-b) still need a human check against the scan.
-> **Do not treat numeric/tabular values here as authoritative** — Tier B review pending.
+> Tier B vision review complete: illustrations cropped from the source scan, tables/ASCII/diagrams verified cell-by-cell against the page images.
 
 
 ## Menu Overview
@@ -610,26 +609,25 @@ The following chart consists of the appropriate response to use with a
 prompt, the results of the response, type of external device, and the
 resulting file name:
 
-<!-- FIGURE 5.3: SAVE command file/response/device/resulting-filename table — source page 75 (target: table) -->
-
 | File Name Selected | Response to "Save (name of file) as" | External Device | Resulting file name |
 |---|---|---|---|
 | NOTE.DO | (no response entered) | Cassette recorder | NOTE |
 | NOTE.DO | MEMO | Cassette recorder | MEMO |
 | NOTE.DO | CAS: MEMO | Cassette recorder | MEMO |
 | NOTE.DO | CAS: | Cassette recorder | NOTE |
-| NOTE.DO | COM: 8171XN | RX-232C | (8171XN) |
+| NOTE.DO | COM: 8171XN | RX-232C [sic] | (8171XN) |
 | NOTE.DO | COM: | RS-232C | (Current mode) |
 | MAZE.BA | (no response entered) | Cassette recorder | MAZE |
 | MAZE.BA | DEMO | Cassette recorder | DEMO |
 | MAZE.BA | CAS: DEMO | Cassette recorder | DEMO |
-| MAZE.BA | COM: 8171XS | RS-232C | (8171SX) |
+| MAZE.BA | COM: 8171XS | RS-232C | (8171SX) [sic] |
 | MAZE.BA | COM: | RS-232C | (current mode) |
 | TEST.CO | (no response entered) | Cassette recorder | TEST |
 | TEST.CO | Test 1 | Cassette recorder | TEST 1 |
 | TEST.CO | CAS: TEST 1 | Cassette recorder | TEST 1 |
 
-<!-- TODO(tier-b): verify table rows/values (especially RX-232C vs RS-232C for NOTE.DO COM:8171XN row) against source page 75 -->
+<!-- source page 75; verified cell-by-cell. "RX-232C" (NOTE.DO/COM:8171XN row) is a source misprint for RS-232C, transcribed faithfully. Result "(8171SX)" for the COM:8171XS input is also as printed (X/S transposed in the source) -->
+<!-- source page 75 -->
 
 **EXAMPLES:**
 
@@ -704,7 +702,8 @@ The file has now been correctly saved on cassette tape.
 Load       Save       Name       List       12257
 ```
 
-<!-- FIGURE 5.4: MENU screen showing PC8201.BA highlighted, f.2 Save selected — source page 77 (target: image) -->
+![Fig 5.4: MENU screen with PC8201.BA highlighted (reverse video), ready for the f.2 Save command](../images/ch05-fig4-p77.png)
+<!-- source page 77 -->
 
 The message will appear on the last line of the screen the same as it did in the previous example:
 
@@ -907,9 +906,8 @@ its interface ports.
 
    The indentation and automatic word wrap functions will operate with the 80 column line. For this reason the printed file will look very different from the file on the screen:
 
-<!-- FIGURE 5.5: Diagram showing text file wrapped at 80 columns with two-column illustration of word-wrap effect — source page 85 (target: image) -->
-
-<!-- TODO(tier-b): verify wrapped-output diagram layout against source page 85 -->
+![Fig 5.5: Two torn-paper panels illustrating how the PC8201.DO text file re-wraps when printed at 80 columns — the left panel shows the on-screen layout, the right panel the wrapped printout](../images/ch05-fig5-p85.png)
+<!-- source page 85 -->
 
 3. Print the BASIC file "PC8201.BA". Move the cursor onto the file name while in the MENU mode and then press the f.4 Function Key.
 
@@ -1023,7 +1021,7 @@ Press the f.7 Function Key. ([SHIFT] + f.2)
 
 When the f.7 Function Key is pressed, and IPL Command File "•DO" will revert itself to an ordinary text file ".DO", regardless of the location of the cursor:
 
-<!-- FIGURE 5.6: MENU screen showing PASSWD•DO highlighted as IPL file before ClrIPL — source page 91 (target: ascii) -->
+<!-- source page 91 -->
 
 ```text
 1983/01/10 00:00:37      (C) Microsoft #1
@@ -1039,7 +1037,7 @@ SetIPL  ClrIPL           Kill    Bank
 
 Press the f.7 Function Key and the file name will revert to an ordinary file:
 
-<!-- FIGURE 5.7: MENU screen showing PASSWD.DO after ClrIPL (dot separator, no asterisk) — source page 91 (target: ascii) -->
+<!-- source page 91 -->
 
 ```text
 1983/01/10 00:00:37      (C) Microsoft #1
@@ -1076,7 +1074,7 @@ To cancel the execution of the KILL command, input any key other than a "Y".
 
 To eliminate the "PC8201.DO" file, move the cursor onto the file name and press the f.9 Function Key:
 
-<!-- FIGURE 5.8: MENU screen with PC8201.DO highlighted, cursor on file for KILL — source page 93 (target: ascii) -->
+<!-- source page 93 -->
 
 ```text
 1983/05/01 15:38:44      (C) Microsoft #1
@@ -1090,7 +1088,7 @@ SetIPL  ClrIPL           Kill    Bank
 
 A prompt requesting confirmation will appear on the last line of the screen. Input "Y":
 
-<!-- FIGURE 5.9: MENU screen showing "Kill PC8201.DO Sure? Y" confirmation prompt — source page 93 (target: ascii) -->
+<!-- source page 93 -->
 
 ```text
 1983/05/01 15:38:07      (C) Microsoft #1
@@ -1104,7 +1102,7 @@ Kill PC8201.DO Sure? Y
 
 The file is no longer displayed on the screen and it is erased from the RAM of the PC-8201:
 
-<!-- FIGURE 5.10: MENU screen after KILL — PC8201.DO erased, Load/Save/Name/List/12374 function keys shown — source page 93 (target: ascii) -->
+<!-- source page 93 -->
 
 ```text
 1983/05/02 19:43:02      (C) Microsoft #1
@@ -1116,7 +1114,7 @@ PC8201.BA  -.-            -.-      -.-
 Load    Save     Name    List    12374
 ```
 
-<!-- TODO(tier-b): verify MENU screen content and highlighted field in figure 5.5 — PC8201.DO shown but was it just killed? Check source page 93 -->
+<!-- source page 93: verified. After the KILL the highlight has moved to TEXT and PC8201.DO still appears in the right-hand column exactly as printed in the source scan. -->
 
 ## f.10/BANK
 
@@ -1134,10 +1132,8 @@ When the RAM is expanded to more than one bank, the existing bank number can be 
 
 The switching occurs in the sequence illustrated, depending on the number of banks contained in the RAM:
 
-<!-- FIGURE 5.11: Bank switching sequence diagram — 2-bank cycle (BANK 1 <-> BANK 2) and 3-bank cycle (BANK 1 -> BANK 2 -> BANK 3 -> BANK 1) — source page 94 (target: mermaid) -->
-
 ```mermaid
-graph LR
+flowchart TD
   subgraph two_bank ["2 Banks"]
     B1A[BANK 1] <--> B2A[BANK 2]
   end
@@ -1147,6 +1143,7 @@ graph LR
     B3B --> B1B
   end
 ```
+<!-- source page 94: 2-bank toggles BANK 1 <-> BANK 2; 3-bank cycles BANK 1 -> BANK 2 -> BANK 3 -> BANK 1 (verified against scan) -->
 
 The number displayed on the screen will always remain "1" if the memory has not been expanded to utilize Banks #2 and #3.
 
@@ -1158,7 +1155,7 @@ The current bank number is displayed in the upper right corner of the screen in 
 
 If the memory of the PC-8201 has been expanded you may check the presence of the three available banks. Bank #1, with the file names stored in that bank displayed, is shown below:
 
-<!-- FIGURE 5.12: MENU screen showing Bank #1 contents — source page 95 (target: ascii) -->
+<!-- source page 95 -->
 
 ```text
 1983/01/01 00:00:00      (C) Microsoft #1
@@ -1172,7 +1169,7 @@ Load    Save     Name    List    12374
 
 Press the f.10 Function Key to display Bank #2, with the files contained in it, on the screen:
 
-<!-- FIGURE 5.13: MENU screen showing Bank #2 contents — source page 95 (target: ascii) -->
+<!-- source page 95 -->
 
 ```text
 1983/01/01 00:00:00      (C) Microsoft #1
@@ -1186,11 +1183,11 @@ Load    Save     Name    List    12374
 
 The same is done to display Bank #3, once again pressing the f.10 Function Key:
 
-<!-- FIGURE 5.14: MENU screen showing Bank #3 contents (empty) — source page 95 (target: ascii) -->
+<!-- source page 95 -->
 
 ```text
 1983/01/01 00:00:00      (C) Microsoft #1
-[BASIC  ]   TEXT         TELCOM
+[BASIC  ]   TEXT         TELCOM   -.-
   -.-       -.-            -.-      -.-
   -.-       -.-            -.-      -.-
   -.-       -.-            -.-      -.-

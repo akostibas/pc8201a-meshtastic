@@ -1,8 +1,7 @@
 # Appendix B: Optional Equipment Available for PC-8201
 
 > Vision-OCR'd from NEC8201A-UsersGuide.pdf (image-only scan, source pages 191-202 / printed B-1..B-12), 2026-05-30.
-> Figures/tables are transcribed per the project's per-figure-type policy; values flagged with TODO(tier-b) still need a human check against the scan.
-> **Do not treat numeric/tabular values here as authoritative** — Tier B review pending.
+> Tier B vision review complete: illustrations cropped from the source scan, pin/spec tables verified cell-by-cell against the page images.
 
 ## The Interface Connectors
 
@@ -168,7 +167,7 @@
 | 47 | NC | No Connection |
 | 48 | NC | No Connection |
 
-<!-- TODO(tier-b): pins 1-14 verified against source page 197; pins 15-48 still need verification against source pages 198-199 (not yet read). -->
+<!-- OCR: pins 15-48 verified cell-by-cell against source pages 198 (B-8) and 199 (B-9). Note: scan prints overbars (active-low) on pin 28 WR, pin 37 ROME, and pin 39 BANK#3; overbar notation not represented in this table. -->
 
 
 ## Audio Cassette-Related
@@ -199,7 +198,7 @@ The following items are new products to be included in the PC-8201 series.
 | PC-8299-6 | SIO2 cable | 6 pin further expansion |
 | PC-8299-8 | SIO1 cable | 8 pin further expansion |
 
-<!-- TODO(tier-b): rows PC-8201-06 / PC-8201-90 / PC-8206 verified against source page 200; rows PC-8271-01 through PC-8299-8 still need verification against source page 201 (not yet read). -->
+<!-- OCR: rows PC-8271-01 through PC-8299-8 verified cell-by-cell against source page 201 (B-11). -->
 
 
 ## Printer related
