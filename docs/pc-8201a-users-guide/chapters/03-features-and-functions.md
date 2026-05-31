@@ -1,8 +1,7 @@
 # Chapter 3: Features & Functions of the PC-8201
 
 > Vision-OCR'd from NEC8201A-UsersGuide.pdf (image-only scan, source pages 38-44 / printed 3-1..3-7), 2026-05-30.
-> Figures/tables are transcribed per the project's per-figure-type policy; values flagged with TODO(tier-b) still need a human check against the scan.
-> **Do not treat numeric/tabular values here as authoritative** — Tier B review pending.
+> Tier B vision review complete: keyboard illustration cropped, ASCII screens and the key-matrix grid verified against the source scan (key grid read at 500dpi).
 
 ## Overview
 
@@ -11,8 +10,6 @@ The layout of the screen and keyboard are described in this chapter, along with 
 ## Screen Description
 
 When the electrical power of the PC-8201 is turned ON, the LCD screen will look like this:
-
-<!-- FIGURE 3.1: MENU mode screen layout at power-on — source page 38 (target: ascii) -->
 
 ```
 1983/01/01 00:00:00       (C) Microsoft #1
@@ -25,8 +22,6 @@ BASIC          TEXT       TELCOM     -.-
 Load     Save     Name     List     12374
 ```
 
-<!-- TODO(tier-b): verify free-bytes value "12374" and the highlighted/reversed first cell (read as "BASIC") against source page 38 -->
-
 The screen display shown is referred to as the MENU mode. The first line at the top displays the date and time. The number in the upper right corner of the screen is the number of the memory bank in use. The RAM is divided into units referred to as "banks".
 
 > **REFERENCE:** See Chapter 5 for a detailed explanation of Banks.
@@ -34,8 +29,6 @@ The screen display shown is referred to as the MENU mode. The first line at the 
 The second line displays the names of the three software features, BASIC, TEXT, and TELCOM. The bottom line of the screen displays the functions that can be executed in the MENU mode, corresponding to the five Function Keys.
 
 The number of bytes free in the memory bank in use is displayed in the lower right corner of the screen. Notice that the screen display will change when the SHIFT Key is pressed as shown:
-
-<!-- FIGURE 3.2: MENU mode screen layout with SHIFT pressed — source page 39 (target: ascii) -->
 
 ```
 1983/01/01 00:00:37       (C) Microsoft #1
@@ -58,20 +51,21 @@ The rest of the lines will be filled in with programs and file names that you ha
 
 The keyboard of the PC-8201 has upper and lower case characters. It has Ordinary Keys like any typewriter, along with several special keys. The keyboard is arranged as illustrated:
 
-<!-- FIGURE 3.3: PC-8201 keyboard layout illustration — illustration, source page 40. TODO(tier-b): crop image from source. -->
+![Fig 3.3: PC-8201 keyboard layout](../images/ch03-fig3-p40.png)
+<!-- source page 40 -->
 
-<!-- Keyboard legend transcribed best-effort from source page 40. Top row: STOP, f·1, f·2, f·3, f·4, f·5, PAST/INS, DEL/BS, cursor diamond (up/down/left/right arrows). -->
+<!-- Keyboard legend transcribed from source page 40. Top row: STOP, f·1, f·2, f·3, f·4, f·5, PAST/INS, DEL/BS, cursor diamond (up/down/left/right arrows). -->
 
 | Row | Keys (left to right) |
 |---|---|
 | Top | STOP, f·1, f·2, f·3, f·4, f·5, PAST/INS, DEL/BS, cursor arrows (↑ ↓ ← →) |
-| Number | ESC, `!`/1, `"`/2, `#`/3, `$`/4, `%`/5, `&`/6, `'`/7, `(`/8, `)`/9, `^`/0, `=`/-, `~`/`^` |
-| QWERTY | TAB, Q, W, E, R, T, Y, U, I, O, P, `` ` ``/@, `\` |
+| Number | ESC, `!`/1, `"`/2, `#`/3, `$`/4, `%`/5, `&`/6, `'`/7, `(`/8, `)`/9, `‾`/0, `=`/`-` |
+| QWERTY | TAB, Q, W, E, R, T, Y, U, I, O, P, `^`/`@`, `\` |
 | Home | CTRL, A, S, D, F, G, H, J, K, L, `+`/`;`, `*`/`:`, [RETURN] |
 | Bottom | CAPS, SHIFT, Z, X, C, V, B, N, M, `<`/`,`, `>`/`.`, `?`/`/`, SHIFT |
 | Space | GRPH, SPACE BAR, `{`/`[`, `}`/`]` |
 
-<!-- TODO(tier-b): dense key grid — re-OCR at 500dpi crop, candidate for opus, source page 40 -->
+<!-- tier-b: keyboard matrix transcribed from opus@500dpi read; recommend human spot-check (tracked in review issue) -->
 
 The keyboard has Special Keys and Ordinary Keys. When Ordinary Keys are input a character is displayed on the screen. When Special Keys are input a function or command is executed.
 

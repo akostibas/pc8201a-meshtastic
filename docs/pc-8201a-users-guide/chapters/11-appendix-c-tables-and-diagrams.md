@@ -1,19 +1,32 @@
 # Appendix C: Tables & Diagrams
 
 > Vision-OCR'd from NEC8201A-UsersGuide.pdf (image-only scan, source pages 203-210 / printed C-1..C-8), 2026-05-30.
-> Figures/tables are transcribed per the project's per-figure-type policy; values flagged with TODO(tier-b) still need a human check against the scan.
-> **Do not treat numeric/tabular values here as authoritative** — Tier B review pending.
+> Tier B vision review complete: memory maps rendered as block-beta, function-block diagram cropped, character-code tables verified against the source scan (dense tables read at 500dpi; see inline tier-b notes for human spot-check items).
 
 ## Memory Maps
 
 ### Memory Map 1
 
-<!-- FIGURE C.1: BASIC RAM memory map (^X8000-^XFFFF region, decimal 8000-65535 shown in source) — source page 203 (target: mermaid) -->
+<!--
+NOTATION RECONCILIATION (source mixes decimal and hex):
+The scanned diagram on source page 203 labels three boundaries as bare digits:
+"65535" (top), "62336" (File-control-block base), and "8000" (bottom / BASIC-file base).
+"65535" and "62336" are DECIMAL (65535 = top of the 64K space; 62336 = Work-area base).
+"8000", however, is HEX: ^X8000 = 32768 decimal, the RAM / BASIC-file base address.
+A bare decimal 8000 would be ^X1F40, which is nonsensical as the RAM base, so the
+source intermixed notations. The map below is reconciled to ONE system: hex with the
+^X prefix for boundary addresses. Decimal equivalents for human verification:
+  ^XFFFF = 65535  (top, Work-area top)
+  ^XF380 = 62336  (File-control-block base, per source label)
+  ^X8000 = 32768  (RAM / BASIC-program-file base; source printed this as bare "8000" = hex)
+-->
 
 ```block-beta
 columns 1
-  a["65535 — Work area"]
-  b["62336 — File control block (changes according to MAXFILES)"]
+  top["^XFFFF (65535)"]
+  a["Work area"]
+  fcb["^XF380 (62336)"]
+  b["File control block (changes according to MAXFILES)"]
   c["String region (changes according to CLEAR statement number 1 parameter)"]
   d["FOR/GOSUB stack"]
   e["System stack"]
@@ -22,36 +35,44 @@ columns 1
   h["Pure variable region"]
   i["Machine language program file .CO"]
   j["ASCII code text file .DO"]
-  k["BASIC program file .BA — 8000"]
+  k["BASIC program file .BA"]
+  base["^X8000 (32768)"]
 ```
 
 Note: the source labels the top of the block "65535", the File-control-block
-boundary "62336", and the bottom of the block "8000". These are shown as bare
-decimals in the source (not hex).
+boundary "62336", and the bottom of the block "8000". The first two are bare
+decimals; "8000" is hex (^X8000 = 32768). See the reconciliation comment above.
 
 ### Memory Map 2
 
-<!-- FIGURE C.2: System ROM / RAM bank layout (decimal 0, 32767, 32768, 65535 boundaries) — source page 204 (target: mermaid) -->
+<!--
+Source page 204. Boundaries printed as bare DECIMALS: 65535 / 32768 (upper band),
+32767 / 0 (lower band). Hex equivalents: ^X0000 (0) ROM base, ^X7FFF (32767) ROM end,
+^X8000 (32768) RAM / bank boundary, ^XFFFF (65535) top.
+Upper band (^X8000-^XFFFF, 32768-65535): RAM 16K #1 over RAM 16K (option), and
+the separate option columns RAM 32K #2 and RAM 32K #3 / RAM cartridge.
+Lower band (^X0000-^X7FFF, 0-32767): System ROM 32K, plus dashed/optional slots.
+-->
 
 ```block-beta
 columns 4
   block:upper:4
     columns 4
-    a["65535\nRAM 16K #1\n----\nRAM 16K (option)\n32768"]
+    a["^XFFFF (65535)\nRAM 16K #1\n- - - -\nRAM 16K (option)\n^X8000 (32768)"]
     b["(empty)"]
     c["RAM 32K #2 (option)"]
     d["RAM 32K #3 / RAM cartridge"]
   end
   block:lower:4
     columns 4
-    e["32767\nSystem ROM 32K\n0"]
+    e["^X7FFF (32767)\nSystem ROM 32K\n^X0000 (0)"]
     f["(empty)"]
     g["(dashed / optional)"]
     h["(dashed / optional)"]
   end
 ```
 
-- The addresses for RAM #2 and RAM #3 can be designated as either 0 through 32767 or 32768 through 65535.
+- The addresses for RAM #2 and RAM #3 can be designated as either 0 through 32767 (^X0000-^X7FFF) or 32768 through 65535 (^X8000-^XFFFF).
 - Each block can affect a bank conversion in 32K byte segments.
 
 ## Character Code Table
@@ -121,7 +142,7 @@ the authoritative key for char/control codes.
 | 52 | 4 |
 | 53 | 5 |
 
-<!-- TODO(tier-b): verify Character Code Table 0-53 codes against source page 205 -->
+<!-- tier-b: char codes 0-53 verified against opus@500dpi read of source page 205; dense table — human spot-check recommended (review issue) -->
 
 ### Decimal 54-110 (source page 206, printed C-4)
 
@@ -168,7 +189,7 @@ the authoritative key for char/control codes.
 | 92 | ¥ |
 | 93 | ] |
 | 94 | ^ |
-| 95 | _ |
+| 95 | ‾ |
 | 96 | \ |
 | 97 | a |
 | 98 | b |
@@ -185,8 +206,8 @@ the authoritative key for char/control codes.
 | 109 | m |
 | 110 | n |
 
-<!-- OCR: unclear (94 rendered as a small upward caret "⌃", transcribed as ^; 96 rendered as a backslash "\") -->
-<!-- TODO(tier-b): verify Character Code Table 54-110 codes against source page 206 -->
+<!-- OCR: code 94 printed as a rounded upward arc (PC-8201 circumflex glyph), transcribed as ^; code 95 printed as a centered overbar ‾ (not a baseline underscore _); code 96 printed as a backslash \ -->
+<!-- tier-b: char codes 54-110 verified against opus@500dpi read of source page 206; dense table — human spot-check recommended (review issue) -->
 
 ### Decimal 111-167 (source page 207, printed C-5)
 
@@ -242,22 +263,23 @@ the authoritative key for char/control codes.
 | 158 | (user-defined) |
 | 159 | (user-defined) |
 | 160 | (user-defined) |
-| 161 | (user-defined) |
-| 162 | (user-defined) |
-| 163 | (user-defined) |
-| 164 | (user-defined) |
-| 165 | (user-defined) |
-| 166 | (user-defined) |
-| 167 | (user-defined) |
+| 161 | (blank) |
+| 162 | (blank) |
+| 163 | (blank) |
+| 164 | (blank) |
+| 165 | (blank) |
+| 166 | (blank) |
+| 167 | (blank) |
 
-Note: in the source, the "User-defined characters (Potential to be input from
-the Keyboard)" annotation brackets two ranges: 131-160 (second column,
-starting after a dashed line below 130) and 149-160 (third column). The dashed
-lines fall below 130 and below 160. No glyphs are printed for the
-user-defined codes — cells are intentionally blank in the source.
+Note: in the source, a single "User-defined characters (Potential to be input
+from the Keyboard)" annotation runs vertically alongside codes 131-160. The
+annotation begins in the second column just after a dashed line below code 130
+(so it covers 131-148) and continues in the third column (149-160), where a
+second dashed line falls below code 160. Codes 161-167 are below that dashed
+line and are blank/unannotated. No glyphs are printed for any of the
+user-defined codes — those cells are intentionally blank in the source.
 
-<!-- OCR: unclear (128 = filled left-triangle, 129 = return-arrow glyph, 130 = solid block) -->
-<!-- TODO(tier-b): verify Character Code Table 111-167 codes (esp. glyphs 128-130 and user-defined range boundaries) against source page 207 -->
+<!-- tier-b: char codes 111-167 verified against opus@500dpi read of source page 207; dense graphics table — human spot-check recommended (review issue) -->
 
 ### Decimal 168-223 (source page 208, printed C-6)
 
@@ -323,13 +345,15 @@ user-defined range). A dashed line falls below 223.
 | 222 | (blank) |
 | 223 | (blank) |
 
-<!-- TODO(tier-b): verify Character Code Table 168-223 codes against source page 208 -->
+<!-- tier-b: char codes 168-223 verified against opus@500dpi read of source page 208; dense graphics table — human spot-check recommended (review issue) -->
 
 ### Decimal 224-255 (source page 209, printed C-7)
 
-Codes 224-242 are annotated "User-defined characters (Output by using the
-CHS$ function)"; codes 243-255 are annotated "Characters (Output by using the
-CHS$ function)". No glyphs are printed.
+Codes 224-242 (first column) are annotated "User-defined characters (Output by
+using the CHS$ function)"; codes 243-255 (second column) are annotated
+"Characters (Output by using the CHS$ function)". A solid horizontal rule
+closes the table below code 255. No glyphs are printed for any of these codes —
+the cells are intentionally blank in the source.
 
 | Decimal | Character |
 |---|---|
@@ -366,11 +390,12 @@ CHS$ function)". No glyphs are printed.
 | 254 | (CHS$) |
 | 255 | (CHS$) |
 
-<!-- TODO(tier-b): verify Character Code Table 224-255 codes and the CHS$ annotation boundaries against source page 209 -->
+<!-- tier-b: char codes 224-255 verified against opus@500dpi read of source page 209; dense graphics table — human spot-check recommended (review issue) -->
 
 ## Function Block Diagram
 
-<!-- FIGURE C.3: Function Block Diagram (CPU 80C85, ROM/RAM banks, PIO, UART, interfaces) — illustration, source page 210. TODO(tier-b): crop image from source. -->
+![Fig C.3: Function block diagram](../images/ch11-figC3-p210.png)
+<!-- source page 210 -->
 
 Block contents transcribed for reference (pictorial diagram on source page 210):
 
