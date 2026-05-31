@@ -1,8 +1,7 @@
 # Chapter 1: Description of the PC-8201
 
 > Vision-OCR'd from NEC8201A-UsersGuide.pdf (image-only scan, source pages 11-26 / printed 1-1..1-16), 2026-05-30.
-> Figures/tables are transcribed per the project's per-figure-type policy; values flagged with TODO(tier-b) still need a human check against the scan.
-> **Do not treat numeric/tabular values here as authoritative** — Tier B review pending.
+> Tier B vision review complete: illustrations cropped from the source scan, tables/ASCII/diagrams verified cell-by-cell against the page images.
 
 ## Overview
 
@@ -24,7 +23,8 @@ The next step you should take is to simply look at the various parts of the comp
 
 ### Front View & Side View
 
-<!-- FIGURE 1.1: Front/side perspective view of the PC-8201 with call-out labels (Liquid crystal display, Low Voltage Display LED, Battery case, Contrast adjustment knob, Electrical power switch) — illustration, source page 11. TODO(tier-b): crop image from source. -->
+![Fig 1.1: Front/side perspective view of the PC-8201 with call-out labels (Liquid crystal display, Low Voltage Display LED, Battery case, Contrast adjustment knob, Electrical power switch)](../images/ch01-fig1-p11.png)
+<!-- source page 11 -->
 
 ## Description of Parts
 
@@ -48,7 +48,8 @@ This knob is used to adjust the contrast of the screen, according to your viewin
 
 This switch simply turns the power to the PC-8201 ON or OFF.
 
-<!-- FIGURE 1.2: Rear connector panel of the PC-8201 with call-out labels (AC-adapter connector, Reset switch, SIO2 connector, Printer connector, Cassette connector, Protect switch, SIO1 connector, Bar-code reader connector, RS-232C connector) — illustration, source page 13. TODO(tier-b): crop image from source. -->
+![Fig 1.2: Rear connector panel of the PC-8201 with call-out labels (AC-adapter connector, Reset switch, SIO2 connector, Printer connector, Cassette connector, Protect switch, SIO1 connector, Bar-code reader connector, RS-232C connector)](../images/ch01-fig2-p13.png)
+<!-- source page 13 -->
 
 ### AC ADAPTER CONNECTOR
 
@@ -88,7 +89,8 @@ Data Recorders (PC-6082) and (PC-8281), or any ordinary cassette recorder may be
 
 ### SYSTEM SLOT
 
-<!-- FIGURE 1.3: PC-8201 with a RAM Cartridge being inserted into the system slot on the left side — illustration, source page 14. TODO(tier-b): crop image from source. -->
+![Fig 1.3: PC-8201 with a RAM Cartridge being inserted into the system slot on the left side](../images/ch01-fig3-p14.png)
+<!-- source page 14 -->
 
 The RAM Cartridge (PC-8206) is inserted into the system slot, on the left side of the PC-8201. This allows expansion of the memory.
 
@@ -96,7 +98,8 @@ The RAM Cartridge (PC-8206) is inserted into the system slot, on the left side o
 
 This switch controls the back-up battery system, which contains NiCAD batteries. The PC-8201 will not operate unless this switch is turned to ON.
 
-<!-- FIGURE 1.4: Underside/rear corner of the PC-8201 showing the Back Up Power Switch — illustration, source page 15. TODO(tier-b): crop image from source. -->
+![Fig 1.4: Underside/rear corner of the PC-8201 showing the Back Up Power Switch](../images/ch01-fig4-p15.png)
+<!-- source page 15 -->
 
 ## Batteries
 
@@ -136,35 +139,42 @@ You can install the standard AA batteries in the regular battery pack by followi
 
 2. Turn power switch to OFF position:
 
-<!-- FIGURE 1.5: Close-up of the power switch in the OFF position (slider toward OFF, labels 0 / OFF / ON / 1) — illustration, source page 18. TODO(tier-b): crop image from source. -->
+![Fig 1.5: Close-up of the power switch in the OFF position (slider toward OFF, labels 0 / OFF / ON / 1)](../images/ch01-fig5-p18.png)
+<!-- source page 18 -->
 
 3. Place thumb of right hand at point B shown in the diagram and thumb of left hand at point A shown below:
 
-<!-- FIGURE 1.6: Underside of the PC-8201 with thumb-placement points A and B marked — illustration, source page 18. TODO(tier-b): crop image from source. -->
+![Fig 1.6: Underside of the PC-8201 with thumb-placement points A and B marked](../images/ch01-fig6-p18.png)
+<!-- source page 18 -->
 
 4. Push downward and outward with both thumbs to remove the battery case as shown:
 
-<!-- FIGURE 1.7: Battery case being pushed out of the PC-8201 (arrow indicating direction), with points A and B and Back Up Power switch shown — illustration, source page 19. TODO(tier-b): crop image from source. -->
+![Fig 1.7: Battery case being pushed out of the PC-8201 (arrow indicating direction), with points A and B and Back Up Power switch shown](../images/ch01-fig7-p19.png)
+<!-- source page 19 -->
 
 5. Remove the battery case completely and turn it over so that the tab is on the bottom:
 
-<!-- FIGURE 1.8: Battery case turned over with the tab on the bottom — illustration, source page 19. TODO(tier-b): crop image from source. -->
+![Fig 1.8: Battery case turned over with the tab on the bottom](../images/ch01-fig8-p19.png)
+<!-- source page 19 -->
 
 6. Insert a quarter into the slot as shown and gently pry off the top of the battery case:
 
-<!-- FIGURE 1.9: Hand using a quarter to pry off the top of the battery case (arrow indicating push direction) — illustration, source page 20. TODO(tier-b): crop image from source. -->
+![Fig 1.9: Hand using a quarter to pry off the top of the battery case (arrow indicating push direction)](../images/ch01-fig9-p20.png)
+<!-- source page 20 -->
 
 > **CAUTION:** Do not attempt to open the optional NiCAD Battery Pack (PC-8201-90).
 
 7. Insert the four AA size batteries with positive and negative poles positioned exactly as shown in the illustration. All of the negative poles should be touching the springs in the battery case:
 
-<!-- FIGURE 1.10: Opened battery case showing four AA batteries with + and - pole orientation — illustration, source page 20. TODO(tier-b): crop image from source. -->
+![Fig 1.10: Opened battery case showing four AA batteries with + and - pole orientation](../images/ch01-fig10-p20.png)
+<!-- source page 20 -->
 
 > **CAUTION:** If the batteries are not placed exactly as described, the PC-8201 could be damaged.
 
 8. Snap the top of the battery case in place. Install the battery case as shown:
 
-<!-- FIGURE 1.11: Battery case being snapped/installed back into the PC-8201 — illustration, source page 21. TODO(tier-b): crop image from source. -->
+![Fig 1.11: Battery case being snapped/installed back into the PC-8201](../images/ch01-fig11-p21.png)
+<!-- source page 21 -->
 
 ### Battery Life Span
 
@@ -172,15 +182,14 @@ Different types of batteries may be installed in the main battery case. The life
 
 The approximate life span of different batteries:
 
-<!-- FIGURE 1.12: Battery life span values — source page 21 (target: table) -->
+**Fig 1.12: Approximate battery life span**
+<!-- source page 21 -->
 
 | Battery type | Approximate life span |
 |---|---|
 | Alkali Batteries | More than 18 Hours |
 | Standard Batteries | More than 6 Hours |
 | Nickel-Cadmium Batteries | More than 5.5 Hours |
-
-<!-- TODO(tier-b): verify life-span hour values against source page 21 -->
 
 The NiCAD back up batteries have a life span of approximately 2½ years. At that time, you will be required to take the PC-8201 to an Authorized NEC Dealer for replacement.
 
@@ -200,11 +209,13 @@ The AC power adapter (PC-8271A-01) converts 120 volt AC power to 8.5 volt DC pow
 
 To turn power on, simply move the power switch to the ON position, after making sure that the Back Up Power switch is also ON. Move the regular power switch to the OFF position to turn the unit off:
 
-<!-- FIGURE 1.13: Close-up of the power switch in the ON position (slider toward ON, labels 0 / OFF / ON / 1) — illustration, source page 23. TODO(tier-b): crop image from source. -->
+![Fig 1.13: Close-up of the power switch in the ON position (slider toward ON, labels 0 / OFF / ON / 1)](../images/ch01-fig13-p23.png)
+<!-- source page 23 -->
 
 Once the power has been turned ON and the screen contrast has been adjusted, the display should always appear as illustrated:
 
-<!-- FIGURE 1.14: Initial menu screen as shown on the LCD — source page 23 (target: ascii) -->
+**Fig 1.14: Initial menu screen as shown on the LCD**
+<!-- source page 23 -->
 
 ```text
 1983/01/01 00:00:00       (C) Microsoft #1
@@ -215,8 +226,6 @@ BASIC          TEXT       TELCOM      -.-
   -.-            -.-        -.-        -.-
 Load      Save      Name     List      12374
 ```
-
-<!-- TODO(tier-b): verify the free-memory count "12374" and the menu layout against source page 23 -->
 
 Although you may eventually have more files than shown above, you should at least have the BASIC, TEXT, and TELCOM file names displayed on the screen.
 
@@ -256,7 +265,8 @@ The files and programs stored in the RAM cartridge will be retained as long as t
 
 The cartridge is inserted into the System Slot located on the left side of the PC-8201. Only one cartridge at a time may be inserted into the slot:
 
-<!-- FIGURE 1.15: PC-8201 with a RAM Cartridge being inserted into the System Slot on the left side — illustration, source page 26. TODO(tier-b): crop image from source. -->
+![Fig 1.15: PC-8201 with a RAM Cartridge being inserted into the System Slot on the left side](../images/ch01-fig15-p26.png)
+<!-- source page 26 -->
 
 > **NOTE:** When inserting a cartridge be certain that the power is turned OFF and push the cartridge completely into the slot.
 
@@ -266,11 +276,12 @@ The cartridge is inserted into the System Slot located on the left side of the P
 
 The RAM in the PC-8201 is divided into units referred to as "banks". One bank can contain a maximum of 32K bytes of memory, while the RAM can be expanded to hold a maximum of three banks:
 
-<!-- FIGURE 1.16: RAM bank diagram — three banks of 32K each labelled R / A / M, BANK 1 / BANK 2 / BANK 3 — source page 26 (target: mermaid) -->
+**Fig 1.16: RAM bank diagram — the RAM is divided into a maximum of three banks of 32K each, spelling R / A / M**
+<!-- source page 26 -->
 
 ```mermaid
 block-beta
   columns 3
   R["R"] A["A"] M["M"]
-  B1["BANK 1\n32K"] B2["BANK 2\n32K"] B3["BANK 3\n32K"]
+  B1["BANK 1<br/>32K"] B2["BANK 2<br/>32K"] B3["BANK 3<br/>32K"]
 ```

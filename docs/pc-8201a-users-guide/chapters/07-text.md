@@ -34,16 +34,8 @@ The `TEXT` mode may be selected from the MENU in the following ways:
 
 When entering the `TEXT` mode by placing the cursor over the word "TEXT", the following display will be on the screen of the PC-8201:
 
-<!-- FIGURE 7.1: MENU screen with TEXT highlighted — source page 124 (target: image) -->
-```text
-1983/05/02 19:43:02      (C) Microsoft #1
-BASIC    TEXT     TELCOM        -.-
-  -.-      -.-      -.-         -.-
-  -.-      -.-      -.-         -.-
-  -.-      -.-      -.-         -.-
-  -.-      -.-      -.-         -.-
-Load     Save     Name     List    12374
-```
+![Fig 7.1: MENU screen with TEXT highlighted](../images/ch07-fig1-p124.png)
+<!-- source page 124 -->
 
 If you want to modify an existing text file, enter the name of the file (document) to be edited. If you create a new file, the name that you wish to designate for the document is entered in response to the prompt "File to edit?". If nothing is input and the [RETURN] Key is pressed, the PC-8201 will return to the MENU mode.
 
@@ -57,10 +49,8 @@ If an illegal file name is input, the "BEEP" sound will be generated and the pro
 
 If you are composing a new document, the screen will appear as illustrated:
 
-<!-- FIGURE 7.2: Empty TEXT editor screen with cursor — source page 125 (target: image) -->
-```text
-▮
-```
+![Fig 7.2: Empty TEXT editor screen with cursor](../images/ch07-fig2-p125.png)
+<!-- source page 125 -->
 
 Now you are ready to start typing your text. If you are modifying an existing document or entering the `TEXT` mode by moving the cursor onto a specific file name and pressing the [RETURN] Key, the screen will be filled, starting with the first lines of your document.
 
@@ -78,30 +68,18 @@ Now try to create a sample text file called PC8201. The file type extension ".DO
 
 Start from the MENU mode by moving the cursor over the word "TEXT" and press the [RETURN] Key:
 
-<!-- FIGURE 7.3: MENU screen with TEXT highlighted — source page 126 (target: image) -->
-```text
-1983/05/02 19:43:02      (C) Microsoft #1
-BASIC    TEXT     TELCOM        -.-
-  -.-      -.-      -.-         -.-
-  -.-      -.-      -.-         -.-
-  -.-      -.-      -.-         -.-
-  -.-      -.-      -.-         -.-
-Load     Save     Name     List    12374
-```
+![Fig 7.3: MENU screen with TEXT highlighted](../images/ch07-fig3-p126.png)
+<!-- source page 126 -->
 
 The prompt "File to edit?" will appear on the screen. Respond by typing in "PC8201":
 
-<!-- FIGURE 7.4: TEXT mode file prompt screen — source page 126 (target: image) -->
-```text
-File to edit? PC8201▮
-```
+![Fig 7.4: TEXT mode file prompt screen](../images/ch07-fig4-p126.png)
+<!-- source page 126 -->
 
 After you input the [RETURN] Key the screen will appear as follows:
 
-<!-- FIGURE 7.5: Empty TEXT editor screen with cursor — source page 126 (target: image) -->
-```text
-▮
-```
+![Fig 7.5: Empty TEXT editor screen with cursor](../images/ch07-fig5-p126.png)
+<!-- source page 126 -->
 
 Now you can start typing your document. Notice the cursor is now a black line instead of the block seen in the MENU mode. Input the following sentences without pressing the [RETURN] Key. The word wrap feature will automatically wrap the words around to the next line if too long to fit on the current line:
 
@@ -109,17 +87,8 @@ The PC-8201 is a compact and smart computer. It offers many features, like BASIC
 
 Our screen display will appear as shown:
 
-<!-- FIGURE 7.6: TEXT editor screen showing wrapped sample text — source page 127 (target: image) -->
-```text
-The PC-8201 is a compact and smart
-computer. It offers many features, like
-BASIC language for programming, word
-processing capability and the ability to
- communicate to other machines by the
-use of a telephone modem. You also have
-access to a wide range of devices thru
-its interface ports.▮
-```
+![Fig 7.6: TEXT editor screen showing wrapped sample text](../images/ch07-fig6-p127.png)
+<!-- source page 127 -->
 
 > **NOTE:** Notice that there are two symbols displayed beside the blinking cursor, when you are in the `TEXT` mode. They are "◄" and "↵".
 >
@@ -129,16 +98,8 @@ its interface ports.▮
 
 Now press the f.10 Function Key. Do not worry about typing errors at this point. You will be in the MENU mode and your file name "PC8201" is saved and appears on the screen:
 
-<!-- FIGURE 7.7: MENU screen showing saved PC8201.DO file — source page 128 (target: image) -->
-```text
-1983/01/01 00:00:00      (C) Microsoft #1
-BASIC    TEXT     TELCOM    PC8201.DO
-PC8201.BA  -.-      -.-         -.-
-  -.-      -.-      -.-         -.-
-  -.-      -.-      -.-         -.-
-  -.-      -.-      -.-         -.-
-Load     Save     Name     List    12374
-```
+![Fig 7.7: MENU screen showing saved PC8201.DO file (BASIC highlighted)](../images/ch07-fig7-p128.png)
+<!-- source page 128 -->
 
 ## Cursor Operations
 
@@ -154,7 +115,7 @@ Used to move the cursor on the screen in the direction of the arrow on the indiv
 
 DESCRIPTION:
 
-In order to move the cursor across the screen horizontally, use the [right-arrow] to move the cursor one character to the left. <!-- OCR: unclear — key icon faces right (pointing-right triangle) but text says "to the left"; may be left-arrow key described as moving left, or icon direction vs. function is reversed --> The other Cursor Movement Keys are used to move the cursor to the right, up, or down. These Cursor Movement Keys will repeat automatically if you press them down for more than 1 second.
+In order to move the cursor across the screen horizontally, use the [right-arrow] to move the cursor one character to the left. <!-- Tier-B confirmed against scan p128: the key icon is a right-pointing triangle but its function is to move the cursor LEFT. The cursor-key icons in this chapter read reversed vs. their function — confirmed source behavior, not an OCR error. --> The other Cursor Movement Keys are used to move the cursor to the right, up, or down. These Cursor Movement Keys will repeat automatically if you press them down for more than 1 second.
 
 SPECIAL FUNCTIONS:
 
@@ -164,8 +125,8 @@ Descriptions of each special function of the cursor:
 
 - [RETURN] + [down-arrow] will display the beginning of the document and move the cursor onto the first letter of the document.
 - [RETURN] + [up-arrow] will display the end of the document and move the cursor onto the end of file symbol.
-- [RETURN] + [right-arrow] will move the cursor to the beginning of the current line (where the cursor is located). <!-- OCR: unclear — right-pointing arrow icon used for "beginning of line"; may be left-arrow -->
-- [RETURN] + [left-arrow] will move the cursor to the end of the current line. <!-- OCR: unclear — left-pointing arrow icon used for "end of line"; may be right-arrow -->
+- [RETURN] + [right-arrow] will move the cursor to the beginning of the current line (where the cursor is located). <!-- Tier-B: reversed-icon behavior, consistent with the Fig 7.8 table (^Q / [CTRL]+[right-arrow] = left end of line). -->
+- [RETURN] + [left-arrow] will move the cursor to the end of the current line. <!-- Tier-B: reversed-icon behavior, consistent with the Fig 7.8 table (^R / [CTRL]+[left-arrow] = right end of line). -->
 
 ### Screen Scrolling
 
@@ -173,9 +134,9 @@ When you are at the bottom line of your text and you press the [up-arrow] Key, a
 
 If you are at the top of your document, you can scroll the screen downward by using the [down-arrow]. You can also scroll the screen by using the Cursor Movement Keys as follows:
 
-If the cursor is positioned at the first character of the screen and this is not the top of the text, and the [right-arrow] Key is input. <!-- OCR: unclear — right-pointing icon; context suggests left/back direction -->
+If the cursor is positioned at the first character of the screen and this is not the top of the text, and the [right-arrow] Key is input. <!-- Tier-B: reversed-icon behavior — the right-pointing key moves the cursor leftward/back, consistent with Fig 7.8. -->
 
-If the cursor is positioned at the last character of the screen and this is not the end of the text, and the [left-arrow] Key is input. <!-- OCR: unclear — left-pointing icon; context suggests right/forward direction -->
+If the cursor is positioned at the last character of the screen and this is not the end of the text, and the [left-arrow] Key is input. <!-- Tier-B: reversed-icon behavior — the left-pointing key moves the cursor rightward/forward, consistent with Fig 7.8. -->
 
 If you use the [down-arrow] Key when you are at the top of the document, and the cursor is positioned on the first character of the text, the cursor will not move.
 
@@ -185,13 +146,12 @@ If you use the [up-arrow] Key when the cursor is positioned at the last characte
 
 - [SHIFT] + [down-arrow] will move the cursor to the corresponding position of the first line. For example, it the cursor is at position 20 of the 2nd line, it will be moved to position 20 of line first line.
 - [SHIFT] + [up-arrow] will move the cursor to the bottom of the screen.
-- [SHIFT] + [right-arrow] will move the cursor to the first character of a word, if it is positioned in the middle of a word. If the cursor is at the beginning of a word, this function will cause the cursor to move to the beginning of the previous word. <!-- OCR: unclear — right-pointing icon but function moves to previous word (leftward) -->
-- [SHIFT] + [left-arrow] will move the cursor to the first character of the next word. <!-- OCR: unclear — left-pointing icon but function moves to next word (rightward) -->
+- [SHIFT] + [right-arrow] will move the cursor to the first character of a word, if it is positioned in the middle of a word. If the cursor is at the beginning of a word, this function will cause the cursor to move to the beginning of the previous word. <!-- Tier-B: reversed-icon behavior — right-pointing key moves to previous word (left); consistent with Fig 7.8 (^A = word left). -->
+- [SHIFT] + [left-arrow] will move the cursor to the first character of the next word. <!-- Tier-B: reversed-icon behavior — left-pointing key moves to next word (right); consistent with Fig 7.8 (^F = word right). -->
 
 You can perform all of the cursor functions described above by using the [CTRL] Key and particular letters simultaneously. The cursor functions available are listed:
 
-<!-- FIGURE 7.8: Cursor operations / CTRL key equivalents table — source page 131 (target: table) -->
-<!-- TODO(tier-b): verify CTRL code letter assignments against source page 131 — several are non-standard (^B=down-screen, ^E=up-line, ^S=left-char, ^X=down-line match WordStar; ^Q=line-start, ^R=line-end are non-standard; verify ^D=right, ^A=word-left, ^F=word-right) -->
+<!-- Fig 7.8: Cursor operations / CTRL key equivalents table — source page 131. Tier-B verified cell-by-cell against scan; all CTRL letters and function text confirmed. Cursor-key icons read reversed vs. function (confirmed source behavior, not OCR error). -->
 
 | CURSOR OPERATION | CTRL OPERATION | FUNCTION |
 |---|---|---|
@@ -316,33 +276,13 @@ EXAMPLES:
 
 Use your previously created document "PC8201.DO". While in the MENU mode, position the cursor over the file name "PC8201.DO" and press the [RETURN] Key. Your screen will display the document. Now press the f.1 Function Key. Your screen will display:
 
-<!-- FIGURE 7.9: Screen showing document text with "String:" prompt at bottom — source page 136 (target: image) -->
-
-```text
-The PC-8201 is a compact and smart
-computer. It offers many features, like
-BASIC language for programming, word
-processing capability and the ability to
- communicate to other machines by the
-use of a telephone modem. You also have
-access to a wide range of devices thru
-String:█
-```
+![Fig 7.9: Screen showing document text with "String:" prompt at bottom](../images/ch07-fig9-p136.png)
+<!-- source page 136 -->
 
 Input "ports" and press the [RETURN] Key. The screen will appear as illustrated:
 
-<!-- FIGURE 7.10: Screen after FIND "ports" — cursor positioned at "p" of "ports" — source page 136 (target: image) -->
-
-```text
-The PC-8201 is a compact and smart
-computer. It offers many features, like
-BASIC language for programming, word
-processing capability and the ability to
- communicate to other machines by the
-use of a telephone modem. You also have
-access to a wide range of devices thru
-its interface ports.◄
-```
+![Fig 7.10: Screen after FIND "ports" — cursor positioned at "p" of "ports"](../images/ch07-fig10-p136.png)
+<!-- source page 136 -->
 
 The cursor will be flashing under the "p" of the word "ports". Now input the f.1 Function Key again and the last line of the screen will display:
 
@@ -360,18 +300,8 @@ Again press the f.1 Function Key. The cursor will move to the position of the "p
 
 Now press the f.1 Function Key and the [SHIFT] Key simultaneously. The function commands will be displayed on the last line of the screen as illustrated:
 
-<!-- FIGURE 7.11: Screen with function command bar showing Find/Next/Sel/Cut/Copy — source page 137 (target: image) -->
-
-```text
-The PC-8201 is a compact and smart
-computer. It offers many features, like
-BASIC language for programming, word
-processing capability and the ability to
- communicate to other machines by the
-use of a telephone modem. You also have
-access to a wide range of devices thru
-Find    Next    Sel     Cut     Copy
-```
+![Fig 7.11: Screen with function command bar showing Find/Next/Sel/Cut/Copy](../images/ch07-fig11-p137.png)
+<!-- source page 137 -->
 
 Repeat the previous steps at this point and you will notice that the prompt and message, "String:" and "No match" will be moved up to the seventh line of the screen.
 
@@ -399,18 +329,8 @@ Again select the file "PC8201.DO" from the MENU. Input f.1 and type in the word 
 
 The display will appear as shown:
 
-<!-- FIGURE 7.12: Screen after FIND "the" — cursor at "t" of "the ability" — source page 138 (target: image) -->
-
-```text
-The PC-8201 is a compact and smart
-computer. It offers many features, like
-BASIC language for programming, word
-processing capability and the ability to
- communicate to other machines by the
-use of a telephone modem. You also have
-access to a wide range of devices thru
-its interface ports.◄
-```
+![Fig 7.12: Screen after FIND "the" — cursor at "t" of "the ability"](../images/ch07-fig12-p138.png)
+<!-- source page 138 -->
 
 The cursor will be flashing under the letter "t" of the string "the ability".
 

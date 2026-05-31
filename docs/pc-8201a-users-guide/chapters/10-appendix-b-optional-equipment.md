@@ -10,9 +10,8 @@
 
 ### RS-232C — 25 pin D SUB
 
-<!-- FIGURE B.1: RS-232C 25-pin D-SUB connector, pins 1/13/14/25 labeled — illustration, source page 191. TODO(tier-b): crop image from source. -->
-
-<!-- FIGURE B.2: RS-232C pin assignments — source page 191 (target: table) -->
+![Fig B.1: RS-232C 25-pin D-SUB connector, pins 1/13/14/25 labeled](../images/ch10-figB1-p191.png)
+<!-- source page 191 -->
 
 | Pin number | Signal name | Remarks |
 |---|---|---|
@@ -29,13 +28,10 @@
 | 22 | RD | Bell detect |
 | 25 | - - - | |
 
-<!-- TODO(tier-b): verify model numbers/specs against source page 191 -->
-
 ### SIO1 — 8 pin DuPont BERG modular jack
 
-<!-- FIGURE B.3: SIO1 8-pin modular jack, pins 1 and 8 labeled — illustration, source page 192. TODO(tier-b): crop image from source. -->
-
-<!-- FIGURE B.4: SIO1 pin assignments — source page 192 (target: table) -->
+![Fig B.3: SIO1 8-pin DuPont BERG modular jack, pins 1 and 8 labeled](../images/ch10-figB3-p192.png)
+<!-- source page 192 -->
 
 | Pin number | Signal name | Remarks |
 |---|---|---|
@@ -48,13 +44,10 @@
 | 7 | NC | Not connected |
 | 8 | NC | Not connected |
 
-<!-- TODO(tier-b): verify model numbers/specs against source page 192 -->
-
 ### SIO2 — 6 pin DuPont BERG modular jack
 
-<!-- FIGURE B.5: SIO2 6-pin modular jack, pins 1 and 6 labeled — illustration, source page 193. TODO(tier-b): crop image from source. -->
-
-<!-- FIGURE B.6: SIO2 pin assignments — source page 193 (target: table) -->
+![Fig B.5: SIO2 6-pin DuPont BERG modular jack, pins 1 and 6 labeled](../images/ch10-figB5-p193.png)
+<!-- source page 193 -->
 
 | Pin number | Signal name | Remarks |
 |---|---|---|
@@ -65,13 +58,10 @@
 | 5 | CTS | Transmission authorized |
 | 6 | Vcc | +5 V |
 
-<!-- TODO(tier-b): verify model numbers/specs against source page 193 -->
-
 ### CMT — 8 pin DIN plug
 
-<!-- FIGURE B.7: CMT 8-pin DIN plug, pins 1-8 labeled — illustration, source page 194. TODO(tier-b): crop image from source. -->
-
-<!-- FIGURE B.8: CMT pin assignments — source page 194 (target: table) -->
+![Fig B.7: CMT 8-pin DIN plug, pins 1-8 labeled](../images/ch10-figB7-p194.png)
+<!-- source page 194 -->
 
 | Pin number | Signal name | Remarks |
 |---|---|---|
@@ -84,13 +74,10 @@
 | 7 | REM2 | Remote terminal |
 | 8 | Vcc | +5 V |
 
-<!-- TODO(tier-b): verify model numbers/specs against source page 194 -->
-
 ### BCR — 9 pin D SUB
 
-<!-- FIGURE B.9: BCR 9-pin D-SUB connector, pins 1/5/6/9 labeled — illustration, source page 195. TODO(tier-b): crop image from source. -->
-
-<!-- FIGURE B.10: BCR pin assignments — source page 195 (target: table) -->
+![Fig B.9: BCR 9-pin D-SUB connector, pins 1/5/6/9 labeled](../images/ch10-figB9-p195.png)
+<!-- source page 195 -->
 
 | Pin number | Signal name | Remarks |
 |---|---|---|
@@ -104,13 +91,10 @@
 | 8 | NC | Not connected |
 | 9 | Vcc | +5 V |
 
-<!-- TODO(tier-b): verify model numbers/specs against source page 195 -->
-
 ### Printer — 26 pin connector using a flat cable
 
-<!-- FIGURE B.11: PRINTER 26-pin flat-cable connector, pins 1/2/25/26 labeled — illustration, source page 196. TODO(tier-b): crop image from source. -->
-
-<!-- FIGURE B.12: Printer pin assignments — source page 196 (target: table) -->
+![Fig B.11: PRINTER 26-pin flat-cable connector, pins 1/2/25/26 labeled](../images/ch10-figB11-p196.png)
+<!-- source page 196 -->
 
 | Pin number | Signal name | Remarks | Pin number | Signal name | Remarks |
 |---|---|---|---|---|---|
@@ -128,13 +112,10 @@
 | 23 | NC | | 24 | GND | Signal ground |
 | 25 | SLCT | Printer select | 26 | NC | |
 
-<!-- TODO(tier-b): verify model numbers/specs against source page 196 -->
-
 ### System Slot
 
-<!-- FIGURE B.13: SYSTEM SLOT connector, pins 1/2/47/48 labeled — illustration, source page 197. TODO(tier-b): crop image from source. -->
-
-<!-- FIGURE B.14: System Slot pin assignments — source pages 197-199 (target: table) -->
+![Fig B.13: SYSTEM SLOT connector, pins 1/2/47/48 labeled](../images/ch10-figB13-p197.png)
+<!-- source page 197 -->
 
 | Pin number | Signal name | Remarks |
 |---|---|---|
@@ -187,28 +168,23 @@
 | 47 | NC | No Connection |
 | 48 | NC | No Connection |
 
-<!-- TODO(tier-b): verify model numbers/specs against source pages 197-199 -->
+<!-- TODO(tier-b): pins 1-14 verified against source page 197; pins 15-48 still need verification against source pages 198-199 (not yet read). -->
+
 
 ## Audio Cassette-Related
-
-<!-- FIGURE B.15: Audio cassette-related product listing — source page 200 (target: table) -->
 
 | Model number | Item name | Function |
 |---|---|---|
 | PC-6082 | Data Recorder | Audio cassette tape recorder for use with a personal computer |
 | PC-8281 | Data Recorder | Audio cassette tape recorder with automatic search function for use with a personal computer |
 
-<!-- TODO(tier-b): verify model numbers/specs against source page 200 -->
-
 — It is possible to use any commercially-marketed audio cassette recorder.
 
 Please use the PC-8293 CMT cable that is packed with the PC-8201 when you purchase it to connect it to an audio cassette recorder. The PC-8093 can also be used.
 
-<!-- OCR: unclear ("PC-8093") — possibly PC-8293; cross-check against source page 200 -->
+<!-- OCR verified against source page 200: scan literally prints "PC-8093" (likely an original-document typo for PC-8293; transcribed verbatim). -->
 
 The following items are new products to be included in the PC-8201 series.
-
-<!-- FIGURE B.16: New products in the PC-8201 series — source pages 200-201 (target: table) -->
 
 | Model number | Item name | Function |
 |---|---|---|
@@ -223,11 +199,10 @@ The following items are new products to be included in the PC-8201 series.
 | PC-8299-6 | SIO2 cable | 6 pin further expansion |
 | PC-8299-8 | SIO1 cable | 8 pin further expansion |
 
-<!-- TODO(tier-b): verify model numbers/specs against source pages 200-201 -->
+<!-- TODO(tier-b): rows PC-8201-06 / PC-8201-90 / PC-8206 verified against source page 200; rows PC-8271-01 through PC-8299-8 still need verification against source page 201 (not yet read). -->
+
 
 ## Printer related
-
-<!-- FIGURE B.17: Printer-related product listing — source page 202 (target: table) -->
 
 | Model number | Item name | Function |
 |---|---|---|
@@ -236,5 +211,3 @@ The following items are new products to be included in the PC-8201 series.
 | PC-8023A-C | Dot matrix | 80 column, dot matrix printer with graphics capability (PC-8294 cable is sold separately) |
 | PC-8023-01 | Ink ribbon cartridge | Ink ribbon cartridge for use in the PC-8023-C |
 | PC-8221 | Thermal dot matrix printer | 40 or 80 column thermal dot matrix printer with graphics capability (The printer cable is attached to this.) |
-
-<!-- TODO(tier-b): verify model numbers/specs against source page 202 -->

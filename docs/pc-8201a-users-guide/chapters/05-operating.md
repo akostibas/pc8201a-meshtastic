@@ -36,7 +36,8 @@ As noted above, there are three primary software programs which are diplayed in 
 
 When the PC-8201 is turned ON it is generally in the MENU mode. The selection of these features is done through the MENU:
 
-<!-- FIGURE 5.1: Menu navigation diagram showing MAIN MENU branching to BASIC, TEXT, and TELCOM with cursor movement and key press annotations — source page 54 (target: image) -->
+![Fig 5.1: Menu navigation — MAIN MENU branches to BASIC, TEXT, and TELCOM via cursor movement and RETURN/f.10 key presses](../images/ch05-fig1-p54.png)
+<!-- source page 54 -->
 
 When the power switch of the PC-8201 is turned ON the word BASIC will be displayed in reverse image on the second line of the screen. This reverse image is known as the cursor of the MENU.
 
@@ -57,8 +58,6 @@ BASIC         TEXT        TELCOM        -.-
 -.-           -.-          -.-          -.-
 Load    Save     Name     List      12374
 ```
-
-<!-- TODO(tier-b): verify MENU screen layout (reverse-image cursor on BASIC, column alignment) against source page 55 -->
 
 The illustration above shows the screen display when the PC-8201 is turned ON. The word BASIC has a black background, in reverse image. Press the [RETURN] Key at this point and the screen should change to the display illustrated below. The PC-8201 is now in the BASIC mode:
 
@@ -136,7 +135,7 @@ Ok
 Load "  Save "  Files   List    Run
 ```
 
-<!-- TODO(tier-b): verify "Bttes" typo in screen mockup — appears to be source misprint of "Bytes" — source page 57 -->
+<!-- "Bttes" is a misprint in the original scan (should read "Bytes"); transcribed faithfully — source page 57 -->
 
 The "Ok" message should appear if you have entered the time command correctly.
 
@@ -185,8 +184,6 @@ BASIC         TEXT        TELCOM        PC8201.BA
 -.-           -.-          -.-          -.-
 Load    Save     Name     List      12374
 ```
-
-<!-- TODO(tier-b): verify MENU screen column layout (BASIC reverse-image cursor, PC8201.BA file position) against source page 59 -->
 
 Notice that your file PC8201.BA has been saved and its name is displayed on the screen.
 
@@ -245,8 +242,6 @@ PC8201.BA     -.-          -.-          -.-
 Load    Save     Name     List      12374
 ```
 
-<!-- TODO(tier-b): verify MENU screen column layout (BASIC reverse-image cursor, PC8201.BA and PC8201.DO positions) against source page 61 -->
-
 ## TELCOM
 
 To select the TELCOM feature move the cursor onto the word "TELCOM" and then press the [RETURN] Key.
@@ -260,7 +255,7 @@ Telecom: |
                               Stat    Term
 ```
 
-<!-- TODO(tier-b): verify "8I71XS" string in TELCOM screen mockup — possibly garbled version string — source page 62 -->
+<!-- "8I71XS" verified against scan (chars 8-I-7-1-X-S); it is the TELCOM status/format string shown verbatim — source page 62 -->
 
 > **REFERENCE:** See Chapter 8 for further explanations of this feature.
 
@@ -279,8 +274,6 @@ PC8201.BA     -.-          -.-          -.-
 -.-           -.-          -.-          -.-
 Load    Save     Name     List      12374
 ```
-
-<!-- TODO(tier-b): verify MENU screen column layout (file positions, reverse-image cursor on BASIC) against source page 63 -->
 
 The addition of these file names on the display indicates that they have been saved in the RAM.
 
@@ -428,17 +421,13 @@ value indicated when TELCOM is selected).
 The responses used for the load process, external device name, and
 the resulting file name are listed:
 
-<!-- FIGURE 5.2: LOAD command response/device/filename table — source page 68 (target: table) -->
-
 | Response to "Load from" | External Device | Resulting File Name |
 |---|---|---|
 | (no response entered) | Cassette recorder | (no file name resulting) |
 | TEST | Cassette recorder | TEST |
 | CAS: TEST | Cassette recorder | TEST |
 | COM | RS-232C | (current mode) |
-| COM: 8171XN | RS-232C | (8171XN) |
-
-<!-- TODO(tier-b): verify table rows/values against source page 68 -->
+| COM: 8I71XN | RS-232C | (8I71XN) |
 
 The file type must be attached to the file name in response to a
 "Save as" prompt.  The system checks the file type and the
