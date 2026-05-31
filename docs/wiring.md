@@ -121,8 +121,14 @@ RX0  ◄──────────  LV2 ◄── HV2 ◄──────�
                   HV ref ◄─────────────────────────  +5V rail (switched, downstream of power button)
 ```
 
-- **Shifter choice:** prefer a 74HCT/AHCT buffer or BSS138 pair over a TXB0104
-  (edge-rate accelerators misbehave with vintage-PCB parasitics).
+- **Shifter:** **Adafruit #757 — 4-channel BSS138 bidirectional logic level
+  converter** (~$3.95). BSS138-based (not the TXB0104, whose edge-rate
+  accelerators misbehave with vintage-PCB parasitics). Critically, each channel
+  **clamps the low side to its 3.3V rail**, so the 8201A's 5V UART-out can't push
+  5V into the non-5V-tolerant nRF52840 — a bare 74AHCT125 buffer would *not*
+  protect the RAK here. Open-drain/10K-pullup edges are a non-issue at 19200.
+  Wire **HV = 8201A 5V**, **LV = RAK 3.3V (VDD)**; only 2 of the 4 channels are
+  used (TX, RX), leaving a spare pair for a handshake line if needed.
 - **Tap is downstream of the input muxes** (U19/U21), so it's clean regardless of
   RS-232/SIO mux state.
 - **Handshake** here lives on separate latches (ports `0xBA` / `0xD8`), not the

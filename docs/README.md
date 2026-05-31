@@ -84,7 +84,7 @@ PCB antenna ships with the RAK4631 and is fine for the external-dongle phase. If
 
 - ~~Where are the 80C85 UART TX/RX pads (pre-driver)?~~ → 6402 U22, TRO pin 25 / RRI pin 20.
 - ~~What driver chip does the 8201A use?~~ → CD4584-style CMOS Schmitt inverters (U30/U31), not MC1488/89.
-- ~~UART logic level?~~ → 5V CMOS (confirm with scope before wiring).
+- ~~UART logic level?~~ → 5V CMOS (already well-established from the tech ref + M100 sibling; a multimeter on the idle-high UART line confirms it — no scope needed).
 - Which internal rail is switched by the power button and has headroom for the RAK4631 (TX bursts can spike to ~120 mA on the SX1262)? Candidates: any 5V rail downstream of the switch, or the regulated CPU supply.
 - If we tap a 5V rail, do we feed it to the RAK19003's 5V/USB input, or step it down and feed VBAT (3.3–4.2V)?
 - Physical mounting location — option ROM bay? Under the keyboard? Behind the battery compartment?
