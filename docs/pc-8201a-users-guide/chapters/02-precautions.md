@@ -30,7 +30,7 @@ The following steps are performed for a Cold Start:
 
 The display will be erased for an instant after the Cold Start, and then a normal MENU display will appear on the screen. Since the RAM has been completely erased, the MENU display will not show file names other than those of BASIC, TEXT, and TELCOM. Those three primary files are not erased because they are located in the ROM:
 
-<!-- FIGURE 2.1: post-Cold-Start MENU screen showing BASIC/TEXT/TELCOM with date/time and free-byte count — screen mock-up, source page 30 (target: ascii) -->
+Fig 2.1: Post-Cold-Start MENU screen (BASIC shown in inverse-video block on actual LCD; 12374 free bytes confirmed against source page 30)
 
 ```text
 1983/01/01 00:00:00      (C) Microsoft #1
@@ -43,7 +43,7 @@ BASIC      TEXT      TELCOM      -.-
 Load     Save     Name     List     12374
 ```
 
-<!-- TODO(tier-b): verify free-byte count "12374" and the BASIC label (highlighted/inverse block) against source page 30 -->
+<!-- source page 30 -->
 
 > **[RETURN]** Be certain that you want to erase all files before performing a Cold Start and pressig the Reset Switch. It should not be necessary to perform this procedure often.
 
@@ -77,7 +77,8 @@ This feature is initiated by the "IPL Command File", containing the program that
 
 The Reset Switch is located on the back of the PC-8201. As mentioned previously, the Reset Switch should not be used often, since it will cause the programs and files stored in the RAM to be erased:
 
-<!-- FIGURE 2.2: rear-panel connector/switch layout of the PC-8201 (AC-adapter, Protect switch, Reset switch, SIO1, SIO2, Bar-code reader/BCR, RS-232C, Printer, Cassette/CMT connectors) — illustration, source page 33. TODO(tier-b): crop image from source. -->
+![Fig 2.2: PC-8201 rear panel showing (left to right) AC-adapter connector, Protect switch, Reset switch, SIO1, SIO2, Bar-code reader (BCR), RS-232C, Printer, and Cassette (CMT) connectors](../images/ch02-fig2-p33.png)
+<!-- source page 33 -->
 
 The Reset Switch is used during the Cold Start process and as part of a sequence for freeing the PC-8201 when "hung up".
 

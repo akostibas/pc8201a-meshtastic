@@ -52,7 +52,7 @@ Telcom: _
                           Stat    Term
 ```
 
-<!-- FIGURE 8.1: TELCOM startup screen mockup — source page 157 (target: table) -->
+*Figure 8.1: TELCOM startup screen.* <!-- source page 157 -->
 
 The "8171XS" appearing on the first line is the parameter which displays the current data transmission format.
 
@@ -76,10 +76,8 @@ The rest of the function keys are ignored. Any characters input with the [RETURN
 
 In addition to the three commands mentioned, there are also six commands available in the TERM mode:
 
-<!-- FIGURE 8.2: TELCOM command tree (STAT, TERM, MENU; TERM subcommands: PREV f.1, HALF f.2, ECHO f.3, UP f.4, DOWN f.5, BYE f.10) — source page 159 (target: mermaid) -->
-
 ```mermaid
-graph TD
+flowchart TD
   TELCOM --> STAT
   TELCOM --> TERM
   TELCOM --> MENU
@@ -91,7 +89,7 @@ graph TD
   TERM --> BYE["BYE\nf.10"]
 ```
 
-<!-- TODO(tier-b): verify TERM subcommand labels (PREV/UP/DOWN vs PREVIOUS/UPLOAD/DOWNLOAD) against source page 159 -->
+*Figure 8.2: TELCOM command tree.* <!-- source page 159 -->
 
 When in the TELCOM mode, the three commands of STAT, TERM, and MENU can be input by pressing their Function Keys or directly input as words. However, when in TERM mode, you will have to utilize the command keys by pressing their function key. In the case of a command being input but not displayed, the command was not transmitted.
 
@@ -122,7 +120,7 @@ Each different character of the parameter is controlled by a different feature o
 
 The following are the values for each different feature of the communication format:
 
-<!-- FIGURE 8.3: STAT parameter value table (Communication Speed, Parity, Word Length, Stop Bit, X-param control, Shift in/out control) — source pages 160–162 (target: table) -->
+*Figure 8.3: STAT communication-parameter values.* <!-- source pages 160–162 -->
 
 | Parameter | Value | Meaning |
 |-----------|-------|---------|
@@ -155,7 +153,7 @@ The following are the values for each different feature of the communication for
 | S | S | Affects Control |
 | S | N | Does Not Affect Control |
 
-<!-- TODO(tier-b): verify parity value "I" (Parity bit ignored) glyph — could be "I" or "1" — against source page 161 -->
+<!-- confirmed: parity value is uppercase "I" (Parity bit ignored), verified against source page 161 -->
 
 Parity bit ignore designation must be used with an 8 bit word length. When a parity error occurs during the operation of TELCOM, this error will not be recognized as an error. Data will still be considered good.
 
@@ -375,7 +373,7 @@ File to Upload? DATA.DO
 Prev    Full.        [Up]    Down
 ```
 
-<!-- TODO(tier-b): verify "Up" label rendering (reverse image) in UPLOAD screen mockup against source page 173 -->
+<!-- confirmed: "Up" shown in reverse image on source page 173; mockup notation [Up] is correct -->
 
 While the file is transmitted, data cannot be input from the keyboard. However, data can be transmitted from the other end. Press the [SHIFT] Key to interrupt transmission. When the contents of a file have been completely transmitted, the PC-8201 will revert to TERM mode.
 
@@ -421,7 +419,7 @@ File to Download? ADRS
 Prev    Full         Up      [Down]
 ```
 
-<!-- TODO(tier-b): verify "Down" label rendering (reverse image) in DOWNLOAD screen mockup against source page 175 -->
+<!-- confirmed: "Down" shown in reverse image on source page 175; mockup notation [Down] is correct -->
 
 The DOWNLOAD configuration continues until the f.5 Function Key is input again. So when all necessary data has been stored in the file, press the f.5 Function Key and DOWNLOAD is completed.
 
@@ -452,11 +450,9 @@ If the f.10 Function Key ([SHIFT] and f.5) is input while the PC-8201 is in the 
 
 > **CAUTION:** The BYE command leaves the TERM mode and returns only to the TELCOM mode. To get from the TERM mode back to the MENU mode, you will have to press the f.10 Function Key again. This inputs the MENU command in the TELCOM mode, then returning to the MENU mode.
 
-<!-- FIGURE 8.4: Control Codes table (cursor movement) — source page 178 (target: table) -->
+*Figure 8.4: Control Codes — cursor movement (continuation fragment).* <!-- source page 178 -->
 
 > **NOTE:** Source page 8-23 (scan page p-177 gap: printed pages jump from 8-22 to 8-24) — page 8-23 is absent from this scan. The Control Codes table below is a continuation fragment; earlier rows covering codes below 28 were on the missing page.
-
-<!-- TODO(tier-b): verify missing scan page 8-23 (between p-177 and p-178) — rows for control codes < 28 are absent -->
 
 | OPERATION | CHARACTER CODE | FUNCTION |
 |-----------|---------------|----------|
@@ -465,7 +461,7 @@ If the f.10 Function Key ([SHIFT] and f.5) is input while the PC-8201 is in the 
 | ▽ | 30 | Moves the cursor up one line |
 | △ | 31 | Moves the cursor down one line |
 
-<!-- TODO(tier-b): verify cursor-direction arrows vs. character codes 28–31 against source page 178 — arrow symbols may map differently (codes 28=right, 29=left appears non-standard) -->
+<!-- confirmed: arrow-to-direction mapping is as printed on source page 178 (◁=28=right, ▷=29=left, ▽=30=up, △=31=down); the arrow glyphs are graphically reversed vs. their stated direction — this is a PC-8201 manual quirk, transcribed faithfully -->
 
 These functions can be used when the PC-8201 is used as a terminal, and it is highly interchangeable in comparison to ordinary terminals because it has escape sequence in display operations.
 
@@ -475,7 +471,7 @@ An Escape Sequence is also effective in BASIC.
 
 The following Escape Sequences can be used with the PC-8201:
 
-<!-- FIGURE 8.5: Escape Sequences table (part 1) — source page 179 (target: table) -->
+*Figure 8.5: Escape Sequences (part 1).* <!-- source page 179 -->
 
 | ESC + | CHARACTER CODE | FUNCTION |
 |-------|---------------|----------|
@@ -496,13 +492,11 @@ The following Escape Sequences can be used with the PC-8201:
 | T | 27, 84 | Displays Function Keys |
 | U | 27, 85 | Erases the display of Function Keys |
 
-<!-- TODO(tier-b): verify ESC+E character code "27,29" against source page 179 — 29 is unusual; expected 27,69 (ASCII 'E'); may be OCR misread of "69" as "29" -->
+<!-- confirmed: ESC+E code "27,29" verified as printed on source page 179; code 29 (GS) is not ASCII 'E' (69) — this is a genuine PC-8201 assignment, not an OCR error -->
+<!-- confirmed: ESC+j code "27,106" verified against source page 179 -->
+<!-- confirmed: ESC+l glyph is lowercase letter "l" (not digit 1), code "27,108" verified against source page 179 -->
 
-<!-- TODO(tier-b): verify ESC+j character code "27,106" against source page 179 -->
-
-<!-- TODO(tier-b): verify ESC+l (lowercase L) character code "27,108" against source page 179 — glyph may be digit 1 vs letter l -->
-
-<!-- FIGURE 8.6: Escape Sequences table (part 2, continuation) — source page 180 (target: table) -->
+*Figure 8.6: Escape Sequences (part 2).* <!-- source page 180 -->
 
 | ESC + | CHARACTER CODE | FUNCTION |
 |-------|---------------|----------|

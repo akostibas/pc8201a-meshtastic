@@ -42,15 +42,15 @@ The PC-8201 power switch should be OFF prior to connecting the recorder. The (PC
 
 1. Insert the three plugs of the cable into the appropriate jacks on the recorder:
 
-<!-- FIGURE 4.1: cable plugs (RED, BLACK, WHITE) inserted into recorder jacks (CMT IN/Red, AUX, REMOTE/Black, CMT OUT/White) alongside PC-8201 — source page 47 (target: image) -->
-<!-- FIGURE 4.1: cable plug-to-jack connection drawing — illustration, source page 47. TODO(tier-b): crop image from source. -->
+![Fig 4.1: RED/BLACK/WHITE cable plugs inserted into CMT IN, REMOTE, and CMT OUT jacks on the recorder, with the PC-8201 shown alongside](../images/ch04-fig1-p47.png)
+<!-- source page 47 -->
 
 > **NOTE:** Insert the RED plug into the jack labeled CMT IN (microphone jack), the BLACK plug into the jack labeled RMT (remote jack), and the WHITE plug into the jack labeled CMT OUT (earphone jack).
 
 2. Plug the other end of the cable into the recorder connector socket on the rear of the PC-8201. Make sure that the notch on the end of the round connector is facing up:
 
-<!-- FIGURE 4.2: round DIN connector with notch facing up — source page 48 (target: image) -->
-<!-- FIGURE 4.2: round connector showing notch — illustration, source page 48. TODO(tier-b): crop image from source. -->
+![Fig 4.2: Round DIN connector with Notch label, showing the notch orientation for correct insertion](../images/ch04-fig2-p48.png)
+<!-- source page 48 -->
 
 3. Plug the recorder into a wall outlet if not using battery power.
 
@@ -66,23 +66,28 @@ During the loading of information from the recorder to the PC-8201, the LOAD (Pl
 
 The best quality high-bias cassette tape available will give the best results. Inferior quality tapes could lead to loss of information being stored on the tapes. Follow manufacturer's recommendations for care, temperature, and storage of cassette tapes. Additional recommendations:
 
-<!-- FIGURE 4.3: handling cassette by plastic case — illustration, source page 49. TODO(tier-b): crop image from source. -->
+![Fig 4.3: Hand holding cassette tape by its plastic case (never touch the magnetic surface)](../images/ch04-fig3-p49.png)
+<!-- source page 49 -->
 
 1. Never touch the magnetic surface of the tape. Always handle the tape by the plastic case.
 
-<!-- FIGURE 4.4: inserting tape into recorder magnetic-surface-forward — illustration, source page 49. TODO(tier-b): crop image from source. -->
+![Fig 4.4: Inserting cassette tape into recorder with magnetic surface facing forward](../images/ch04-fig4-p49.png)
+<!-- source page 49 -->
 
 2. Always insert the tape into the recorder with the magnetic surface facing the front of the unit. Gently place the tape into the Cassette Tape Housing. Never force it in.
 
-<!-- FIGURE 4.5: tightening loose tape with a pencil in the play reel — illustration, source page 49. TODO(tier-b): crop image from source. -->
+![Fig 4.5: Pencil inserted into the play reel to tighten loose cassette tape clockwise](../images/ch04-fig5-p49.png)
+<!-- source page 49 -->
 
 3. The tape should be tightly wound in the cassette package at all times. If it should become unraveled or loosened, gently place a pencil into the play reel (not the take up reel) and slowly tighten the tape by turning the pencil clockwise.
 
-<!-- FIGURE 4.6: cassette write-protect punch tabs (Side A tab location) — illustration, source page 49. TODO(tier-b): crop image from source. -->
+![Fig 4.6: Two cassette tape drawings showing write-protect punch tab location (Side A tab on right when Side A faces up) and cellophane tape repair](../images/ch04-fig6-p49.png)
+<!-- source page 49 -->
 
 4. Tapes should be "write protected" if you want to protect particular information stored on tape from having new information written over it. To do this, the punch tabs are removed as illustrated. Be careful not to crack the case while removing the tabs. The punch tab protecting Side A of the tape is on the right when Side A is facing up. To later save new information on a write protected tape you simply cover the write protect tab area with a strong piece of cellophane tape. The tape is then functional for input or output.
 
-<!-- FIGURE 4.7: cleaning tape heads and capstan with a cotton swab (labels: HEAD, HEAD, CAPSTAN, COTTON SWAB) — illustration, source page 50. TODO(tier-b): crop image from source. -->
+![Fig 4.7: Recorder interior diagram showing cotton swab cleaning of tape heads and capstan (labels: HEAD, HEAD, CAPSTAN, COTTON SWAB)](../images/ch04-fig7-p50.png)
+<!-- source page 50 -->
 
 5. The tape heads of the recorder should be cleaned periodically for optimum performance. A head cleaning tape may be used for this purpose.
 
