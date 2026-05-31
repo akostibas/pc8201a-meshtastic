@@ -1,8 +1,10 @@
 # Chapter 7: N82-BASIC Programming Aids
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 221–228). Transcribed faithfully; **numeric/tabular values
-> are pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 221–228). Transcribed faithfully and Tier B figure/table pass complete
+> (figures rendered, tables checked against the source scan). Remaining
+> items needing a human eye are tracked in the BASIC Reference Tier B
+> review issue.
 
 This chapter is designed to provide enough information to make programming easier for beginning programmers.  It will aid in the creation of your own programs, as well as helping to resolve problems within those programs.
 
@@ -18,7 +20,7 @@ Scrolling occurs whenever characters are input on the bottom line of the screen,
 
 EXPLANATION:
 
-The cursor in the BASIC Mode is described as a flashing box <!-- OCR: unclear (filled square cursor symbol rendered as solid block in source) -->; its position is very important when you input or print on the screen display.
+The cursor in the BASIC Mode is described as a flashing box ■; its position is very important when you input or print on the screen display.
 
 Wrap around is a process when characters continue on to the next line of the screen.  When characters are input past the 39th position of the current line, they are moved onto the first position of the next line.
 
@@ -79,14 +81,14 @@ The logical error occurs in statement 60 because we add elements 1 to 6 instead 
 60 FOR I = 0 TO 5
 ```
 
-Type RUN and press the <!-- OCR: unclear (keycap symbol — appears to be RETURN/ENTER key graphic) --> Key and you will see that the result of 69 is now correct.
+Type RUN and press the `RETURN` Key <!-- source shows a small unlabeled keycap graphic; identified as RETURN/ENTER from context --> and you will see that the result of 69 is now correct.
 
 
 ### Loss of Program Control
 
 SITUATION:
 
-The <!-- OCR: unclear (keycap symbol — STOP key graphic) --> Key is ineffective and you have no control over a program.
+The `STOP` Key is ineffective and you have no control over a program.
 
 EXPLANATION:
 
@@ -94,7 +96,7 @@ In this situation you may have temporarily overlayed vital routines through the 
 
 Files stored in the RAM are erased when this situation is encountered.  The only option you have at this point is to turn the power switch OFF.  When the power is turn ON again, no files are displayed on the MENU screen except the primary files of BASIC, TEXT, and TELCOM.
 
-If the PC-8201 still does not operate correctly in some way, conducting a Cold Start is necessary.  To do this, press the <!-- OCR: unclear (keycap symbol — appears to be RETURN/ENTER key graphic) --> Key and the <!-- OCR: unclear (keycap symbol — SHIFT key graphic) --> Key simultaneously, while the Reset Switch on the back of the PC-8201 is pressed.  If necessary, refer to the User's Guide.
+If the PC-8201 still does not operate correctly in some way, conducting a Cold Start is necessary.  To do this, press the `RETURN` Key <!-- source shows a small unlabeled keycap graphic; identified as RETURN/ENTER from context --> and the `SHIFT` Key simultaneously, while the Reset Switch on the back of the PC-8201 is pressed.  If necessary, refer to the User's Guide.
 
 
 ### Return to BASIC from TEXT is Impossible
@@ -107,7 +109,7 @@ EXPLANATION:
 
 In this situation, the message "Text ill-formed" is displayed on the screen whenever you try to exit and return to the BASIC or MENU Mode.  This happens because a statement within the program is longer than 255 characters, or the statement format is illegal.
 
-The PC-8201 locks you out and pressing the <!-- OCR: unclear (keycap symbol — STOP key graphic) --> Key or the f.10 Function Key have no effect except to display the error message.  To resolve this problem, it is necessary to find the long statement and make it shorter, or re-format the statement.  Exit from the TEXT Mode should then be possible.
+The PC-8201 locks you out and pressing the `STOP` Key or the f.10 Function Key have no effect except to display the error message.  To resolve this problem, it is necessary to find the long statement and make it shorter, or re-format the statement.  Exit from the TEXT Mode should then be possible.
 
 
 ## Programming Hints

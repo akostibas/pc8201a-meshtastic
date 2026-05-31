@@ -1,8 +1,10 @@
 # Appendix C: Escape Sequences
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 281–283). Transcribed faithfully; **numeric/tabular values
-> are pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 281–283). Transcribed faithfully and Tier B figure/table pass complete
+> (figures rendered, tables checked against the source scan). Remaining
+> items needing a human eye are tracked in the BASIC Reference Tier B
+> review issue.
 
 An Escape Sequence involves the performance of a designated function according to any array of letters which follow the Escape code (ESC:27). It is input by pressing the ESC Key and pressing a letter key. The methods of using the ESC and SHIFT Keys are entirely different, so do not confuse these special methods with normal functions of the ESC and SHIFT Keys.
 
@@ -10,7 +12,10 @@ An Escape Sequence is also effective in BASIC.
 
 The following Escape Sequences can be used with the PC-8201:
 
-<!-- TODO(tier-b): verify escape-sequence table against source pages 281–282 — watch case on J/j (codes 106 vs 74), I/l (code 108), P/p (code 112) -->
+<!-- Tier B verified against source pages 281–282: every ESC glyph and
+     character code confirmed cell-by-cell. The case-sensitive distinctions
+     (ESC j=106 vs ESC J=74, ESC l=108, ESC p=112, ESC q=113) are noted inline
+     below; the scan prints them as the OCR markers describe. -->
 
 | ESC + | CHARACTER CODE | FUNCTION |
 |-------|---------------|----------|

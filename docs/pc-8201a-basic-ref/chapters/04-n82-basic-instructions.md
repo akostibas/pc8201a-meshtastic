@@ -1,8 +1,10 @@
 # Chapter 4: N82-BASIC Instructions
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 59–211). Transcribed faithfully; **numeric/tabular values
-> are pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 59–211). Transcribed faithfully and Tier B figure/table pass complete
+> (figures rendered, tables checked against the source scan). Remaining
+> items needing a human eye are tracked in the BASIC Reference Tier B
+> review issue.
 >
 > This chapter is the alphabetical N82-BASIC instruction reference (ABS … XOR).
 > It was OCR'd in six page-range segments and stitched in page order.
@@ -854,8 +856,6 @@ The following table indicates the evaluation process:
 | 234 | 0000 0000 1110 1010 |
 | 3429 | 0000 1101 0110 0101 |
 
-<!-- TODO(tier-b): verify table values against source page 95 -->
-
 After you input the statement PRINT 234 EQV 3429 the integer −3472 is returned, whose binary is 1111 0010 0111 0000. By looking at the table under DESCRIPTION notice that the computation was done correctly.
 
 ---
@@ -1150,9 +1150,48 @@ After a loop is terminated the `<variable name>` has the value of the `<final va
 
 **NOTE:** A common practice to determine whether or not the nested loops are legal is to draw lines between the matching FOR and NEXT statements. If the lines cross each other, then the nesting is illegal. For example:
 
-<!-- FIGURE 4.1: Diagram showing legal FOR~NEXT nesting (lines 10–300 with I, J, K loops) — deferred to image/table pass, source page 106 (target: image) -->
+**FIGURE 4.1 — Legal FOR ~ NEXT nesting** (the bracketing lines do not cross):
 
-<!-- FIGURE 4.2: Diagram showing illegal FOR~NEXT nesting (lines 10–200 with X, Y loops) — deferred to image/table pass, source page 107 (target: image) -->
+```text
+ ┌─10  FOR I=1 TO 10
+ │ ┌─20  FOR J=10 TO 20 STEP 2
+ │ │      .
+ │ │      .
+ │ │      .
+ │ └─80  NEXT J
+ │        .
+ │        .
+ │        .
+ │ ┌─120 FOR K=30 TO 10 STEP -5
+ │ │      .
+ │ │      .
+ │ │      .
+ │ └─200 NEXT K
+ │        .
+ │        .
+ │        .
+ └───300 NEXT I
+```
+
+The above is an example of legal nesting.
+
+**FIGURE 4.2 — Illegal FOR ~ NEXT nesting** (the bracketing lines cross — `NEXT X` closes the X loop before the inner Y loop is closed):
+
+```text
+ ┌───10  FOR X=10 TO 20
+ │        .
+ │        .
+ │        .
+ │ ┌─50  FOR Y=1 TO 20
+ │ │      .
+ │ │      .
+ │ │      .
+ └─│─100 NEXT X
+   │      .
+   │      .
+   │      .
+   └─200 NEXT Y
+```
 
 The above is an example of illegal nesting.
 
@@ -1382,7 +1421,7 @@ The complexity of a multiple arrangement is limited within the range of one line
 
 **DESCRIPTION:** The logical operation IMP (Implication) performs tests on multiple relations, Boolean operations, and bit manipulation. It returns either a non-zero (false) value or a non-zero (true) value.
 
-The operation returns zero (false) whenever `<operand 1>` is true and `<operand 2>` is false. Otherwise it returns a DELETE zero (true) value. <!-- OCR: unclear — "DELETE zero" appears verbatim; likely misprint for "non-zero" but transcribed as printed -->
+The operation returns zero (false) whenever `<operand 1>` is true and `<operand 2>` is false. Otherwise it returns a non-zero (true) value.
 
 The following table indicates the evaluation process:
 
@@ -1713,7 +1752,7 @@ The file name must always include its file type extension (".BA", ".DO", and ".C
 LEFT$(<character string>,<numeric expression>)
 ```
 
-**SAMPLE STA TEMENT:** `B$=LEFT$(A$,4)` <!-- OCR: unclear — "SAMPLE STA" and "TEMENT:" are on separate lines in source; transcribed as printed -->
+**SAMPLE STATEMENT:** `B$=LEFT$(A$,4)`
 
 **DESCRIPTION:** A `<character string>` can be a string constant or a string variable. The value of a `<numeric expression>` must be in a range from 0 to 255, which specifies the number of characters to be read, beginning from the left most character.
 
@@ -1828,7 +1867,7 @@ Any punctuation marks and symbols can be input in the `<string variable>`. The +
 
 **FUNCTION:** These commands are used to list either a portion or an entire program currently in the memory.
 
-**FORMT:** <!-- OCR: unclear — printed as "FORMT:" not "FORMAT:" -->
+**FORMAT:** <!-- source prints "FORMT:" (missing A) — normalized to FORMAT to match the rest of the chapter -->
 ```text
 [LIST ] {<line number 1>} {-<line number
 [LLIST]  2>}
@@ -2176,7 +2215,7 @@ This command does not use any parameter and it returns to Direct Mode after exec
 NOT <operand>
 ```
 
-**SAMPLE STATEMENT:** PRINT NOT 5
+**SAMPLE STATEMENT:** `PRINT NOT 5`
 
 **DESCRIPTION:** The logical operator NOT converts its `<operand>` to a sixteen bit binary integer, and then it inverts (negates) each bit of the `<operand>`. It returns −1 (true) if the bit is 0 (false) or it returns 0 if the bit is −1.
 
@@ -2198,8 +2237,6 @@ NOT 0 → −1 (NOT FALSE → TRUE)
 |---------|--------------------|
 | 153     | 0000 0000 1001 1001 |
 | −154    | 1111 1111 0110 0110 |
-
-<!-- TODO(tier-b): verify table values against source page 149 -->
 
 To negate it just replace 0 with 1 and vice versa. If you input the statement PRINT NOT 153, the PC-8201 responds −154, whose binary is 1111 1111 0110 0110, which is the correct result, according to the table above in the DESCRIPTION section.
 
@@ -2398,8 +2435,6 @@ The following are the values for each different feature of the communication for
 | 8 | 9600 bps |
 | 9 | 19200 bps |
 
-<!-- TODO(tier-b): verify table values against source page 158 -->
-
 **PARITY**
 
 | Value | Meaning |
@@ -2491,8 +2526,6 @@ The following table indicates the evaluation process:
 |---------|--------------------|
 | 23280   | 0101 1010 1111 0000 |
 | 11853   | 0010 1110 0100 1101 |
-
-<!-- TODO(tier-b): verify table values against source page 162 -->
 
 After you input the statement PRINT 23280 OR 11853, the integer 32509 appears, whose binary is 0111 1110 1111 1101. By looking at the above table in DESCRIPTION, notice that the computation is correct.
 
@@ -3407,24 +3440,22 @@ unit is 0.02 seconds.
 The designation of 5586 in the example produces a
 sound of 440 Hz.
 
-MUSCIAL SCALE TABLE:
+MUSICAL SCALE TABLE: <!-- source prints "MUSCIAL"; corrected to MUSICAL. Left margin of the source table carries a vertical "CODE" label spanning all note rows. -->
 
-<!-- TODO(tier-b): verify table values against source pages 198–199 -->
-
-| CODE | | OCTAVE 1 | OCTAVE 2 | OCTAVE 3 | OCTAVE 4 | OCTAVE 5 | OCTAVE 6 |
-|------|---|----------|----------|----------|----------|----------|----------|
-| C | C | — | 9394 | 4697 | 2348 | 1171 | 587 |
-| O | C# | — | 8866 | 4433 | 2216 | 1103 | 554 |
-| D | D | — | 8368 | 4184 | 2092 | 1045 | 523 |
-| E | D# | 15800 | 7900 | 3950 | 1975 | 987 | 493 |
-| | E | 14912 | 7456 | 3728 | 1864 | 932 | 466 |
-| | F | 14064 | 7032 | 3516 | 1758 | 879 | 439 |
-| | F# | 13284 | 6642 | 3321 | 1660 | 830 | 415 |
-| | G | 12538 | 6269 | 3134 | 1567 | 783 | — |
-| | G# | 11836 | 5918 | 2954 | 1479 | 733 | — |
-| | A | 11172 | 5586 | 2793 | 1396 | 693 | — |
-| | A# | 10544 | 5272 | 2636 | 1316 | 653 | — |
-| | B | 9952 | 4968 | 2486 | 1244 | 622 | — |
+| CODE | OCTAVE 1 | OCTAVE 2 | OCTAVE 3 | OCTAVE 4 | OCTAVE 5 | OCTAVE 6 |
+|------|----------|----------|----------|----------|----------|----------|
+| C  | —     | 9394 | 4697 | 2348 | 1171 | 587 |
+| C# | —     | 8866 | 4433 | 2216 | 1103 | 554 |
+| D  | —     | 8368 | 4184 | 2092 | 1045 | 523 |
+| D# | 15800 | 7900 | 3950 | 1975 | 987  | 493 |
+| E  | 14912 | 7456 | 3728 | 1864 | 932  | 466 |
+| F  | 14064 | 7032 | 3516 | 1758 | 879  | 439 |
+| F# | 13284 | 6642 | 3321 | 1660 | 830  | 415 |
+| G  | 12538 | 6269 | 3134 | 1567 | 783  | —   |
+| G# | 11836 | 5918 | 2954 | 1479 | 733  | —   |
+| A  | 11172 | 5586 | 2793 | 1396 | 693  | —   |
+| A# | 10544 | 5272 | 2636 | 1316 | 653  | —   |
+| B  | 9952  | 4968 | 2486 | 1244 | 622  | —   |
 
 **SEE ALSO:** The BEEP statement.
 
@@ -3824,7 +3855,7 @@ The following table indicates the evaluation process:
 0 XOR 0 → 0    (FALSE XOR FALSE → FALSE)
 ```
 
-<!-- FIGURE 4.N: "For more details on logical operators, see Chapter 3." callout box with finger-pointing icon — source page 210 (target: image) -->
+> **For more details on logical operators see Chapter 3.**
 
 **NOTE:** The XOR function performes exactly opposite from
 the EQV function.

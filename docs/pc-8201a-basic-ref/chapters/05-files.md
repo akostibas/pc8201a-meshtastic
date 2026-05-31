@@ -1,8 +1,10 @@
 # Chapter 5: Files
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 213–216). Transcribed faithfully; **numeric/tabular values
-> are pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 213–216). Transcribed faithfully and Tier B figure/table pass complete
+> (figures rendered, tables checked against the source scan). Remaining
+> items needing a human eye are tracked in the BASIC Reference Tier B
+> review issue.
 
 A file is a collection of records in the RAM of the PC-8201 or external devices, such as a data recorder.  Each record consists of a group of logically related characters.  For example, an N82-BASIC program line is one record.  The PC-8201 uses the record unit to read or write into a file, and each file is designated a distinct file name when the file is created.
 
@@ -53,9 +55,16 @@ You can also display the file names within the specific bank when in the BASIC m
 
 EXAMPLE:
 
-Move the cursor onto the word "PC8201.BA" and then press the <!-- OCR: unclear (key symbol shown as small icon, likely ENTER or EXE key) --> Key.  The PC-8201 is now in the BASIC mode and the previously created BASIC program "PC8201.BA" is executed.  The screen will appear as shown:
+Move the cursor onto the word "PC8201.BA" and then press the [ENTER] <!-- source shows a small return/enter key icon here; rendered as [ENTER] to match the convention used elsewhere in this manual --> Key.  The PC-8201 is now in the BASIC mode and the previously created BASIC program "PC8201.BA" is executed.  The screen will appear as shown:
 
-<!-- FIGURE 5.1: Screen output of executing PC8201.BA from MENU mode, showing the text "The PC-8201 is a frendly computer! It offers many features, including the generation of sound, wordprocessing and many more." — deferred to image/table pass, source page 215 (target: image) -->
+```text
+The PC-8201 is a frendly computer!
+It offers many features, including the
+generation of sound,
+wordprocessing and many more.
+```
+
+*Figure 5.1 — Screen output of running `PC8201.BA` from the MENU. ("frendly" [sic] — spelled this way in the source screen.) (Source p. 215)*
 
 
 ## Buffers

@@ -1,8 +1,10 @@
 # Chapter 8: Error Messages
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 230–245). Transcribed faithfully; **numeric/tabular values
-> are pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 230–245). Transcribed faithfully and Tier B figure/table pass complete
+> (figures rendered, tables checked against the source scan). Remaining
+> items needing a human eye are tracked in the BASIC Reference Tier B
+> review issue.
 
 This chapter outlines causes and what action you should take when error messages are displayed on your screen.  There are 43 messages programmed into the PC-8201.  Many more error messages could be defined by you, using a BASIC program.
 

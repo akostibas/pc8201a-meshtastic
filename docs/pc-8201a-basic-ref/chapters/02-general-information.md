@@ -1,8 +1,10 @@
 # Chapter 2: General Information
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 21–29). Transcribed faithfully; **numeric/tabular values
-> are pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 21–29). Transcribed faithfully and Tier B figure/table pass complete
+> (figures rendered, tables checked against the source scan). Remaining
+> items needing a human eye are tracked in the BASIC Reference Tier B
+> review issue.
 
 ## Screen Display
 
@@ -10,13 +12,53 @@ The Liquid Crystal Display screen can display 8 lines of 40 characters per line.
 
 The character positions on the screen are numbered 0 through 39 columns from left to right, and 0 through 7 lines from top to bottom:
 
-<!-- FIGURE 2.1: Screen coordinate diagram showing corners 0,0 → 39,0 → 0,7 → 39,7 — deferred to image/table pass, source page 21 (target: image) -->
+```text
+        col 0                          col 39
+        +------------------------------------+
+line 0  | 0.0  -------------------->   39.0  |
+        |  |                             |   |
+        |  v                             v   |
+line 7  | 0.7  -------------------->   39.7  |
+        +------------------------------------+
+```
+
+*Figure 2.1 — Screen character-position coordinates (column.line).*
+
+| Corner       | Coordinate |
+|--------------|------------|
+| top-left     | 0.0        |
+| top-right    | 39.0       |
+| bottom-left  | 0.7        |
+| bottom-right | 39.7       |
+
+<!-- Note: source labels corners with a dot separator (e.g. "0.0", "39.7"), read as column.line, not column,line. -->
+
 
 Each position is addressable by using the LOCATE statement.
 
 Dot graphics may be displayed on the screen of the PC-8201.  The screen consists of 240 pixels (dots) across from left to right, with the columns numbered 0 through 239.  There are 64 pixels from top to bottom on the screen, with the lines numbered 0 through 63:
 
-<!-- FIGURE 2.2: Dot-graphics coordinate diagram showing corners 0,0 → 239,0 → 0,63 → 239,63 — deferred to image/table pass, source page 21 (target: image) -->
+```text
+        col 0                          col 239
+        +-------------------------------------+
+line 0  | 0.0   ------------------>   239.0   |
+        |  |                            |     |
+        |  v                            v     |
+line 63 | 0.63  ------------------>   239.63  |
+        +-------------------------------------+
+```
+
+*Figure 2.2 — Dot-graphics pixel coordinates (column.line).*
+
+| Corner       | Coordinate |
+|--------------|------------|
+| top-left     | 0.0        |
+| top-right    | 239.0      |
+| bottom-left  | 0.63       |
+| bottom-right | 239.63     |
+
+<!-- Note: source labels corners with a dot separator (e.g. "0.63", "239.63"), read as column.line. -->
+
 
 Each dot is addressed using the PSET statement.
 
@@ -45,7 +87,7 @@ N82-BASIC reserves several symbols for special purposes:
 
 - Hyphen (-) indicates a range, in place of the word "to", such as 1-19.  The hyphen is the same character as the minus sign.
 
-- Comma (,) separates variables or data within a PRINT command into <!-- OCR: unclear — a graphic/icon (possibly "14") appears before "unit widths called Space Zones"; likely a print-formatting symbol or column-width indicator in the original --> unit widths called Space Zones.
+- Comma (,) separates variables or data within a PRINT command into <!-- a small shaded/cross-hatched block graphics glyph appears here in place of a numeral; the intended Space-Zone width is not legible --> unit widths called Space Zones.
 
 - Colon (:) is used to separate compound statements within one program line, which saves memory space.
 
@@ -68,8 +110,6 @@ N82-BASIC reserves several symbols for special purposes:
 | Pound (#)       | (variable)#  | Real Number Double Precision    |
 | Dollar ($)      | (variable)$  | Character String                |
 
-<!-- TODO(tier-b): verify table values against source page 24 -->
-
 ## Control Characters
 
 The characters recognized by N82-BASIC include:
@@ -80,13 +120,11 @@ The characters recognized by N82-BASIC include:
 | Lower case alphabet | a - z                                                               |
 | Numbers             | 0 - 9                                                               |
 | Special symbols     | . − , : ; ' " ? % ! # $ & = ( ) [ ] \ / @ + ^ _ etc.              |
-| Graphics characters | <!-- OCR: unclear — two small graphic/icon characters appear here, likely left-arrow and down-arrow or similar PC-8201 graphics glyphs -->, and up to a total of 125 programmable graphics characters |
-
-<!-- TODO(tier-b): verify table values against source page 24 -->
+| Graphics characters | (three sample graphics glyphs are shown: a solid left-pointing triangle, a return/enter arrow, and a shaded/cross-hatched block)<!-- glyphs not in Unicode-faithful form; described in prose --> , and up to a total of 125 programmable graphics characters |
 
 ## Error Messages
 
-If an error occus <!-- OCR: unclear ("occus" vs "occurs") — likely "occurs", preserved as printed --> during program execution, the PC-8201 will terminate the program and return to the Direct Mode.
+If an error occus <!-- [sic] printed "occus" in the source; should read "occurs" --> during program execution, the PC-8201 will terminate the program and return to the Direct Mode.
 
 The error message is displayed on the screen if the PC-8201 is in the Direct Mode of BASIC.  While in the Program Mode, the line number where the error occurred is displayed along with the error message.
 
@@ -98,23 +136,23 @@ The two editing modes featured by the PC-8201 are the Direct Mode in BASIC and t
 
 ## Screen Editing of Programs
 
-Editing programs in the BASIC mode is done by modifying program lines.  When you edit in this manner, the <!-- OCR: unclear — key icon, likely the RETURN/ENTER key --> Key must be pressed after your changes have been made in order to be entered into the memory.  Remember that a program line cannot be over 254 characters long, which is more than 6 full lines on the screen.  It is recommended that lines have less than 200 characters, so they may be LISTed and edited.
+Editing programs in the BASIC mode is done by modifying program lines.  When you edit in this manner, the [RETURN] Key must be pressed after your changes have been made in order to be entered into the memory.  Remember that a program line cannot be over 254 characters long, which is more than 6 full lines on the screen.  It is recommended that lines have less than 200 characters, so they may be LISTed and edited.
 
-The following operations are used to edit (modify) program lines.  First list the line by typing LIST and then the line number following by the <!-- OCR: unclear — key icon, likely RETURN/ENTER --> Key.
+The following operations are used to edit (modify) program lines.  First list the line by typing LIST and then the line number following by the [RETURN] Key.
 
 INSERT:
 
 1. Move the cursor to the place where the character is to be inserted using the Cursor Movement Keys.
 
-2. Press the <!-- OCR: unclear — key icon, likely INS key --> Key.
+2. Press the [INS] Key.
 
 3. Type the character(s) to be inserted.
 
-4. If other insertions are needed on the same program line, move the cursor to the desired positions again using the Cursor Movement Keys, then press <!-- OCR: unclear — key icon, likely INS key --> Key and insert the character(s).
+4. If other insertions are needed on the same program line, move the cursor to the desired positions again using the Cursor Movement Keys, then press [INS] Key and insert the character(s).
 
-5. Press the <!-- OCR: unclear — key icon, likely RETURN/ENTER key --> Key to enter your insertions into the memory.
+5. Press the [RETURN] Key to enter your insertions into the memory.
 
-6. Keep in mind that when INSERTion editing in the Direct Mode of BASIC is used, the INSERT is active until a <!-- OCR: unclear — key icon, likely RETURN/ENTER key --> Key is pressed, or a cursor movement key is entered.
+6. Keep in mind that when INSERTion editing in the Direct Mode of BASIC is used, the INSERT is active until a [RETURN] Key is pressed, or a cursor movement key is entered.
 
 DELETE:
 
@@ -122,35 +160,35 @@ To delete characters that precede the cursor in a program line, LIST the line, t
 
 1. Move the cursor to the right of the character to be deleted.
 
-2. Press the <!-- OCR: unclear — key icon, likely BS/DEL key --> Key.
+2. Press the [BS/DEL] Key.
 
 3. Press the same key as many times as needed to delete characters to the left of the cursor.
 
-4. Press the <!-- OCR: unclear — key icon, likely RETURN/ENTER key --> Key to store the changes.
+4. Press the [RETURN] Key to store the changes.
 
 To delete characters that follow the cursor in a program line, LIST the line, then:
 
 1. Move the cursor onto the first character to be deleted.
 
-2. Press and hold the SHIFT Key and then input the <!-- OCR: unclear — key icon, likely BS/DEL key --> key.
+2. Press and hold the SHIFT Key and then input the [BS/DEL] key.
 
 3. Repeat the same process as many times as needed.
 
-4. Press the <!-- OCR: unclear — key icon, likely RETURN/ENTER key --> Key to store the changes.
+4. Press the [RETURN] Key to store the changes.
 
 To delete an entire line:
 
 1. Type the line number to be deleted, with no characters following it.
 
-2. Press the <!-- OCR: unclear — key icon, likely RETURN/ENTER key --> Key.
+2. Press the [RETURN] Key.
 
 Another way to delete an entire line is to LIST the line then:
 
 1. Move the cursor to the space between the line number and the body of the statement.
 
-2. Press and hold the <!-- OCR: unclear — key icon, likely CTRL key --> Key and input the E Key, then press the <!-- OCR: unclear — key icon, likely RETURN/ENTER key --> Key.
+2. Press and hold the [CTRL] Key and input the E Key, then press the [RETURN] Key.
 
-> **NOTE**  This procedure of holding the <!-- OCR: unclear — key icon, likely CTRL key --> Key down while inputting a character will appear in this manual as <!-- OCR: unclear — key icon --> + \< character \>.  Do not input the + sign, because it just signifies that the two keys are being entered simultaneously.
+> **NOTE**  This procedure of holding the [CTRL] Key down while inputting a character will appear in this manual as [CTRL] + 〈character〉.  Do not input the + sign, because it just signifies that the two keys are being entered simultaneously.
 
 ADD:
 
@@ -170,7 +208,7 @@ To rewrite a line just type the old line number followed by the contents of the 
 
 - CTRL + E — Erases characters from the position directly to the right of the cursor, all the way to the end of the program line.
 
-- CTRL + H — Same as the <!-- OCR: unclear — key icon, likely BS key --> Key.
+- CTRL + H — Same as the [BS] Key.
 
 - CTRL + I — Same as the TAB Key.
 
@@ -178,23 +216,23 @@ To rewrite a line just type the old line number followed by the contents of the 
 
 - CTRL + L — Clears the screen and moves the cursor to the home position.
 
-- CTRL + M — Same as the <!-- OCR: unclear — key icon, likely RETURN/ENTER key --> Key.
+- CTRL + M — Same as the [RETURN] Key.
 
 - CTRL + Q — Continues the scrolling of a program listing on the screen after the LIST instruction has been given and the listing was interrupted.  See CTRL + S.
 
 - CTRL + S — Interrupts the scrolling of a program listing on the screen after the LIST instruction has been used.
 
-- CTRL + R — Same as the <!-- OCR: unclear — key icon, likely INS key --> Key.
+- CTRL + R — Same as the [INS] Key.
 
 - CTRL + U — Erases a line displayed on the screen.  The internal memory is not altered.
 
 ## Editing Programs Using the TEXT Mode
 
-Programs can be edited in the TEXT mode by entering EDIT and then pressing the <!-- OCR: unclear — key icon, likely RETURN/ENTER key --> Key.  To exit the TEXT editing mode, press the <!-- OCR: unclear — key icon, likely RETURN/ENTER key --> Key twice or the f.10 Function Key (SHIFT Key and f.5).
+Programs can be edited in the TEXT mode by entering EDIT and then pressing the [RETURN] Key.  To exit the TEXT editing mode, press the [RETURN] Key twice or the f.10 Function Key (SHIFT Key and f.5).
 
-In this mode, any character typed is inserted one at a time, at the location of the cursor.  Unlike editing in the Direct Mode, every modification that you make in a program line is entered into the memory of the PC-8201 immediately, before you press the <!-- OCR: unclear — key icon, likely RETURN/ENTER key --> Key.
+In this mode, any character typed is inserted one at a time, at the location of the cursor.  Unlike editing in the Direct Mode, every modification that you make in a program line is entered into the memory of the PC-8201 immediately, before you press the [RETURN] Key.
 
-Use of the TAB Key while in the TEXT editing mode will indent the line being typed.  The <!-- OCR: unclear — key icon, likely RETURN/ENTER key --> Key must be used to end a program line being typed or modified in this mode, or else the line will appear in the program out of sequence.
+Use of the TAB Key while in the TEXT editing mode will indent the line being typed.  The [RETURN] Key must be used to end a program line being typed or modified in this mode, or else the line will appear in the program out of sequence.
 
 The PC-8201 will check a newly input program line in the TEXT editing mode.  If a line with only a line number and no characters following it or if a line which does not contain a line number is input by you, the PC-8201 will not store it in the memory.  When this type of line is input the message "Text ill-formed" will be displayed on the screen and a "BEEP" sound will be generated.  You will have to type in a correct program line or delete the line number from the screen to avoid this error message.
 

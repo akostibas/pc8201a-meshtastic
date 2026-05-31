@@ -1,8 +1,8 @@
 # Chapter 3: Expressions and Operations
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 31–57). Transcribed faithfully; **numeric/tabular values
-> are pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 31–57). Tier B verified: figures, tables, truth tables,
+> and relational operators checked cell-by-cell against the page images.
 
 
 ## Variables
@@ -44,7 +44,21 @@ The last character of a variable name determines the type of variable. The 4 typ
 
 Following is a table of the different types of variables:
 
-<!-- FIGURE 3.1: Variable type hierarchy tree (Variable → Character Variable / Numeric Variable → Real Number Variable / Integer Variable → Single Precision / Double Precision → Fixed Decimal / Floating Decimal) — deferred to image/table pass, source page 33 (target: image) -->
+**Figure 3.1 — Variable type hierarchy**
+
+```mermaid
+graph TD
+    V[Variable] --> CV[Character Variable]
+    V --> NV[Numeric Variable]
+    NV --> RNV[Real Number Variable]
+    NV --> IV[Integer Variable]
+    RNV --> SP[Single Precision]
+    RNV --> DP[Double Precision]
+    SP --> SPF[Fixed Decimal]
+    SP --> SPL[Floating Decimal]
+    DP --> DPF[Fixed Decimal]
+    DP --> DPL[Floating Decimal]
+```
 
 Variable type can be designated by using declaration statements.
 
@@ -154,8 +168,6 @@ Values:     11  91  36  12  19  50
 
 When the elements of an array are designated with two subscripts then the array has two dimensions. This is explained with the following example. Let the array "ITEMS%" be two-dimensional to a size of 4 rows by 8 columns. To reserve memory space for the array, the statement DIM ITEMS%(3,7) would be used. Following is the layout of the location of each element of an array ITEMS% :
 
-<!-- TODO(tier-b): verify table values against source page 37 -->
-
 **COLUMNS**
 
 |      |   | 0  | 1  | 2  | 3  | 4  | 5   | 6   | 7  |
@@ -179,8 +191,6 @@ In this example "I" represents the ROWS and "T" represents the COLUMNS. Notice t
 
 The layout for the array with dimensions (3,7) is addressed by subscripts according to the following table:
 
-<!-- TODO(tier-b): verify table values against source page 38 -->
-
 **COLUMNS**
 
 |      |   | 0     | 1     | 2     | 3     | 4     | 5     | 6     | 7     |
@@ -201,7 +211,21 @@ Constants are values that you assign to variable names for use throughout your p
 
 Constants could represent the same types of information as variables. The same rules regarding designation of variables apply to constants. The following table illustrates types of constants used in BASIC:
 
-<!-- FIGURE 3.2: Constant type hierarchy tree (Constant → Character Constant / Numeric Constant → Real Number / Integer Number → Single Precision / Double Precision → Fixed Decimal / Floating Decimal) — deferred to image/table pass, source page 39 (target: image) -->
+**Figure 3.2 — Constant type hierarchy**
+
+```mermaid
+graph TD
+    C[Constant] --> CC[Character Constant]
+    C --> NC[Numeric Constant]
+    NC --> RN[Real Number]
+    NC --> IN[Integer Number]
+    RN --> SP[Single Precision]
+    RN --> DP[Double Precision]
+    SP --> SPF[Fixed Decimal]
+    SP --> SPL[Floating Decimal]
+    DP --> DPF[Fixed Decimal]
+    DP --> DPL[Floating Decimal]
+```
 
 
 ### Numeric Constants
@@ -284,8 +308,6 @@ Numeric variables can be converted from one type to another in N82-BASIC. Charac
 
    EXAMPLE:
 
-   <!-- TODO(tier-b): verify table values against source page 43 -->
-
    | Statement | Variable | Value |
    |-----------|----------|-------|
    | ABC%=1.234 | ABC% | 1 |
@@ -297,7 +319,7 @@ Numeric variables can be converted from one type to another in N82-BASIC. Charac
    - Single Precision
    - Double Precision
 
-   Integer, as shown abive <!-- OCR: unclear ("abive" vs "above") — likely "above" -->, is the lowest degree of precision. Arithmetic operations are performed in numeric values with the same degree of precision. If different types of numeric values are involved in an operation, the lower ordered values are converted into the higher ordered format first, before the operation is performed.
+   Integer, as shown above <!-- source prints "abive"; corrected to "above" -->, is the lowest degree of precision. Arithmetic operations are performed in numeric values with the same degree of precision. If different types of numeric values are involved in an operation, the lower ordered values are converted into the higher ordered format first, before the operation is performed.
 
    EXAMPLE:
 
@@ -309,8 +331,6 @@ Numeric variables can be converted from one type to another in N82-BASIC. Charac
 
    EXAMPLE:
 
-   <!-- TODO(tier-b): verify table values against source page 44 -->
-
    | Statement | Variable | Content |
    |-----------|----------|---------|
    | A#=12.34 | A# | 12.34000015258789 |
@@ -320,18 +340,14 @@ Numeric variables can be converted from one type to another in N82-BASIC. Charac
 
    EXAMPLE:
 
-   <!-- TODO(tier-b): verify table values against source page 44 -->
-
    | Statement | Variable | Content |
    |-----------|----------|---------|
    | A%=34.4 | A% | 34 |
    | B%=34.5 | B% | 34 |
 
-5. Values of Double Precision real numbers are rounded to 7 signigicant <!-- OCR: unclear ("signigicant" vs "significant") — scan reads "signigicant" --> digits when converting to Single Precision numbers. An overflow error could occur if rounded values exceed the valid Single Precision range of −1.7014E+38 to +1.70141E+38.
+5. Values of Double Precision real numbers are rounded to 7 significant <!-- source prints "signigicant"; corrected to "significant" --> digits when converting to Single Precision numbers. An overflow error could occur if rounded values exceed the valid Single Precision range of −1.7014E+38 to +1.70141E+38.
 
    EXAMPLE:
-
-   <!-- TODO(tier-b): verify table values against source page 44 -->
 
    | Statement | Variable | Content |
    |-----------|----------|---------|
@@ -342,19 +358,15 @@ Numeric variables can be converted from one type to another in N82-BASIC. Charac
 
    EXAMPLE:
 
-   <!-- TODO(tier-b): verify table values against source page 45 -->
-
    | Statement | Variable | Content |
    |-----------|----------|---------|
-   | A#=12.34 | A# | 12.34000015258789 error factor |
+   | A#=12.34 | A# | 12.34000015258789 (the `000015258789` tail is the error factor) |
    | A!=12.34 | A! | 12.34 |
-   | A#=VAL(STR$(A!)) | A# | 12.34  no error factor |
+   | A#=VAL(STR$(A!)) | A# | 12.34 (no error factor) |
 
 7. Numeric variables can be converted into strings by using the STR$ function.
 
    EXAMPLE:
-
-   <!-- TODO(tier-b): verify table values against source page 45 -->
 
    | Statement | Variable | Content |
    |-----------|----------|---------|
@@ -374,8 +386,6 @@ A Logical Expression is the specification of a series of operations to be perfor
 
 ### Arithmetic Expressions:
 
-<!-- TODO(tier-b): verify table values against source page 46 -->
-
 | Priority | Operator | Function |
 |----------|----------|----------|
 | 1 | ^ | Exponentiation |
@@ -393,7 +403,7 @@ An arithmetic expression is defined as:
 〈 arithmetic term 〉 [ 〈 arithmetic operator 〉 〈 arithmetic term 〉 ]
 ```
 
-The follwing <!-- OCR: unclear ("follwing" vs "following") — scan reads "follwing" --> are examples of valid arithmetic expressions:
+The following <!-- source prints "follwing"; corrected to "following" --> are examples of valid arithmetic expressions:
 
 ```text
 NOT A%                           Integer result
@@ -426,8 +436,6 @@ Rules for arithmetic expressions:
 6. An overflow error occurs whenever the results of an operation exceed the assigned variable type limits.
 
 Example:
-
-<!-- TODO(tier-b): verify table values against source page 48 -->
 
 | Statement | Meaning | Result |
 |-----------|---------|--------|
@@ -498,8 +506,6 @@ A logical operator is any of the following:
 
 Logical Expressions are comparisons between the corresponding "bits" of the two terms of the expression. A bit is a binary (either ON or OFF) piece of information. An integer value is composed of sixteen bits. A decimal integer is expressed in bits by converting the number to base 2 notation and adding any leading binary zeros, if necessary. The following is a list of some equivalent values in decimal and binary:
 
-<!-- TODO(tier-b): verify table values against source page 51 -->
-
 | Decimal | Binary Bits |
 |---------|-------------|
 | 0 | 0000000000000000 |
@@ -510,8 +516,6 @@ Logical Expressions are comparisons between the corresponding "bits" of the two 
 | −1 | 1111111111111111 |
 
 Note that a decimal zero has all zero bits and a decimal minus one has all one bits. This relationship between decimal and binary is used in the result of relational expressions. Logical expressions are valid wherever arithmetic expressions are allowed, however, both terms must be integers. The following tables are called truth tables. They show graphically the results of the logical operations for every possible combination of two bits:
-
-<!-- TODO(tier-b): verify truth table values against source pages 51–52 -->
 
 **NOT**
 
@@ -583,8 +587,6 @@ Logical expressions are normally used to evaluate terms that are the result of r
 
 Some examples will illustrate how the logical operators work on non-relational values:
 
-<!-- TODO(tier-b): verify logical operator worked examples against source page 53 -->
-
 ```text
 15 AND 14        0000000000001111   (15)
             AND  0000000000001110   (14)
@@ -624,8 +626,6 @@ A string can be concatenated (connected end to end) with another string by the "
 
 EXAMPLE:
 
-<!-- TODO(tier-b): verify table values against source page 54 -->
-
 | Statement | Variable | Content |
 |-----------|----------|---------|
 | A$="NEC " | A$ | NEC |
@@ -642,16 +642,14 @@ Two strings are equal if they have the same character in the respective position
 
 EXAMPLES:
 
-<!-- TODO(tier-b): verify table values against source page 55 -->
-
 | Relational Testing | Result |
 |--------------------|--------|
-| "AA" ( "AB" | TRUE |
+| "AA" < "AB" | TRUE |
 | "BASIC"="BASIC" | TRUE |
-| "PENX" ( "PEN" | FALSE |
+| "PENX" < "PEN" | FALSE |
 | "cm" = "CM" | FALSE |
-| "cm" ) "CM" | TRUE |
-| "DESK" ( "DESKS" | TRUE |
+| "cm" > "CM" | TRUE |
+| "DESK" < "DESKS" | TRUE |
 
 
 ## Mathematical Functions
@@ -695,8 +693,6 @@ TAN(DO)+COS(DO)
 
 N82-BASIC operations are performed in the following order:
 
-<!-- TODO(tier-b): verify precedence table against source page 57 -->
-
 | Precedence | Operation |
 |-----------|-----------|
 | 1 | Expressions enclosed by parentheses |
@@ -707,7 +703,7 @@ N82-BASIC operations are performed in the following order:
 | 6 | Integer division (\) |
 | 7 | Modulo division (MOD) |
 | 8 | Addition and subtraction (+, −) |
-| 9 | Relational operators (=, <, >, < >, <=, >=, etc.) |
+| 9 | Relational operators (=, <, >, <>, <=, >=, etc.) |
 | 10 | Logical operator NOT |
 | 11 | Logical operator AND |
 | 12 | Logical operator OR |

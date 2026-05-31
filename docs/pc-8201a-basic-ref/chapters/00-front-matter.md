@@ -1,8 +1,9 @@
 # Front Matter
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 1–5). Transcribed faithfully; **page references and tabular
-> values are pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 1–5). Transcribed faithfully; the cover art is kept as an
+> image (target: image). **Table-of-contents page references have not been
+> cross-checked** — tracked in the BASIC Reference Tier B review issue.
 
 ## Cover
 

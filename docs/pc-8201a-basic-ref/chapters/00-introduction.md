@@ -1,8 +1,10 @@
 # INTRODUCTION
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 6–9). Transcribed faithfully; **numeric/tabular values
-> are pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 6–9). Transcribed faithfully and Tier B figure/table pass complete
+> (figures rendered, tables checked against the source scan). Remaining
+> items needing a human eye are tracked in the BASIC Reference Tier B
+> review issue.
 
 The N82-BASIC Reference manual is a guide to the programming language used for the PC-8201 personal computer.  Microsoft TM 's N82-BASIC language, developed specifically for the PC-8201 offers a wide range of commands and functions, making it very useful and versatile.
 
@@ -76,13 +78,13 @@ The system commands, statements, and functions in Chapter 4 are presented alphab
 
 **SAMPLE PROGRAM:** &nbsp;&nbsp;&nbsp; When included, this is a sample program for system commands, statements, and functions described.
 
-<!-- FIGURE: SHIFT key icon + `<Character>` notation — source page 9 (target: image) -->
+<!-- FIGURE: keycap icon labeled "SHIFT" (rounded-rectangle key), followed by "+ <Character> :" notation — source page 9 (target: image) -->
 
 `[SHIFT]` + `<Character>` :
 
 &nbsp;&nbsp;&nbsp; Indicates that you should press and hold the `[SHIFT]` Key, then type the specified character.  The + sign is not to be typed in.
 
-<!-- FIGURE: CODE/FN key icon + `<Character>` notation — source page 9 (target: image) -->
+<!-- FIGURE: small square keycap icon (CODE/FN key glyph), followed by "+ <Character> :" notation — source page 9 (target: image) -->
 
 `[CODE/FN]` + `<Character>` :
 
@@ -90,14 +92,14 @@ The system commands, statements, and functions in Chapter 4 are presented alphab
 
 Symbols used in this Reference Manual:
 
-<!-- FIGURE: NOTE icon (flag/signpost graphic) — source page 9 (target: image) -->
+<!-- FIGURE: NOTE icon — small flag/tag graphic with the word "NOTE" lettered on it — source page 9 (target: image) -->
 
 **NOTES** to be remembered.
 
-<!-- FIGURE: REFERENCE icon (pointing hand/book graphic) — source page 9 (target: image) -->
+<!-- FIGURE: REFERENCE icon — a pointing-hand (index finger pointing right) graphic — source page 9 (target: image) -->
 
 **REFERENCE** is made to another chapter, to the PC-8201 User's Guide.
 
-<!-- FIGURE: CAUTION icon (right-pointing arrow/box graphic) — source page 9 (target: image) -->
+<!-- FIGURE: CAUTION icon — a hollow (outline) right-pointing arrow graphic — source page 9 (target: image) -->
 
 **CAUTION** is required when utilizing certain features of the N82-BASIC language.

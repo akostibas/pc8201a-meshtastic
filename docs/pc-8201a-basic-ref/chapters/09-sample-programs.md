@@ -1,8 +1,10 @@
 # Chapter 9: Sample Programs
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 247–263). Transcribed faithfully; **numeric/tabular values
-> are pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 247–263). Transcribed faithfully and Tier B figure/table pass complete
+> (figures rendered, tables checked against the source scan). Remaining
+> items needing a human eye are tracked in the BASIC Reference Tier B
+> review issue.
 
 ## PSET Routine
 
@@ -217,7 +219,19 @@ c) Note the keys "Z", "X", "C", "V", "B", "N", and "M" on
    length of a note consists of the following.  A rest is input by
    the SPACE bar.
 
-<!-- FIGURE 9.1: Musical note length table (note value symbols 1–9) — deferred to image/table pass, source page 251 (target: image) -->
+**Figure 9.1** — Note-length designations (the value `1`–`9` following the `L` key):
+
+| Value | Note | Length |
+|-------|------|--------|
+| 1 | thirty-second note (filled head, three flags) | 1/32 |
+| 2 | sixteenth note (filled head, two flags) | 1/16 |
+| 3 | eighth note (filled head, one flag) | 1/8 |
+| 4 | dotted eighth note (filled head, one flag, dot) | 1/8 + 1/16 |
+| 5 | quarter note (filled head, stem) | 1/4 |
+| 6 | dotted quarter note (filled head, stem, dot) | 1/4 + 1/8 |
+| 7 | half note (open head, stem) | 1/2 |
+| 8 | dotted half note (open head, stem, dot) | 1/2 + 1/4 |
+| 9 | whole note (open head, no stem) | 1 |
 
 The length of a note and the octave can be omitted if these are not
 to be modified because they will automatically be set at the values
@@ -483,30 +497,28 @@ program.
 330 FOR I=0 TO 500:NEXT
 340 LOCATE 0,0:GOTO 130
 350 DATA 0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,1,
-    0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0
-360 DATA 0,1,0,0,0,1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,
-    0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-370 DATA 0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,
-    0,0,0,0,1,0,1,0,0,0,0,0,0,0,1
-380 DATA 0,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,
+    0,0,0,1,0,0,0,1,0,0,0,1,0,0
+360 DATA 0,1,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,
+    0,1,0,0,0,0,0,0,0,0,0,0,0,0
+370 DATA 0,0,0,1,1,1,0,0,0,0,1,0,0,0,1,0,0,1,
+    0,0,0,0,0,1,0,1,0,0,0,0,0,1
+380 DATA 0,1,0,0,0,0,0,1,0,0,1,0,0,0,1,0,0,0,
     0,0,0,0,0,0,0,0,0,0,1,0,0,0
-390 DATA 0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+390 DATA 0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
     1,1,0,1,1,0,0,1,0,0,1,0,0,1
-400 DATA 0,1,0,0,0,1,0,0,0,1,0,1,0,1,0,0,1,0,0,1,0,
-    1,1,0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0
-410 DATA 0,0,1,0,0,0,1,1,0,1,1,0,1,0,0,0,1,0,1,0,
-    0,0,1,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,1
-420 DATA 0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,
-    1,1,1,1,1,0,0,1,0,0,0,0,0,0,0,1
+400 DATA 0,1,0,0,1,0,0,1,0,1,0,0,1,0,0,1,0,0,
+    1,1,0,1,1,0,0,0,0,0,0,0,0,0
+410 DATA 0,0,1,0,0,0,1,1,0,1,0,0,0,1,0,1,0,1,
+    0,0,1,0,0,1,0,1,0,0,1,0,0,1
+420 DATA 0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,
+    1,1,1,1,1,0,0,1,0,0,0,0,0,1
 430 DATA 0,1,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,
-    1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    1,1,1,1,1,0,0,0,0,0,0,0,0,0
 440 DATA 0,0,1,0,0,0,0,1,0,1,1,1,1,1,1,1,0,0,
-    0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    0,0,0,0,0,1,0,0,0,0,0,0,0,0
 ```
 
 <!-- OCR: line 50 — `[CHAR?]` placeholder = unidentified graphics/special character printed after the closing string quote on `PRINT 'READING DATA'`; resembles a double-quote or graphics symbol; source page 257 (target: image) -->
-<!-- TODO(tier-b): verify DATA lines 350–440; values are dense comma-separated 0/1 patterns, source page 258 -->
-
 ## Game Program
 
 The missile base is moved by using the left and right Cursor
@@ -676,8 +688,6 @@ ments.
 <!-- OCR: line 440 (Game Program, p-260) — `PRINT '        '` string content is spaces; trailing period in scan appears typographic (sentence end), not part of string -->
 
 Sample output:
-
-<!-- TODO(tier-b): verify sample output table values, source page 263 -->
 
 ```
                     STUDENT ACHIEVEMENT BY SUBJECT

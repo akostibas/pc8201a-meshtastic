@@ -1,14 +1,35 @@
 # Appendix B: Memory Maps
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 279–280). Transcribed faithfully; **numeric/tabular values
-> are pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 279–280). Transcribed faithfully and Tier B figure/table pass complete
+> (figures rendered, tables checked against the source scan). Remaining
+> items needing a human eye are tracked in the BASIC Reference Tier B
+> review issue.
 
 ## B. Memory Maps
 
 ### Map 1 — RAM Address Layout (single-bank view)
 
-<!-- FIGURE B.1: Memory map diagram showing RAM address regions from 8000 to 65535, with labeled blocks for Work area, File control block, String region, FOR/GOSUB stack, System stack, Array region, Pure variable region, Machine language program file (.CO), ASCII code text file (.DO), and BASIC program file (.BA). Annotations note that File control block changes according to MAXFILES, and String/stack regions change according to CLEAR statement number 1 parameter. Source page 279 (target: image) -->
+**Figure B.1 — RAM address map (8000–65535), high address at top.**
+
+```mermaid
+block-beta
+  columns 2
+  top["65535 → 62336"]:1 work["Work area"]:1
+  a1[" "]:1 fcb["File control block — Changes according to MAXFILES"]:1
+  a2[" "]:1 str["String region — Changes according to CLEAR statement number 1 parameter"]:1
+  a3[" "]:1 fg["FOR/GOSUB stack"]:1
+  a4[" "]:1 sys["System stack"]:1
+  a5[" "]:1 arr["Array region"]:1
+  a6[" "]:1 pure["Pure variable region"]:1
+  a7[" "]:1 co["Machine language program file .CO"]:1
+  a8[" "]:1 do[".DO ASCII code text file"]:1
+  bot["8000"]:1 ba["BASIC program file .BA"]:1
+```
+<!-- Figure B.1 reproduces the single-bank RAM map on source p279. Addresses
+     verified against scan: top boundary 65535, Work-area lower boundary 62336,
+     base 8000. The "Changes according to CLEAR statement number 1 parameter"
+     brace in the scan spans String region through System stack. -->
 
 The following table summarises the regions shown in the diagram on source page 279:
 
@@ -27,7 +48,25 @@ The following table summarises the regions shown in the diagram on source page 2
 
 ### Map 2 — RAM Bank Configuration
 
-<!-- FIGURE B.2: Multi-column memory bank diagram showing four configurations side by side: (1) RAM 16K #1 (32768–65535) + RAM 16K option (below 32768), with System ROM 32K (0–32767); (2) RAM 32K #2 (option) with unlabeled lower block; (3) RAM 32K #3 with dashed-border lower block; (4) RAM cartridge with dashed-border lower block. Address markers: 65535 (top), 32768/32767 (midpoint), 0 (bottom). Source page 280 (target: image) -->
+**Figure B.2 — RAM bank configurations (four memory blocks), high address at top.**
+
+```mermaid
+block-beta
+  columns 4
+  hi["65535"]:4
+  r1u["RAM 16K #1"] r2u["RAM 32K #2"] r3u["RAM 32K #3"] rcu["RAM 32K cartridge"]
+  r1o["RAM 16K (option)"] r2o["(option)"] r3o["RAM cartridge"] space
+  mid["32768 / 32767"]:4
+  rom["System ROM 32K"] b2[" "] b3[" "] b4[" "]
+  lo["0"]:4
+```
+<!-- Figure B.2 reproduces the four-column bank diagram on source p280.
+     Upper blocks occupy 32768–65535; lower blocks occupy 0–32767.
+     Block 1: RAM 16K #1 over RAM 16K (option), with System ROM 32K in the
+     lower position. Block 2: RAM 32K #2 (option). Block 3: RAM 32K #3 over
+     RAM cartridge. Block 4: RAM 32K cartridge. The lower cells of blocks 3
+     and 4 are drawn dashed (undesignated) in the scan. All addresses
+     (decimal) verified against the image. -->
 
 The addresses for RAM #2 and RAM #3 can be designated as either 0 through 32767 or 32768 through 65535.
 

@@ -1,8 +1,10 @@
 # Chapter 1: N82-BASIC Overview
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 11–19). Transcribed faithfully; **numeric/tabular values
-> are pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 11–19). Transcribed faithfully and Tier B figure/table pass complete
+> (figures rendered, tables checked against the source scan). Remaining
+> items needing a human eye are tracked in the BASIC Reference Tier B
+> review issue.
 
 N82-BASIC has been designed to fully utilize the many features of the PC-8201 personal computer.  The language that is used is similar to many other forms of BASIC language.  In certain ways, it differs since the hardware features of the PC-8201 are different than those on other computers.
 
@@ -45,11 +47,32 @@ The BASIC software feature of the PC-8201 has two operating modes, the Direct Mo
 
 As described in the PC-8201 User's Guide, the BASIC mode is entered by moving the cursor onto the word BASIC on the LCD screen:
 
-<!-- FIGURE 1.1: LCD menu screen with cursor on "BASIC", showing date 1983/01/01 00:00:00, (C) Microsoft #1, and function-key labels Load/Save/Name/List/12374 — deferred to image/table pass, source page 13 (target: image) -->
+```text
+1983/01/01 00:00:00      (C) Microsoft #1
+[BASIC]    TEXT      TELCOM    -.-
+-.-        -.-       -.-       -.-
+-.-        -.-       -.-       -.-
+-.-        -.-       -.-       -.-
+-.-        -.-       -.-       -.-
+-.-        -.-       -.-       -.-
+Load    Save    Name    List    12374
+```
+
+*Figure 1.1 — LCD menu screen; cursor highlights `BASIC` (shown inverse-video). Function-key label row at bottom; `12374` is bytes free. (Source p. 13)*
 
 After pressing the [ENTER] Key, the message "Ok" will be displayed:
 
-<!-- FIGURE 1.2: BASIC startup screen showing "NEC PC-8201 BASIC Ver 1.0 (C) Microsoft / 12374 Bytes free / Ok" with cursor, and function-key labels Load "/Save "/Files/List/Run — deferred to image/table pass, source page 13 (target: image) -->
+```text
+NEC PC-8201 BASIC Ver 1.0 (C) Microsoft
+12374 Bytes free
+Ok
+█
+
+
+Load "  Save "  Files   List    Run
+```
+
+*Figure 1.2 — BASIC startup screen with flashing cursor (`█`) on the line below `Ok`. (Source p. 13)*
 
 You can now utilize either the Direct Mode or the Program Mode of the BASIC feature.
 
@@ -76,7 +99,17 @@ The PC-8201 is device independent, allowing all of your programming on the PC-82
 
 To begin using the N82-BASIC language, get the PC-8201 into the BASIC Mode.  Your screen should appear as illustrated:
 
-<!-- FIGURE 1.3: BASIC startup screen showing "NEC PC-8201 BASIC Ver 1.0 (C) Microsoft / 12374 Bytes free / Ok" with cursor, and function-key labels Load "/Save "/Files/List/Run — deferred to image/table pass, source page 16 (target: image) -->
+```text
+NEC PC-8201 BASIC Ver 1.0 (C) Microsoft
+12374 Bytes free
+Ok
+█
+
+
+Load "  Save "  Files   List    Run
+```
+
+*Figure 1.3 — BASIC startup screen with flashing cursor (`█`). (Source p. 16)*
 
 The "Ok" message with the flashing cursor appearing on the next line indicates that the PC-8201 is ready for use and is waiting for instructions from you.  The PC-8201 is now in the Direct Mode, meaning that you can enter system commands or statements.
 

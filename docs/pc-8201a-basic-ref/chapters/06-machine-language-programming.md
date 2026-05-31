@@ -1,8 +1,10 @@
 # Chapter 6: Machine Language Programming
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 218–219). Transcribed faithfully; **numeric/tabular values
-> are pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 218–219). Transcribed faithfully and Tier B figure/table pass complete
+> (figures rendered, tables checked against the source scan). Remaining
+> items needing a human eye are tracked in the BASIC Reference Tier B
+> review issue.
 
 Machine Language Programming is a collection of meaningful coded instructions that the PC-8201 can execute.  All other programming languages must be compiled or translated into Machine Language before they can be executed.  Machine Language is also known as Assembler Language or Code.
 

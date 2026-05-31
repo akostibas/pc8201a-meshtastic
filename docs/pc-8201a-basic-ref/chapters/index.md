@@ -1,8 +1,9 @@
 # Index
 
 > Vision-OCR'd from the image-only scan of NEC8201A-BasicReference.pdf
-> (source pages 288–292). Transcribed faithfully; **page references are
-> pending Tier B verification** — do not treat as authoritative yet.
+> (source pages 288–292). Transcribed faithfully; **the page references have
+> not been cross-checked** against the chapters — tracked in the BASIC
+> Reference Tier B review issue.
 
 ## A
 
