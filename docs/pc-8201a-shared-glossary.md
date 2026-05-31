@@ -46,6 +46,23 @@ per-figure-type output policy.
 | SI / SO | Shift In / Shift Out | User's Guide Ch8 (TELCOM) |
 | XON / XOFF | flow control | User's Guide Ch8 |
 | Half Duplex / Full Duplex | (transmission modes) | User's Guide Ch8 |
+| `CAS:` / `COM:` | device names — cassette / RS-232C | User's Guide Ch8 |
+| `.BA` / `.DO` / `.CO` | file types — BASIC program / ASCII text / machine-language | User's Guide; BASIC-ref |
+| IPL Command File / `SETIPL` / `CLRIPL` | auto-run-on-boot file mechanism | User's Guide Ch2 |
+| `GRPH` | graphics-symbols key | User's Guide Ch3 |
+
+### App B connector signals (active-low marked with overbar in source)
+
+| Signal | Meaning | Seen in |
+|---|---|---|
+| `AD0`–`AD7` | multiplexed address/data bus | User's Guide App B |
+| `ALE` | address latch enable | User's Guide App B |
+| `HOLDA` | hold acknowledge | User's Guide App B |
+| `ROME` | ROM enable (active-low) | User's Guide App B |
+| `HADRD` / `LADRD` | high / low address read | User's Guide App B |
+| `BANK#3` | RAM-cassette select (active-low) | User's Guide App B |
+| `VDD` / `Vcc` | supply rails | User's Guide App B |
+| DuPont BERG modular jack / DIN plug | connector types | User's Guide App B |
 
 ## Memory map (authoritative source: BASIC-ref Appendix B)
 
@@ -142,4 +159,7 @@ machine behavior, not OCR error._
 |---|---|---|
 | Programmable I/O (PIO) | Canonical `8155`/`8155S` (see Hardware/parts). User's Guide **App C** labels it `81C55` (CMOS variant marking) — transcribed as printed, flagged; treat as the same part. | User's Guide App C |
 | `PC-8271-01` (disk), `PC-8023A-C` (printer) | Optional-equipment model numbers as printed in User's Guide App B; differ from some catalogs' `PC-8271A-01` / `PC-8023-C`. Transcribed verbatim from the scan; confirm against a parts list in Tier B. | User's Guide App B |
+| Part numbers (App A/B, as printed) | `PC-8201-06`, `PC-8206`, `PC-8293`, `PC-8294`, `PC-8023A-C`/`PC-8023-01`, `PC-6082`, `PC-8281`, `PC-8093` (likely OCR/source typo for `PC-8293`). Transcribed verbatim; confirm against a parts list. | User's Guide App A/B |
 | `N82-BASIC` | The dialect name; source sets "82" as a subscript. Render `N82-BASIC` in prose. | User's Guide Ch.6 |
+| `CHS$` | user-definable-character function (codes 224–255); codes 131–160 are keyboard-inputtable | User's Guide App C |
+| TEXT editor markers | EOF marker `◄`, line-feed/return marker `↵`, PASTE buffer, word wrap, tab stop every 8th column | User's Guide Ch7 |
