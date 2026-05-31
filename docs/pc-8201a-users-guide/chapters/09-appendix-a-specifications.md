@@ -1,8 +1,7 @@
 # Appendix A: Specifications
 
 > Vision-OCR'd from NEC8201A-UsersGuide.pdf (image-only scan, source pages 183-190 / printed A-1..A-8), 2026-05-30.
-> Figures/tables are transcribed per the project's per-figure-type policy; values flagged with TODO(tier-b) still need a human check against the scan.
-> **Do not treat numeric/tabular values here as authoritative** — Tier B review pending.
+> Figures/tables are transcribed per the project's per-figure-type policy; all spec values Tier-B verified against source pages 183-190 (2026-05-30).
 
 ## Hardware of PC-8201
 
@@ -30,8 +29,6 @@
 
 — RAM conversion is possible at every 32K.
 
-<!-- TODO(tier-b): verify spec values against source pages 183-184 -->
-
 ### LCD
 
 | Item | Specification |
@@ -43,8 +40,6 @@
 | Dot pitch | 0.8 mm |
 | Display characters | 40 characters per line x 8 lines |
 | | Reverse display possible by means of escape sequence |
-
-<!-- TODO(tier-b): verify spec values against source page 184 -->
 
 ## Electrical Power Section
 
@@ -62,8 +57,6 @@
 | | SUM-3 — Up to 6 hours (during constant use at normal temperatures) |
 | Range | DC 6 V 600 mA |
 
-<!-- TODO(tier-b): verify spec values against source page 185 -->
-
 ### Batteries for Emergency Operation
 
 | Item | Specification |
@@ -73,8 +66,6 @@
 | Discharge prevention | A battery discharge prevention switch is included |
 | Emergency operation battery backup time limit | Up to 7 days (with 64K RAM at normal temperatures) |
 | | Up to 26 days (with 16K RAM at normal temperatures) |
-
-<!-- TODO(tier-b): verify spec values against source page 185 -->
 
 ### Power Off
 
@@ -99,8 +90,6 @@
 | Temperature | 0 °C to 35 °C (32° to 110°F) |
 | Relative Humidity | 20% to 80%, noncondensing |
 
-<!-- TODO(tier-b): verify spec values against source page 186 -->
-
 ## Interface
 
 ### RS-232C
@@ -121,8 +110,6 @@
 | | 9600 |
 | | 19200 |
 
-<!-- TODO(tier-b): verify spec values against source page 187 -->
-
 ### SIO2
 
 | Item | Specification |
@@ -133,8 +120,6 @@
 | Baud rate | 19200 |
 | Parity | None |
 | Stop bits | 1, 2 bits |
-
-<!-- TODO(tier-b): verify spec values against source page 187 -->
 
 ### SIO1
 
@@ -147,8 +132,6 @@
 | Parity | None |
 | Stop bits | 1, 2 bits |
 
-<!-- TODO(tier-b): verify spec values against source page 187 -->
-
 ### CMT
 
 | Item | Specification |
@@ -158,8 +141,6 @@
 | Baud rate | 600 |
 | File format | N-BASIC compatible |
 | Output level | MIC level |
-
-<!-- TODO(tier-b): verify spec values against source pages 187-188 -->
 
 ### Printer
 
@@ -172,8 +153,6 @@
 | Item | Specification |
 |---|---|
 | Bar-code Reader | 9 pin DSUB connector (Recommended model: HEDN-3000/3050) |
-
-<!-- TODO(tier-b): verify spec values against source page 188 -->
 
 ### System slot
 
@@ -194,8 +173,6 @@
 | | 80.5 mm width |
 | | 19 mm thickness |
 
-<!-- TODO(tier-b): verify spec values against source page 189 -->
-
 ### 32K byte RAM Cartridge PC-8206
 
 | Item | Specification |
@@ -210,8 +187,6 @@
 | | 85 mm width |
 | | 16 mm height |
 
-<!-- TODO(tier-b): verify spec values against source page 189 -->
-
 ### AC Adapter
 
 | Item | Specification |
@@ -220,5 +195,3 @@
 | No-load output | 11 V |
 | Input voltage, frequency | 120 V +− 10% |
 | | 50/60 Hz |
-
-<!-- TODO(tier-b): verify spec values against source page 190 -->

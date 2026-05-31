@@ -300,7 +300,7 @@ The LIST command is also used to list lines on the screen, allowing you to check
 
 The following table shows the lines that are listed on the screen, according to the (line number) entered:
 
-<!-- FIGURE 6.1: LIST command line-number selection table — source page 112 (target: table) -->
+**Figure 6.1:** LIST command line-number selection table
 
 | \<Line Number\> specified | Line Listed |
 |---|---|
@@ -309,8 +309,6 @@ The following table shows the lines that are listed on the screen, according to 
 | First \<Line Number\> and Hyphen | That line and all following |
 | Hyphen and 2nd \<Line Number\> | First line to that line |
 | First \<Line Number\> Hyphen 2nd \<Line Number\> | That range |
-
-<!-- TODO(tier-b): verify LIST line-number table layout against source page 112 -->
 
 ### f.5/RUN
 
@@ -482,4 +480,5 @@ This is a sample program that uses letters in the operation of the screen displa
 100 END
 ```
 
-<!-- FIGURE 6.2: Screen output of BASIC Sample Program showing progressive display "0  Oh  Ohh  Ohhh  Ohhhh" with function-key menu bar "Load "  Save "  Files  List  Run" — source page 121 (target: image) -->
+![Fig 6.2: Screen output of BASIC Sample Program — progressive display "O  Oh  Ohh  Ohhh  Ohhhh" with function-key bar](../images/ch06-fig2-p121.png)
+<!-- source page 121 -->
