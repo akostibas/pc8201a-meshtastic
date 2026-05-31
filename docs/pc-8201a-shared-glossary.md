@@ -33,6 +33,19 @@ per-figure-type output policy.
 | Programmable I/O / timer | `8155` (variant `8155S`) | Tech-ref |
 | LCD column driver | `HD44102B` | Tech-ref |
 | LCD common driver | `HD44023B` | Tech-ref |
+| CPU (confirmed) | `80C85` | User's Guide App A (independent agreement w/ Tech-ref) |
+| Optoelectronic / display part | `HEDN-3000` / `HEDN-3050` | User's Guide App A |
+
+## Abbreviations (cross-title)
+
+| Abbrev | Expansion | Seen in |
+|---|---|---|
+| IPL | Initial Program Loader | User's Guide Ch2 |
+| Warm Start / Cold Start | (boot modes — Warm preserves RAM, Cold clears) | User's Guide Ch2 |
+| BCR | Bar-Code Reader (rear-panel connector) | User's Guide Ch2 |
+| SI / SO | Shift In / Shift Out | User's Guide Ch8 (TELCOM) |
+| XON / XOFF | flow control | User's Guide Ch8 |
+| Half Duplex / Full Duplex | (transmission modes) | User's Guide Ch8 |
 
 ## Memory map (authoritative source: BASIC-ref Appendix B)
 
