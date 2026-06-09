@@ -19,6 +19,12 @@ A `gitleaks` pre-commit hook scans staged changes for secrets (including a
 custom Meshtastic channel-URL rule). If it blocks a commit, do not bypass with
 `--no-verify` — remove the secret instead.
 
+## Workflow
+
+Always push doc changes to GitHub after committing:
+- **On a feature/coding branch** — push to that branch.
+- **Doc-only changes on main** — push directly to main.
+
 ## Reference manuals (OCR'd)
 
 All three 1983 NEC PC-8201A manuals have been OCR'd from scans into
