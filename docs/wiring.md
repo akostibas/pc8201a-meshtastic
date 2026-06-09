@@ -44,13 +44,15 @@ Directions are from the 8201A's point of view.
 > **Verify:** confirm the Meshtastic Serial Module's `txd`/`rxd` defaults map to
 > these `TX0`/`RX0` pads on the RAK4631 before relying on them.
 
-### MAX3232 breakout (SparkFun BOB-11189) — 2 channels, we use channel 1
+### MAX3232 breakout (Adafruit RS232 Pal) — 2 channels, we use channel 1
 
-| TTL side | RS-232 side |
-|----------|-------------|
-| `VCC` (3.0–5.5V), `GND` | — |
-| `T1IN` (TTL in → drives RS-232 out) | `T1OUT` (RS-232 out) |
-| `R1OUT` (TTL out ← from RS-232 in) | `R1IN` (RS-232 in) |
+Pin names are the same label on both sides; the header they're on tells you which domain.
+
+| Logic side (3.3V/5V) | RS-232 side |
+|----------------------|-------------|
+| `VIN` (match logic level), `GND` | — |
+| `T1` (logic in → drives RS-232 out) | `T1` (RS-232 out) |
+| `R1` (logic out ← from RS-232 in) | `R1` (RS-232 in) |
 
 ---
 
@@ -75,21 +77,21 @@ The crossover (TX→RX) is done *in your wiring* of the MAX3232 RS-232 pins to t
 DB-25. No null-modem cable needed — you're building the connection yourself.
 
 ```
-RAK (3.3V TTL)            MAX3232 (powered at 3.3V)        8201A DB-25 female
-─────────────             ─────────────────────────        ──────────────────
-VDD ───────────────────►  VCC
-GND ───────────────────►  GND  ─────────────────────────►  7  SG
-TX0 ───────────────────►  T1IN        T1OUT ────────────►  3  RXD  (into 8201A)
-RX0 ◄───────────────────  R1OUT       R1IN  ◄────────────  2  TXD  (out of 8201A)
+RAK (3.3V TTL)     RS232 Pal logic side   RS232 Pal RS-232 side   8201A DB-25 female
+─────────────      ────────────────────   ─────────────────────   ──────────────────
+VDD ────────────►  VIN
+GND ────────────►  GND  ──────────────────────────────────────►  7  SG
+TX0 ────────────►  T1 (logic)             T1 (RS-232) ─────────►  3  RXD  (into 8201A)
+RX0 ◄────────────  R1 (logic)             R1 (RS-232) ◄─────────  2  TXD  (out of 8201A)
 ```
 
 **Data wiring (the 3 that matter):**
 
 | From | To | Why |
 |------|----|-----|
-| RAK `TX0` → MAX3232 `T1IN`; `T1OUT` → DB-25 **pin 3** | 8201A RXD | RAK talks → 8201A listens |
-| 8201A **pin 2** → MAX3232 `R1IN`; `R1OUT` → RAK `RX0` | 8201A TXD | 8201A talks → RAK listens |
-| RAK `GND` ↔ MAX3232 `GND` ↔ DB-25 **pin 7** | common ground | mandatory reference |
+| RAK `TX0` → RS232 Pal logic `T1`; RS-232 `T1` → DB-25 **pin 3** | 8201A RXD | RAK talks → 8201A listens |
+| DB-25 **pin 2** → RS232 Pal RS-232 `R1`; logic `R1` → RAK `RX0` | 8201A TXD | 8201A talks → RAK listens |
+| RAK `GND` ↔ RS232 Pal `GND` ↔ DB-25 **pin 7** | common ground | mandatory reference |
 
 **Handshake — try 3-wire first.** TELCOM has *no hardware flow-control option*
 (only XON/XOFF via `STAT`), so pins 4/5/6/8/20 may not gate transmission at all.
