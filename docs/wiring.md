@@ -56,6 +56,24 @@ Pin names are the same label on both sides; the header they're on tells you whic
 
 ---
 
+## Parts lists
+
+### Scenario A
+| Part | Notes |
+|------|-------|
+| FTDI USB↔RS-232 adapter (DB-9 male) | Any FTDI-based USB serial adapter |
+| Null-modem cable, DB-9F → DB-25M | SFCable or equivalent — **must be crossover** |
+
+### Scenario B
+| Part | Notes |
+|------|-------|
+| RAK4631 + RAK19003 WisBlock Mini base | Adafruit #5987 (base); RAK4631 separate |
+| Adafruit RS232 Pal | MAX3232-based level converter, screw terminals both sides |
+| JUXINICE DB-25 male solderless connector | Amazon B0DBCFLTHH — screw terminals, no soldering, 2-pack |
+| Jumper wires | Header-to-screw-terminal connections RAK ↔ RS232 Pal |
+
+---
+
 ## Scenario A — Bench-test the 8201A against a Mac (List 1)
 
 No soldering. The **null-modem cable does the crossover and gender change**, and
