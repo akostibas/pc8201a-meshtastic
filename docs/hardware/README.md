@@ -13,7 +13,7 @@ The main logic board with the lid open, shot from above.
 - **Upper-right** — power section (large capacitors, red/black power wires); ribbon cable to keyboard/display
 - **Right edge** — ribbon cable connector going to the keyboard panel board
 
-**Phase 2 relevance:** U22 (6402 UART) location needs to be pinpointed on this board before tapping. The wiring doc calls out TRO (pin 25) and RRI (pin 20) as the tap points. Cross-reference with `docs/phase2-internal-uart-tap.md`.
+**Phase 2 relevance:** U22 is **positively identified** — visible in the center of the board, marked **RCA Z / CDP6402CE / 541** (40-pin DIP). This is the tap target. The wiring doc calls out TRO (pin 25 = TX out of machine → level shifter → RAK RX0) and RRI (pin 20 = RX into machine → level shifter → RAK TX0). Cross-reference with `docs/phase2-internal-uart-tap.md`.
 
 ## keyboard-panel-rear.jpeg — keyboard panel, rear (IMG_9712)
 
