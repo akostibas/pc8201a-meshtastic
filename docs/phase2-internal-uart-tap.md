@@ -57,7 +57,50 @@ level, or set a TELCOM `STAT` word that ignores hardware flow control (the
 "ignore" option in the stat string — verify the exact code on-machine). This is
 the logic-level equivalent of the DB-25 loopback jumpers from Phase 1.
 
-## 5. Sources
+## 5. Pin validation procedure (multimeter only — no scope required)
+
+U22 is a 40-pin DIP. Find the **notch or dot on one short end** — that marks pin 1.
+Left column: pins 1 (top-left) → 20 (bottom-left), counting down.
+Right column: pins 21 (bottom-right) → 40 (top-right), counting up.
+
+- **Pin 20 (RRI)** = bottom-left corner.
+- **Pin 25 (TRO)** = 5th pin up from the bottom-right corner.
+
+### Step 1 — Idle baseline
+
+With the 8201A on and TELCOM open but idle, probe each pin to GND (DB-25 pin 7):
+- Both pin 20 and pin 25 should read **~5V**. Serial idles high.
+- If you read ±5–8V you're accidentally on the RS-232 side (U30/U31 output). Move closer to U22.
+
+### Step 2 — Drive pin 20 (RRI) low from the Mac
+
+Connect via Scenario A (FTDI + null-modem cable). On the Mac, run:
+
+```python
+import serial
+s = serial.Serial('/dev/tty.usbserial-A9V4QX1D', 19200)
+s.send_break(duration=5)   # holds TX low for 5 seconds
+s.close()
+```
+
+While the break is active, **pin 20 should drop to ~0V**. All other nearby pins stay at ~5V. This confirms pin 20 is RRI.
+
+### Step 3 — Drive pin 25 (TRO) low from BASIC
+
+In BASIC on the 8201A, run:
+
+```basic
+OPEN "COM:9N81NN" FOR OUTPUT AS #1
+WHILE 1
+PRINT #1, CHR$(0);
+WEND
+```
+
+NUL bytes (all-zero data bits) hold TRO low for 9 of every 10 bit-times. A DC multimeter will read **~0.5V average** on pin 25 while the loop runs — clearly different from the 5V idle. All other nearby pins stay static. Stop the loop with `CTRL+BREAK`.
+
+---
+
+## 6. Sources
 
 - [PC-8201A Technical Reference (NEC, 1984)](https://www.web8201.net/Files/LIBRARY_web8201/NEC8201A-TechRef.pdf)
 - [PC-8201A RS-232 init / register map](https://www.web8201.net/PotentPortables/initrs.html)
