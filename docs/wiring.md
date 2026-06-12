@@ -123,6 +123,58 @@ Wire TX/RX/GND only and test. **If TELCOM refuses to send**, add loopback jumper
 22  (RI) — leave open
 ```
 
+### Scenario B status & postmortem (2026-06-12)
+
+**The RAK4631 module is dead** — app firmware never boots (no LED, no logs, no
+API) while the UF2 bootloader works perfectly. Exhausted software recovery:
+factory erase, Meshtastic 2.7.15 and 2.6.11, full SoftDevice+bootloader DFU
+restore, module reseat. Failure followed a powered-off rewire of the Pal from
+T1/R1 to T2/R2; suspected a transient mis-plug onto the Pal's HV-side **V+/V−
+terminals (±5.5V charge-pump rails, adjacent to the data pins)**. Replacement
+module needed; the 19003 base, antenna, Pal, and DB-25 wiring are all fine.
+
+**Lessons (apply to the replacement):**
+
+- **`serial.rxd`/`serial.txd` must be set explicitly to 15/16** on the RAK4631.
+  With defaults (0) the serial module silently doesn't run, even with
+  `enabled=true`. Full config: `enabled true, baud 8 (19200), mode 3 (TEXTMSG),
+  echo true, rxd 15, txd 16`.
+- **The Pal's RS-232-side header is `V+ V− T1 R1 T2 R2`** — the ±5.5V supply
+  rails sit immediately next to the data terminals. An off-by-one connection
+  feeds ±5.5V into whatever's on the other end. Meter-check before powering.
+- **V− is not GND.** Never use it as a ground or supply return.
+- Before connecting a RAK, verify the Pal **logic-side** terminals read only
+  0/3.3V (never negative) with the Pal powered.
+- Power the RAK up disconnected first; wire the Pal only after it boots clean.
+
+**Everything else is validated.** The Pal was proven good end-to-end
+(2026-06-12) with a dual-channel passthrough rig: both channels chained
+back-to-back at logic level, inserted between the known-good Mac/FTDI path and
+the 8201A. Text flowed cleanly both directions at 19200.
+
+### Pal passthrough validation rig (reusable test)
+
+Turns the Pal into an inline RS-232 repeater — exercises both channels, both
+directions, both voltage domains, with no RAK at risk.
+
+| From | To |
+|------|----|
+| Logic `R1` | Logic `T2` (jumper) |
+| Logic `R2` | Logic `T1` (jumper) |
+| Supply + (3.3–5V) | `VIN` |
+| Supply − | `GND` |
+| Null-modem cable pin 3 (Mac data out) | RS-232 `R1` |
+| Null-modem cable pin 2 (Mac data in) | RS-232 `T1` |
+| Null-modem cable pin 7 | `GND` |
+| RS-232 `T2` | 8201A pin 3 (RXD) |
+| RS-232 `R2` | 8201A pin 2 (TXD) |
+| 8201A pin 7 (SG) | `GND` |
+
+Sanity checks before connecting: `V+`→`V−` ≈ 11V; RS-232 `T1`/`T2` idle at
+≈ −5.5V (this proves the whole logic loopback chain); cable pin 3→7 ≈ −6V with
+the Mac port open; 8201A pin 2→7 ≈ −4.6V in TELCOM TERM. Then
+`screen /dev/cu.usbserial-* 19200` ↔ `STAT 9N81NN` + `TERM`, type both ways.
+
 ---
 
 ## Scenario C — Phase 2 internal TTL tap (RAK ↔ level shifter ↔ 6402)
